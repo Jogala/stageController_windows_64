@@ -1,0 +1,7 @@
+-I have used libpi_pi_gcs2_x86_64 because the libpi_pi_gcs2_i686 did not compile. 
+
+-I had to add  #include<stdint.h> in the header file for the library, for  int64_t  beeing defined as a type
+
+-Sleep ist Windows und unter Linux ist es sleep.
+
+-INT_MAX funktioniet unter windows einfach so, unter Linux muss man noch den header #include <limits.h> einbauen.

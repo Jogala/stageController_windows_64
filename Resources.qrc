@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/figures_bw.jpg</file>
+        <file>icons/settings.png</file>
+        <file>icons/puls.png</file>
+        <file>icons/pulse_explanation.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>595</width>
+    <height>460</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>595</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionFigures"/>
+   <addaction name="actionPuls"/>
+   <addaction name="actionSettings"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionFigures">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/icons/icons/figures_bw.jpg</normaloff>:/icons/icons/figures_bw.jpg</iconset>
+   </property>
+   <property name="text">
+    <string>Figures</string>
+   </property>
+   <property name="toolTip">
+    <string>Figures Ctrl+Shift+F</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+F</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/icons/icons/settings.png</normaloff>:/icons/icons/settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>Settings</string>
+   </property>
+   <property name="toolTip">
+    <string>Settings Ctrl+Shift+S</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionPuls">
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/icons/icons/puls.png</normaloff>:/icons/icons/puls.png</iconset>
+   </property>
+   <property name="text">
+    <string>Puls</string>
+   </property>
+   <property name="toolTip">
+    <string>Puls Ctrl+Shift+P</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+P</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
