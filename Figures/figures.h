@@ -2,6 +2,7 @@
 #define FIGURES_H
 
 #include "./GlobalVariables.h"
+#include "./globalstagecontroller.h"
 #include "./Header.h"
 #include "./usefulFunctions.h"
 #include <Eigen/Core>

@@ -1,6 +1,7 @@
 #ifndef HEADER_H
 #define HEADER_H
 
+//pure C++ header
 #include <stdio.h>
 #include <iostream>
 #include <iomanip>
@@ -13,8 +14,34 @@
 #include <limits.h>
 
 
+//Qt stuff
+#include <Eigen/Core>
+#include <QWidget>
+#include <QMainWindow>
+#include <QTableWidget>
+#include <QLabel>
+#include <QMessageBox>
+#include <QFile>
+#include <QTextStream>
+#include <QDir>
+#include <QDebug>
+#include <QAbstractTextDocumentLayout>
+#include <QHeaderView>
+#include <QLineEdit>
+#include <QAbstractSpinBox>
+#include <QTextEdit>
+#include <QDoubleSpinBox>
+#include <QScrollArea>
+#include <QShortcut>
+#include <QKeySequence>
+#include <QStackedWidget>
+#include <QComboBox>
+#include <QVBoxLayout>
+#include <QAction>
+#include <QWidgetAction>
+#include <QToolBar>
+#include <QLayout>
 
-const double pi = 3.1415926535897932384626;
 
 
 #endif

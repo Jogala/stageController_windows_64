@@ -1,13 +1,8 @@
 #ifndef THIRDPAGE_H
 #define THIRDPAGE_H
 
-#include "./stageController.h"
+#include "./globalstagecontroller.h"
 #include "./GlobalVariables.h"
-#include <QWidget>
-#include <QAbstractButton>
-#include <QAbstractSpinBox>
-
-using namespace std;
 
 namespace Ui {
 class thirdPage;

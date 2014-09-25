@@ -4,12 +4,15 @@
 
 int main(int argc, char *argv[])
 {
-    cout<<"main ENTERING "<<endl;
+    std::cout<<"main ENTERING "<<endl;
     QApplication a(argc, argv);
 
     MainWindow w;
     w.show();
 
-    cout<<"main LEAVING"<<endl;
+    std::cout<<"main LEAVING"<<std::endl;
+    std::cout<<"#################################################################"<<std::endl;
+    std::cout<<"#               SETUP DONE, WAITING FOR USER ACTION             #"<<std::endl;
+    std::cout<<"#################################################################"<<std::endl;
     return a.exec();
 }

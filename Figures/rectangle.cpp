@@ -3,7 +3,7 @@
 
 void    figures::rectangle::loadValuesFromTextFile()
 {
-    fstream f;
+    std::fstream f;
 
     f.open(storedValuesPath);
 
@@ -18,18 +18,18 @@ void    figures::rectangle::loadValuesFromTextFile()
 
 }
 void    figures::rectangle::writeValuesToTextFile(){
-   cout<<"void    figures::rectangle::writeValuesToTextFile()"<<endl;
+   std::cout<<"void    figures::rectangle::writeValuesToTextFile()"<<endl;
 
-   fstream f;
+   std::fstream f;
    f.open(storedValuesPath);
 
    if(!(f.is_open()))
    {
-     cout<<"failed to open "<< storedValuesPath <<endl;
+     std::cout<<"failed to open "<< storedValuesPath <<endl;
    }else
    {
 
-   cout << storedValuesPath <<" opened successfully "<<endl;
+   std::cout << storedValuesPath <<" opened successfully "<<endl;
 
    for(auto item : itsValues)
    {
@@ -37,17 +37,17 @@ void    figures::rectangle::writeValuesToTextFile(){
    }
 
    f.close();
-   cout << storedValuesPath <<" closed "<<endl;
+   std::cout << storedValuesPath <<" closed "<<endl;
    }
 
-   cout<<"Leaving void    figures::rectangle::writeValuesToTextFile()"<<endl;
+   std::cout<<"Leaving void    figures::rectangle::writeValuesToTextFile()"<<endl;
 }
 
 void    figures::rectangle::setValue(int i, double value){
 
-    cout<<"void    figures::rectangle::setValue(int i, double value)"<<endl;
+    std::cout<<"void    figures::rectangle::setValue(int i, double value)"<<endl;
     itsValues[i]=value;
-    cout<<"itsValue("<<i<<") = "<<itsValues[i]<<endl;
+    std::cout<<"itsValue("<<i<<") = "<<itsValues[i]<<endl;
 
 }
 double  figures::rectangle::getValue(int i){
@@ -59,27 +59,27 @@ void    figures::rectangle::printMemberVariables(){
 
     int i = 0;
     for(auto item : itsValues){
-        cout<<i++<<" "<<item<<endl;
+        std::cout<<i++<<" "<<item<<endl;
     }
 
 }
 
 void figures::rectangle::cutAbs3D(){
-cout<<"void figures::rectangle::cutAbs3D()"<<endl;
+std::cout<<"void figures::rectangle::cutAbs3D()"<<endl;
 
-cout<<"assign values from array to variables with more concrete names"<<endl;
+std::cout<<"assign values from array to variables with more concrete names START"<<endl;
     double a=itsValues[0];
     double b=itsValues[1];
     double phi0=itsValues[2];
     double rotAngleX=itsValues[3];
     double rotAngleZ=itsValues[4];
     double velocity = itsValues[5];
-cout<<"assign values from array to variables with more concrete names DONE"<<endl;
+std::cout<<"assign values from array to variables with more concrete names DONE"<<endl;
 
     if ((a <= 0) || (b <= 0))
     {
-		cout << "ERROR:" << endl;
-		cout << "a <= 0 or b <= 0 are no exaptable values for a rectangle " << endl;
+		std::cout << "ERROR:" << endl;
+		std::cout << "a <= 0 or b <= 0 are no exaptable values for a rectangle " << endl;
 	}
 	else{
 
@@ -104,7 +104,7 @@ cout<<"assign values from array to variables with more concrete names DONE"<<end
 		//////////////////////////////////////////////////////////////////////////
 		//		Generating the sequence of coordinates that will be visited		//
 		//////////////////////////////////////////////////////////////////////////
-        cout<<"Generating the sequence of coordinates that will be visited"<<endl;
+        std::cout<<"Generating the sequence of coordinates that will be visited"<<endl;
 
 		R = 0.5*sqrt(a*a + b*b);
 		deltaPhi[0] = 2 * atan(b / a);
@@ -144,33 +144,33 @@ cout<<"assign values from array to variables with more concrete names DONE"<<end
 			storagePos[i][2] = vec[2] + pos[2];
 		}
 
-        cout<<"Generating the sequence of coordinates that will be visited DONE"<<endl;
+        std::cout<<"Generating the sequence of coordinates that will be visited DONE"<<endl;
 
 
 		//////////////////////////////////////////////////////
 		//		Write sequence to file for controle			//
 		//////////////////////////////////////////////////////
 
-        cout<<"Write sequence to file for controle"<<endl;
+        std::cout<<"Write sequence to file for controle"<<endl;
 		use.writeCoordToFile("rec3DAbs.txt", storagePos, moves);
-        cout<<"Write sequence to file for controle DONE"<<endl;
+        std::cout<<"Write sequence to file for controle DONE"<<endl;
 
 		//////////////////////////////////////////
 		//		Actual cutting procedure 		//
 		//////////////////////////////////////////
-        cout<<"Actual cutting procedure"<<endl;
+        std::cout<<"Actual cutting procedure"<<endl;
 
 		//A
         ::gE545.moveTo(storagePos[0][0], storagePos[0][1], storagePos[0][2]);
-		cout << "was target: "<<storagePos[0][0] << " " << storagePos[0][1] << " " << storagePos[0][2] << endl;
+		std::cout << "was target: "<<storagePos[0][0] << " " << storagePos[0][1] << " " << storagePos[0][2] << endl;
         ::gE545.printPosition();
         ::gE545.openShutter();
 		//B, C, D, A
 		for (int i = 1; i < moves; i++){
 
-			cout << "i " << i << endl;
+			std::cout << "i " << i << endl;
             ::gE545.moveTo(storagePos[i][0], storagePos[i][1], storagePos[i][2]);
-			cout<<"was target: " << storagePos[i][0] << " " << storagePos[i][1] << " " << storagePos[i][2] << endl;
+			std::cout<<"was target: " << storagePos[i][0] << " " << storagePos[i][1] << " " << storagePos[i][2] << endl;
             ::gE545.printPosition();
 
 		}
@@ -179,9 +179,9 @@ cout<<"assign values from array to variables with more concrete names DONE"<<end
 
 
         ::gE545.moveTo(pos[0] + focus[0], pos[1] + focus[1], pos[2] + focus[2]);
-        cout<<"Actual cutting procedure DONE"<<endl;
+        std::cout<<"Actual cutting procedure DONE"<<endl;
 
-        cout<<"Leaving void figures::rectangle::cutAbs3D()"<<endl;
+        std::cout<<"Leaving void figures::rectangle::cutAbs3D()"<<endl;
 	}
 }
 

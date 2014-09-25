@@ -2,7 +2,8 @@
 #define SECONDPAGE_H
 
 #include "./GlobalVariables.h"
-#include "./stageController.h"
+#include "./globalstagecontroller.h"
+
 #include <QWidget>
 #include <QWidget>
 #include <QMainWindow>

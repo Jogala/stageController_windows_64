@@ -5,7 +5,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    cout<<"MainWindow::MainWindow(QWidget *parent) ENTERING"<<endl;
+    std::cout<<"MainWindow::MainWindow(QWidget *parent) ENTERING"<<std::endl;
 
     ui->setupUi(this);
 
@@ -25,17 +25,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     stackedWidget = new QStackedWidget(this);
 
-    cout<<"allocate first Page on the heap START"<<endl;
+    std::cout<<"allocate first Page on the heap START"<<std::endl;
     firstPageWidget= new firstPage(this);
-    cout<<"allocate first Page on the heap DONE"<<endl;
+    std::cout<<"allocate first Page on the heap DONE"<<std::endl;
 
-    cout<<"allocate second Page on the heap START"<<endl;
+    std::cout<<"allocate second Page on the heap START"<<std::endl;
     secondPageWidget= new secondPage(this);
-    cout<<"allocate second Page on the heap DONE"<<endl;
+    std::cout<<"allocate second Page on the heap DONE"<<std::endl;
 
-    cout<<"allocate third Page on the heap START"<<endl;
+    std::cout<<"allocate third Page on the heap START"<<std::endl;
     thirdPageWidget = new thirdPage(this);
-    cout<<"allocate third Page on the heap DONE"<<endl;
+    std::cout<<"allocate third Page on the heap DONE"<<std::endl;
 
     //////////////////////////////////////////////////////////
     //      Put firstPageWidget into a Scroll Area          //
@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->mainToolBar->setMovable(false);
 
-    cout<<"MainWindow::MainWindow(QWidget *parent) LEAVING"<<endl;
+    std::cout<<"MainWindow::MainWindow(QWidget *parent) LEAVING"<<std::endl;
 }
 
 MainWindow::~MainWindow()

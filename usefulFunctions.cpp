@@ -1,11 +1,11 @@
 #include "usefulFunctions.h"
 
 bool usefulFunctions::cinAndCheckForDoubleAndLimits(double & xStepSize){
-    bool success = 0;
+
     double newValue;
 
     do{
-        if (cin >> newValue)
+        if (std::cin >> newValue)
         {
             if ((0 <= newValue) && (newValue <= 200)){
                 xStepSize = newValue;
@@ -13,15 +13,15 @@ bool usefulFunctions::cinAndCheckForDoubleAndLimits(double & xStepSize){
             }
             else
             {
-                cout << "No new value was set; value was out of range [0,200]" << endl;
+                std::cout << "No new value was set; value was out of range [0,200]" << std::endl;
                 return 0;
             }
         }
         else
         {
-            cout << "not a number... try again, escape by typing for example -1" << endl;
-            cin.clear();
-            cin.ignore(INT_MAX, '\n');
+            std::cout << "not a number... try again, escape by typing for example -1" << std::endl;
+            std::cin.clear();
+            std::cin.ignore(INT_MAX, '\n');
 
             return 0;
         }
@@ -29,56 +29,56 @@ bool usefulFunctions::cinAndCheckForDoubleAndLimits(double & xStepSize){
 
 }
 
-bool usefulFunctions::cinAndCheckForDoubleAndLimits(double & xStepSize, double min){
+bool usefulFunctions::cinAndCheckForDoubleAndLimits(double & xStepSize, double minima){
 
     double newValue;
 
     do{
-        if (cin >> newValue)
+        if (std::cin >> newValue)
         {
-            if ((min <= newValue)){
+            if ((minima <= newValue)){
                 xStepSize = newValue;
                 return 1;
             }
             else
             {
-                cout << "No new value was set; value was out of range [0,200]" << endl;
+                std::cout << "No new value was set; value was out of range [0,200]" << std::endl;
                 return 0;
             }
         }
         else
         {
-            cout << "not a number... try again, escape by typing for example -1" << endl;
-            cin.clear();
-            cin.ignore(INT_MAX, '\n');
+            std::cout << "not a number... try again, escape by typing for example -1" << std::endl;
+            std::cin.clear();
+            std::cin.ignore(INT_MAX, '\n');
 
             return 0;
         }
     } while (1);
 }
 
-bool usefulFunctions::cinAndCheckForDoubleAndLimits(double & xStepSize, double min, double max){
+bool usefulFunctions::cinAndCheckForDoubleAndLimits(double & xStepSize, double minima, double maxima){
 
     double newValue;
 
     do{
-        if (cin >> newValue)
+        if (std::cin >> newValue)
         {
-            if ((min <= newValue) && (newValue <= max)){
+            if ((minima <= newValue) && (newValue <= maxima)){
                 xStepSize = newValue;
                 return 1;
             }
             else
             {
-                cout << "No new value was set; value was out of range [0,200]" << endl;
+                std::cout << "No new value was set; value was out of range [0,200]" << std::endl;
                 return 0;
             }
         }
         else
         {
-            cout << "not a number... try again, escape by typing for example -1" << endl;
-            cin.clear();
-            cin.ignore(INT_MAX, '\n');
+            std::cout << "not a number... try again, escape by typing for example -1" << std::endl;
+            std::cin.clear();
+            std::cin.ignore(INT_MAX, '\n');
 
             return 0;
         }
@@ -90,7 +90,7 @@ void usefulFunctions::cinAndCheckForDouble(double & xStepSize){
     double newValue;
 
     do{
-        if (cin >> newValue)
+        if (std::cin >> newValue)
         {
 
             xStepSize = newValue;
@@ -98,9 +98,9 @@ void usefulFunctions::cinAndCheckForDouble(double & xStepSize){
         }
         else
         {
-            cout << "not a number... try again" << endl;
-            cin.clear();
-            cin.ignore(INT_MAX, '\n');
+            std::cout << "not a number... try again" << std::endl;
+            std::cin.clear();
+            std::cin.ignore(INT_MAX, '\n');
         }
     } while (!success);
 }
@@ -125,6 +125,9 @@ bool usefulFunctions::qValuesInLimits(double value1, double value2){
 
 usefulFunctions::usefulFunctions()
 {
+    std::cout<<"usefulFunctions::usefulFunctions() ENTERING"<<std::endl;
+    std::cout<<"usefulFunctions::usefulFunctions() LEAVING"<<std::endl;
+
 }
 
 usefulFunctions::~usefulFunctions()

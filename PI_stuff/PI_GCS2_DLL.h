@@ -11,9 +11,9 @@
 //  
 // File: PI_GCS_DLL.h : 
 /////////////////////////////////////////////////////////////////////////////
+#define NOMINMAX 
 #include <windows.h>
 
-#include<stdint.h>
 
 #ifdef __cplusplus
 extern "C" {

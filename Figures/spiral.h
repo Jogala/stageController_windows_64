@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SPIRAL_H
+#define SPIRAL_H
 #include "figures.h"
 
 namespace figures{
@@ -8,7 +9,7 @@ namespace figures{
 	class spiral : public figures{
 	private:
 
-        string storedValuesPath;
+        std::string storedValuesPath;
         double itsValues[8];
 
 //		double itsR, phi0, velocity;
@@ -18,10 +19,10 @@ namespace figures{
 //		double radiusRatio;
 
 	public:
-        void setStoredValuesPath(string newstoredValuesPath ){
+        void setStoredValuesPath(std::string newstoredValuesPath ){
             storedValuesPath=newstoredValuesPath;
         }
-        string getStoredValuesPath(){
+        std::string getStoredValuesPath(){
             return storedValuesPath;
         }
 
@@ -38,9 +39,9 @@ namespace figures{
         void cutAbsMacroSpiral3D();
 
 		spiral(){
-            cout<<"spiral::spiral() ENTERING"<<endl;
+            std::cout<<"spiral::spiral() ENTERING"<<std::endl;
             storedValuesPath="./Stored_Values/spiral.txt";
-            cout<<"spiral::spiral() LEAVING"<<endl;
+            std::cout<<"spiral::spiral() LEAVING"<<std::endl;
 		}
 
 		~spiral(){
@@ -49,3 +50,4 @@ namespace figures{
 
 	};
 }
+#endif

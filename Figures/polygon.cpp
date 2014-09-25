@@ -4,7 +4,7 @@
 void    figures::polygon::loadValuesFromTextFile()
 {
 
-    fstream f;
+    std::fstream f;
 
     f.open(storedValuesPath);
 
@@ -19,18 +19,21 @@ void    figures::polygon::loadValuesFromTextFile()
 
 }
 void    figures::polygon::writeValuesToTextFile(){
+    std::cout<<"void    figures::polygon::writeValuesToTextFile() ENTERING"<<endl;
 
-   fstream f;
+   std::fstream f;
    f.open(storedValuesPath);
 
-   cout<<"writing values to "<<storedValuesPath<<endl;
+   std::cout<<"writing values to "<<storedValuesPath<<endl;
    for(auto item : itsValues)
    {
-       cout<<item<<endl;
+       std::cout<<item<<endl;
        f<<item<<endl;
    }
 
    f.close();
+   std::cout<<"void    figures::polygon::writeValuesToTextFile() LEAVING"<<endl;
+
 }
 
 void    figures::polygon::setValue(int i, double value){
@@ -47,11 +50,10 @@ void    figures::polygon::printMemberVariables(){
 
     int i = 0;
     for(auto item : itsValues){
-        cout<<i++<<" "<<item<<endl;
+        std::cout<<i++<<" "<<item<<endl;
     }
 
 }
-
 
 void    figures::polygon::cutAbsViaMacro3D(){
 
@@ -74,12 +76,12 @@ void    figures::polygon::cutAbsViaMacro3D(){
 
     double deltaAlpha = (2 * pi) / steps;
     double vec[3];
-    auto storPos = vector<vector<double>>(steps + 1, vector<double>(3));
+    auto storPos = std::vector<std::vector<double>>(steps + 1, std::vector<double>(3));
 
     double delay = 1000 * (sin(deltaAlpha / 2) * 2 * R*delayFactor) / velocity;
 
-    string macroName = "macroPoly";
-    string nameFile = "macroPoly.txt";
+    std::string macroName = "macroPoly";
+    std::string nameFile = "macroPoly.txt";
 
     double phi0RotMat[3][3];
     double xRotMat[3][3];
@@ -114,12 +116,12 @@ void    figures::polygon::cutAbsViaMacro3D(){
     ///////////////////////////////////////
     //Write sequence to file for controle//
     ///////////////////////////////////////
-    fstream fc;
-    fc << fixed;
-    fc << setprecision(5);
-    fc.open(nameFile, fstream::out | fstream::trunc);
+    std::fstream fc;
+    fc << std::fixed;
+    fc << std::setprecision(5);
+    fc.open(nameFile, std::fstream::out | std::fstream::trunc);
     fc.close();
-    fc.open(nameFile, fstream::out | fstream::app);
+    fc.open(nameFile, std::fstream::out | std::fstream::app);
 
     for (int i = 0; i < steps + 1; i++){
         for (int j = 0; j < 3; j++){
@@ -131,7 +133,7 @@ void    figures::polygon::cutAbsViaMacro3D(){
 
     use.writeCoordToFile("cutAbsMacro3D_Coord.txt", storPos, steps + 1);
     fc.close();
-    cout << "coordinates written to file:" << "cutAbsMacro3D_Coord.txt" << endl;
+    std::cout << "coordinates written to file:" << "cutAbsMacro3D_Coord.txt" << endl;
 
     //########################################################################################################################################################
 
@@ -139,12 +141,12 @@ void    figures::polygon::cutAbsViaMacro3D(){
     //		Actual cutting procedure 		//
     //////////////////////////////////////////
 
-    fstream f;
-    f << fixed;
-    f << setprecision(5);
-    f.open(nameFile, fstream::out | fstream::trunc);
+    std::fstream f;
+    f << std::fixed;
+    f << std::setprecision(5);
+    f.open(nameFile, std::fstream::out | std::fstream::trunc);
     f.close();
-    f.open(nameFile, fstream::out | fstream::app);
+    f.open(nameFile, std::fstream::out | std::fstream::app);
 
     f << "MAC BEG " << macroName << endl;
     f << "VEL A " << velocity << " B " << velocity << " C " << velocity << endl;
@@ -169,8 +171,8 @@ void    figures::polygon::cutAbsViaMacro3D(){
     f << "MAC END" << endl;
     f.close();
 
-    cout << "Macro written to file:" << nameFile << endl;
-    cout << "SENDING MACRO TO CONTROLLER..." << endl;
+    std::cout << "Macro written to file:" << nameFile << endl;
+    std::cout << "SENDING MACRO TO CONTROLLER..." << endl;
     ::gE545.sendMacros(nameFile);
 
     ::gE545.closeShutter();

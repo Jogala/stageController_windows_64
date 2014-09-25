@@ -13,7 +13,7 @@ class polygon : public figures{
 
 private:
 
-    string storedValuesPath;
+    std::string storedValuesPath;
     double itsValues[6];
 
     //        double itsR, phi0, velocity;
@@ -21,10 +21,10 @@ private:
     //        double rotAngleX, rotAngleZ;
 
 public:
-    void setStoredValuesPath(string newstoredValuesPath ){
+    void setStoredValuesPath(std::string newstoredValuesPath ){
         storedValuesPath=newstoredValuesPath;
     }
-    string getStoredValuesPath(){
+    std::string getStoredValuesPath(){
         return storedValuesPath;
     }
 
@@ -41,9 +41,9 @@ public:
 
 
     polygon(){
-            cout<<"polygon::polygon() ENTERING"<<endl;
+            std::cout<<"polygon::polygon() ENTERING"<<endl;
             storedValuesPath="./Stored_Values/poly.txt";
-            cout<<"polygon::polygon() LEAVING"<<endl;
+            std::cout<<"polygon::polygon() LEAVING"<<endl;
     }
 
     ~polygon(){

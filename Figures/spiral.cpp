@@ -2,8 +2,9 @@
 
 
 void    figures::spiral::loadValuesFromTextFile(){
+    std::cout<<"void    figures::spiral::loadValuesFromTextFile() ENTERING"<<endl;
 
-    fstream f;
+    std::fstream f;
 
     f.open(storedValuesPath);
 
@@ -16,20 +17,25 @@ void    figures::spiral::loadValuesFromTextFile(){
     }
     f.close();
 
+    std::cout<<"void    figures::spiral::loadValuesFromTextFile() LEAVING"<<endl;
+
 }
 void    figures::spiral::writeValuesToTextFile(){
+   std::cout<<"void    figures::spiral::writeValuesToTextFile() ENTERING"<<endl;
 
-   fstream f;
+   std::fstream f;
    f.open(storedValuesPath);
 
-   cout<<"writing values to "<<storedValuesPath<<endl;
+   std::cout<<"writing values to "<<storedValuesPath<<endl;
    for(auto item : itsValues)
    {
-       cout<<item<<endl;
+       std::cout<<item<<endl;
        f<<item<<endl;
    }
 
    f.close();
+
+   std::cout<<"void    figures::spiral::writeValuesToTextFile() LEAVING"<<endl;
 }
 
 void    figures::spiral::setValue(int i, double value){
@@ -46,7 +52,7 @@ void    figures::spiral::printMemberVariables(){
 
     int i = 0;
     for(auto item : itsValues){
-        cout<<i++<<" "<<item<<endl;
+        std::cout<<i++<<" "<<item<<endl;
     }
 
 }
@@ -54,10 +60,13 @@ void    figures::spiral::printMemberVariables(){
 
 void figures::spiral::cutAbsMacroSpiral3D()
 {
+    std::cout<<"void figures::spiral::cutAbsMacroSpiral3D() ENTERING"<<endl;
+
     //////////////////////////////////////////
     //                 Set up               //
     //////////////////////////////////////////
 
+    std::cout<<"assign values from array to variables with more concrete names START"<<endl;
     double R=itsValues[0];
     double R_end = itsValues[1];
     int    steps=itsValues[2];
@@ -66,6 +75,7 @@ void figures::spiral::cutAbsMacroSpiral3D()
     double rotAngleX=itsValues[5];
     double rotAngleZ=itsValues[6];
     double velocity = itsValues[7];
+    std::cout<<"assign values from array to variables with more concrete names DONE"<<endl;
 
     double deltaR = (R-R_end) / (sectors-1);
 	int stepsPerSector = steps / sectors;
@@ -76,11 +86,11 @@ void figures::spiral::cutAbsMacroSpiral3D()
 
 	double deltaAlpha = (2 * pi) / steps;
 	double vec[3];
-	auto storPos = vector<vector<double>>(steps + 1, vector<double>(3));
-	auto delay = vector<double>(steps + 1);
+	auto storPos = std::vector<std::vector<double>>(steps + 1, std::vector<double>(3));
+	auto delay = std::vector<double>(steps + 1);
 
-	string macroName = "macroSpiral";
-	string nameFile = "macroSpiral.txt";
+    std::string macroName = "macroSpiral";
+    std::string nameFile = "macroSpiral.txt";
 
     double phi0RotMat[3][3];
 	double xRotMat[3][3];
@@ -92,10 +102,10 @@ void figures::spiral::cutAbsMacroSpiral3D()
 
     //########################################################################################################################################################
 
-
-	//////////////////////////////////////////
+    //////////////////////////////////////////
 	//		Generating the coordinates		//
-	//////////////////////////////////////////
+    //////////////////////////////////////////
+    std::cout<<"Generating the coordinates START"<<endl;
 	int n = 0;
 	int nOld = n;
 	for (int i = 1; i <= steps + 1; i++){
@@ -139,19 +149,22 @@ void figures::spiral::cutAbsMacroSpiral3D()
 			n = n - 1;
 		}
 	}
+
+    std::cout<<"Generating the coordinates DONE"<<endl;
     //########################################################################################################################################################
 
     ///////////////////////////////////////
     //Write sequence to file for controle//
     ///////////////////////////////////////
+    std::cout<<"Write sequence to file for controle START"<<endl;
 
-	int color = 1;
-	fstream fc;
-	fc << fixed;
-	fc << setprecision(5);
-	fc.open("cutAbsMacroSpiral3D_Coord.txt", fstream::out | fstream::trunc);
+    int color = 1;
+	std::fstream fc;
+    fc << std::fixed;
+    fc << std::setprecision(5);
+	fc.open("cutAbsMacroSpiral3D_Coord.txt", std::fstream::out | std::fstream::trunc);
 	fc.close();
-	fc.open("cutAbsMacroSpiral3D_Coord.txt", fstream::out | fstream::app);
+	fc.open("cutAbsMacroSpiral3D_Coord.txt", std::fstream::out | std::fstream::app);
 
     n = 0;
 	nOld = 0;
@@ -167,11 +180,13 @@ void figures::spiral::cutAbsMacroSpiral3D()
 	}
 	fc.close();
 
+    std::cout<<"Write sequence to file for controle DONE"<<endl;
     //########################################################################################################################################################
 
 	//////////////////////////////////////////
 	//		Actual cutting procedure 		//
 	//////////////////////////////////////////
+    std::cout<<"Actual cutting procedure START"<<endl;
 
 	double diff[3];
 	for (int i = 0; i < 3; i++){
@@ -179,12 +194,12 @@ void figures::spiral::cutAbsMacroSpiral3D()
 	}
 
 
-	fstream f;
-	f << fixed;
-	f << setprecision(5);
-	f.open(nameFile, fstream::out | fstream::trunc);
+	std::fstream f;
+    f << std::fixed;
+    f << std::setprecision(5);
+	f.open(nameFile, std::fstream::out | std::fstream::trunc);
 	f.close();
-	f.open(nameFile, fstream::out | fstream::app);
+	f.open(nameFile, std::fstream::out | std::fstream::app);
 
 	f << "MAC BEG " << macroName << endl;
 	f << "VEL A " << velocity << " B " << velocity << " C " << velocity << endl;
@@ -221,12 +236,15 @@ void figures::spiral::cutAbsMacroSpiral3D()
 	f << "MAC END" << endl;
 	f.close();
 
-	cout << "Macro written to file:" << nameFile << endl;
-	cout << "SENDING MACRO TO CONTROLLER..." << endl;
+	std::cout << "Macro written to file:" << nameFile << endl;
+	std::cout << "SENDING MACRO TO CONTROLLER..." << endl;
     ::gE545.sendMacros(nameFile);
 
     ::gE545.closeShutter();
     ::gE545.startMacroAndWaitWhileRunning(macroName);
 
+    std::cout<<"Actual cutting procedure DONE"<<endl;
     //########################################################################################################################################################
+
+    std::cout<<"void figures::spiral::cutAbsMacroSpiral3D() LEAVING"<<endl;
 }

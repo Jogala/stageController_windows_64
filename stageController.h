@@ -1,10 +1,11 @@
-#pragma once
-#include "Header.h"
-#include "usefulFunctions.h"
+#ifndef STAGECONTROLLER_H
+#define STAGECONTROLLER_H
 
-//./ because I do not add the header to the project as I will not modify it, hence I have to give the relative path to the header.
+#include "./Header.h"
+#include "./usefulFunctions.h"
+#include "./GlobalVariables.h"
 #include "./PI_stuff/PI_GCS2_DLL.h"
-#include <Eigen/Core>
+
 
 class stageController
 {
@@ -14,10 +15,11 @@ private:
     usefulFunctions useful;
     double  veloLimit;
     double itsFocusValues[3];
-    string fileName_FocusValues;
+    std::string fileName_FocusValues;
 
 public:
     //Variables
+
     int ID;
     char szErrorMesage[1024];
     int	iError;
@@ -38,11 +40,11 @@ public:
     int getID();
     void printMemberVariables(){
 
-        cout << "ID = " << "\t" << ID << endl;
+        std::cout << "ID = " << "\t" << ID << endl;
 
         for(int i = 0; i < 3; i++)
         {
-            cout << "itsFocusValues["<<i<<"] = " << "\t" << itsFocusValues[i] << endl;
+            std::cout << "itsFocusValues["<<i<<"] = " << "\t" << itsFocusValues[i] << std::endl;
         }
 
     }
@@ -118,22 +120,22 @@ public:
     bool switchDriftControlModeOn();
 
     void setTriggerMode(int axis, int mode);
-    void setLimits(int xYorZaxis, double min, double max);
-    void setLimitsMin(int whichAxis, double min);
-    void setLimitsMax(int whichAxis, double max);
+    void setLimits(int xYorZaxis, double minima, double maxima);
+    void setLimitsMin(int whichAxis, double minima);
+    void setLimitsMax(int whichAxis, double maxima);
 
-    string setLimitsMacro(int whichAxis, double value1, double value2, double altValue1, double altValue2);
+    std::string setLimitsMacro(int whichAxis, double value1, double value2, double altValue1, double altValue2);
 
-    void getLimits(int whichAxis, double &min, double &max);
+    void getLimits(int whichAxis, double &minima, double &maxima);
     void getLimits(double &xMin, double &xMax, double &yMin, double &yMax, double &zMin, double &zMax);
     void printLimits();
 
     bool checkIfAnyLimit();
     void getConfigOfTriggerOutput();
 
-    void sendMacros(string nameOfFile);
-    void startMacroAndWaitWhileRunning(string nameOfmacro);
-    void startMacro(string nameOfmacro);
+    void sendMacros(std::string nameOfFile);
+    void startMacroAndWaitWhileRunning(std::string nameOfmacro);
+    void startMacro(std::string nameOfmacro);
 
     void openShutter();
     void closeShutter();
@@ -142,3 +144,4 @@ public:
     ~stageController();
 };
 
+#endif

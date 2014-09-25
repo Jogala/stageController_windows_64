@@ -11,17 +11,17 @@ private:
 
     double itsValues[6];
 
-    string storedValuesPath;
+    std::string storedValuesPath;
     
     //leaveOrSwap leaves a and b unchanged if -45<=phi<=45 or 135<=phi<=225
     //and adjusts phi
     void leaveOrSwapAndAdjustPhi(double &phi, double &a, double &b);
     
 public:
-    string getStoredValuesPath(){
+    std::string getStoredValuesPath(){
         return storedValuesPath;
     }
-    void setStoredValuesPath(string newstoredValuesPath ){
+    void setStoredValuesPath(std::string newstoredValuesPath ){
         storedValuesPath=newstoredValuesPath;
     }
 
@@ -38,9 +38,9 @@ public:
 
     
     rectangle(){
-        cout<<"rectangle::rectangle() ENTERING"<<endl;
+        std::cout<<"rectangle::rectangle() ENTERING"<<endl;
         storedValuesPath = "./Stored_Values/rec.txt" ;
-        cout<<"rectangle::rectangle() LEAVING"<<endl;
+        std::cout<<"rectangle::rectangle() LEAVING"<<endl;
     }
     ~rectangle(){}
     

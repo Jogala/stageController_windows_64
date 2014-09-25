@@ -1,13 +1,18 @@
-#pragma once
-#include "Header.h"
+#ifndef USEFULFUNCTIONS_H
+#define USEFULFUNCTIONS_H
 
-using namespace std;
+#include "./GlobalVariables.h"
+#include "./Header.h"
+
 class usefulFunctions
 {
+private:
+    double pi = 3.1415926535897932384626;
+
 public:
     bool cinAndCheckForDoubleAndLimits(double & xStepSize);
-    bool cinAndCheckForDoubleAndLimits(double & xStepSize, double min);
-    bool cinAndCheckForDoubleAndLimits(double & xStepSize, double min, double max);
+    bool cinAndCheckForDoubleAndLimits(double & xStepSize, double minima);
+    bool cinAndCheckForDoubleAndLimits(double & xStepSize, double minima, double maxima);
     void cinAndCheckForDouble(double & xStepSize);
     bool qValueInLimits(double value);
     bool qValuesInLimits(double value1, double value2);
@@ -117,26 +122,26 @@ public:
     }
 
     template<class aNumber>
-    const string numberToString(aNumber x){
-        stringstream ss;
+    const std::string numberToString(aNumber x){
+        std::stringstream ss;
         ss << x;
         return ss.str();
     }
 
     template<class aNumber>
-    void assignValueToMember(const char * charArray, aNumber & member, string name){
+    void assignValueToMember(const char * charArray, aNumber & member, std::string name){
 
         aNumber temp;
-        string myString(charArray);
-        stringstream ss;
+        std::string myString(charArray);
+        std::stringstream ss;
 
         ss.str(myString);
         if (!(ss >> temp)){
-            cout << "no new value set for "<<name << endl;
+            std::cout << "no new value set for "<<name << std::endl;
         }
         else{
             member = temp;
-            cout <<name<< " = " << member << endl;
+            std::cout <<name<< " = " << member << std::endl;
         }
         ss.str("");
         ss.clear();
@@ -146,48 +151,48 @@ public:
     template<class aNumber>
     void constCharToNumber(const char * charArray, aNumber & number){
 
-        string myString(charArray);
-        stringstream ss;
+        std::string myString(charArray);
+        std::stringstream ss;
 
         ss.str(myString);
         if (!(ss >> number)){
-            cout << "ERROR:" << endl;
-            cout << "constCharToNumber failed" << endl;
+            std::cout << "ERROR:" << std::endl;
+            std::cout << "constCharToNumber failed" << std::endl;
         }
 
     }
 
-    void writeCoordToFile(string name, double storedPos[][3], int length){
+    void writeCoordToFile(std::string name, double storedPos[][3], int length){
 
-//        fstream f;
+//        std::fstream f;
 //        f << fixed;
 //        f << setprecision(3);
 
-//        f.open(name, fstream::out | fstream::trunc);
+//        f.open(name, std::fstream::out | std::fstream::trunc);
 //        f.close();
-//        f.open(name, fstream::out | fstream::app);
+//        f.open(name, std::fstream::out | std::fstream::app);
 
 //        for (int i = 0; i < length; i++){
 
-//            f << storedPos[i][0] << "\t" << storedPos[i][1] << "\t" << storedPos[i][2] << endl;
+//            f << storedPos[i][0] << "\t" << storedPos[i][1] << "\t" << storedPos[i][2] << std::endl;
 
 //        }
 
 //        f.close();
     }
-    void writeCoordToFile(string name, vector< vector<double> > &storedPos, int length){
+    void writeCoordToFile(std::string name, std::vector< std::vector<double> > &storedPos, int length){
 
-//        fstream f;
+//        std::fstream f;
 //        f << fixed;
 //        f << setprecision(3);
 
-//        f.open(name, fstream::out | fstream::trunc);
+//        f.open(name, std::fstream::out | std::fstream::trunc);
 //        f.close();
-//        f.open(name, fstream::out | fstream::app);
+//        f.open(name, std::fstream::out | std::fstream::app);
 
 //        for (int i = 0; i < length; i++){
 
-//            f << storedPos[i][0] << "\t" << storedPos[i][1] << "\t" << storedPos[i][2] << endl;
+//            f << storedPos[i][0] << "\t" << storedPos[i][1] << "\t" << storedPos[i][2] << std::endl;
 
 //        }
 
@@ -225,3 +230,4 @@ public:
     ~usefulFunctions();
 };
 
+#endif

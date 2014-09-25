@@ -1,9 +1,6 @@
 #ifndef LINE_H
 #define LINE_H
 
-#include <QDebug>
-#include <QDir>
-
 #include "figures.h"
 
 namespace figures
@@ -12,7 +9,7 @@ namespace figures
 class line : public figures
 {
 private:
-    string storedValuesPath;
+    std::string storedValuesPath;
     double itsValues[5];
 
 //    double l, phi, velocity, theta;
@@ -20,10 +17,10 @@ private:
 
 public:
 
-    void setStoredValuesPath(string newstoredValuesPath ){
+    void setStoredValuesPath(std::string newstoredValuesPath ){
         storedValuesPath=newstoredValuesPath;
     }
-    string getStoredValuesPath(){
+    std::string getStoredValuesPath(){
 
         return storedValuesPath;
     }
@@ -41,9 +38,9 @@ public:
 
 
     line(){
-        cout<<"line::line() ENTERING"<<endl;
+        std::cout<<"line::line() ENTERING"<<endl;
         storedValuesPath="./Stored_Values/line.txt";
-        cout<<"line::line() LEAVING"<<endl;
+        std::cout<<"line::line() LEAVING"<<endl;
     }
     ~line(){}
 

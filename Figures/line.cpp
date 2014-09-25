@@ -1,9 +1,8 @@
 #include "line.h"
-#include <QDir>
-#include <QDebug>
+
 void    figures::line::loadValuesFromTextFile(){
 
-    fstream f;
+    std::fstream f;
 
     f.open(storedValuesPath);
 
@@ -18,14 +17,14 @@ void    figures::line::loadValuesFromTextFile(){
 }
 void    figures::line::writeValuesToTextFile(){
 
-   fstream f;
+   std::fstream f;
    f.open(storedValuesPath);
 
-   cout<<"writing values to "<<storedValuesPath<<endl;
+   std::cout<<"writing values to "<<storedValuesPath<<std::endl;
    for(auto item : itsValues)
    {
-       cout<<item<<endl;
-       f<<item<<endl;
+       std::cout<<item<<std::endl;
+       f<<item<<std::endl;
    }
 
    f.close();
@@ -43,11 +42,11 @@ double  figures::line::getValue(int i){
 
 void    figures::line::printMemberVariables(){
 
-    cout<<"PRINT MEMBER VARIABLES"<<endl;
+    std::cout<<"PRINT MEMBER VARIABLES"<<std::endl;
     int i = 0;
     for(auto item : itsValues){
-        cout<<i++<<" "<<item<<endl;
-        cout<<"C++11"<<endl;
+        std::cout<<i++<<" "<<item<<std::endl;
+        std::cout<<"C++11"<<std::endl;
     }
 
 }
@@ -55,9 +54,9 @@ void    figures::line::printMemberVariables(){
 
 void figures::line::cutAbs3D(){
 
-    cout<<endl;
-    cout<<endl;
-    cout<<"ENTER void figures::line::cutAbs3D()"<<endl;
+    std::cout<<std::endl;
+    std::cout<<std::endl;
+    std::cout<<"ENTER void figures::line::cutAbs3D()"<<std::endl;
 
 
     double l = itsValues[0];
@@ -68,9 +67,9 @@ void figures::line::cutAbs3D(){
 
     if (repetitions < 1){
 
-        cout << endl;
-        cout << "ERROR:" << endl;
-        cout << "repetitions has to be >= 1" << endl;
+        std::cout << std::endl;
+        std::cout << "ERROR:" << std::endl;
+        std::cout << "repetitions has to be >= 1" << std::endl;
 
     }
     else{
@@ -78,17 +77,17 @@ void figures::line::cutAbs3D(){
         ::gE545.setVelocity(velocity, velocity, velocity);
 
         double vec[3];
-        auto storagePos = vector<vector<double>>(repetitions, vector<double>(3));
+        auto storagePos = std::vector<std::vector<double>>(repetitions, std::vector<double>(3));
 
         double pos[3];
         ::gE545.getPositon(pos);
 
-        cout<<"########################################################################"<<endl;
-        cout<<"in figures::line::cutAbs3D() get focus values"<<endl;
+        std::cout<<"########################################################################"<<std::endl;
+        std::cout<<"in figures::line::cutAbs3D() get focus values"<<std::endl;
         double focus[3];
         ::gE545.getFocusValues(focus);
-        cout<<"in figures::line::cutAbs3D() get focus values DONE"<<endl;
-        cout<<"#########################################################################"<<endl;
+        std::cout<<"in figures::line::cutAbs3D() get focus values DONE"<<std::endl;
+        std::cout<<"#########################################################################"<<std::endl;
 
         vec[0] = l*cos(phi)*sin(theta);
         vec[1] = l*sin(phi)*sin(theta);
@@ -126,7 +125,7 @@ void figures::line::cutAbs3D(){
 
         ::gE545.openShutter();
         for (int i = 0; i < repetitions; i++){
-            cout << " cut number " << i+1 << endl;
+            std::cout << " cut number " << i+1 << std::endl;
             ::gE545.moveTo(storagePos[i][0], storagePos[i][1], storagePos[i][2]);
 
         }
@@ -135,15 +134,16 @@ void figures::line::cutAbs3D(){
         ::gE545.moveTo(pos[0] +focus[0] + vec[0] / 2, pos[1] + focus[1]+ vec[1] / 2, pos[2] + focus[2]+ vec[2] / 2);
     }//else
 
-    cout<<"LEAVE void figures::line::cutAbs3D()"<<endl;
+    std::cout<<"LEAVE void figures::line::cutAbs3D()"<<std::endl;
 
 
 }
 void figures::line::cutAbsLim3D(){
 
-    cout<<endl;
-    cout<<endl;
-    cout<<"void figures::line::cutAbsLim3D() ENTER"<<endl;
+    std::cout<<std::endl;
+    std::cout<<std::endl;
+    std::cout<<"####################################################"<<std::endl;
+    std::cout<<"void figures::line::cutAbsLim3D() ENTER"<<std::endl;
 
     double l = itsValues[0];
     double phi = itsValues[1];
@@ -153,9 +153,9 @@ void figures::line::cutAbsLim3D(){
 
     if (repetitions < 1){
 
-        cout << endl;
-        cout << "ERROR:" << endl;
-        cout << "repetitions has to be >= 1" << endl;
+        std::cout << std::endl;
+        std::cout << "ERROR:" << std::endl;
+        std::cout << "repetitions has to be >= 1" << std::endl;
 
     }
     else{
@@ -164,7 +164,7 @@ void figures::line::cutAbsLim3D(){
 
         double vec[3];
         double pos[3];
-        auto storagePos = vector<vector<double>>(repetitions, vector<double>(3));
+        auto storagePos = std::vector<std::vector<double>>(repetitions, std::vector<double>(3));
 
         ::gE545.getPositon(pos);
 
@@ -208,20 +208,20 @@ void figures::line::cutAbsLim3D(){
 
         for (int i = 0; i < repetitions; i++){
 
-            cout<<"i "<<i<<endl;
+            std::cout<<"i "<<i<<std::endl;
             ::gE545.moveTo(storagePos[i][0], storagePos[i][1], storagePos[i][2]);
 
         }
-        cout<<"close sh"<<endl;
+        std::cout<<"close sh"<<std::endl;
         ::gE545.closeShutter();
-        cout<<"close set vel"<<endl;
+        std::cout<<"close set vel"<<std::endl;
         ::gE545.setVelocity(1000, 1000, 1000);
         ::gE545.moveTo(pos[0], pos[1], pos[2]);
 
     }//else
 
 
-    cout<<"void figures::line::cutAbsLim3D() LEAVING"<<endl;
+    std::cout<<"void figures::line::cutAbsLim3D() LEAVING"<<std::endl;
 
 }
 

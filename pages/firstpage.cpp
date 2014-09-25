@@ -5,7 +5,7 @@ firstPage::firstPage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::firstPage)
 {
-    cout<<"Entering constructor firstPage"<<endl;
+    std::cout<<"Entering constructor firstPage"<<endl;
 
     ui->setupUi(this);
 
@@ -56,7 +56,7 @@ firstPage::firstPage(QWidget *parent) :
     this->setTabOrder(static_cast<QSpinBox*>(spiralTable->cellWidget(7,1)),ui->spiral_cut);
 
     gE545.printMemberVariables();
-    cout<<"Leaving constructor firstPage"<<endl;
+    std::cout<<"Leaving constructor firstPage"<<endl;
 
 
 }
@@ -147,7 +147,7 @@ void firstPage::setUp_LineTable(){
             QLabel *label = new QLabel();
             int x = inLine.readLine().toInt();
             label->setNum(x);
-            cout<<x<<endl;
+            std::cout<<x<<endl;
             label->setAlignment(Qt::AlignVCenter);
             lineTable->setCellWidget( i, 3, label );
             static_cast<QSpinBox*>(lineTable->cellWidget(i,1))->setValue(x);
@@ -161,7 +161,7 @@ void firstPage::setUp_LineTable(){
             }
 
             label->setNum(x);
-            cout<<x<<endl;
+            std::cout<<x<<endl;
             label->setAlignment(Qt::AlignVCenter);
             lineTable->setCellWidget( i, 3, label );
             static_cast<QDoubleSpinBox*>(lineTable->cellWidget(i,1))->setValue(x);
@@ -219,7 +219,7 @@ void firstPage::setUp_RecTable(){
     ////////////////////////////////////////////////////////////////////////
     //      Load stored values and assign them in 3. and 2. Column        //
     ////////////////////////////////////////////////////////////////////////
-    cout<<mRectangle.getStoredValuesPath()<<endl;
+    std::cout<<mRectangle.getStoredValuesPath()<<endl;
     QFile recFile(QString::fromStdString(mRectangle.getStoredValuesPath()));
     recFile.open(QIODevice::ReadOnly | QIODevice::Text);
 
@@ -235,7 +235,7 @@ void firstPage::setUp_RecTable(){
 
 
         label->setNum(x);
-        cout<<x<<endl;
+        std::cout<<x<<endl;
         label->setAlignment(Qt::AlignVCenter);
         recTable->setCellWidget( i, 3, label );
         static_cast<QDoubleSpinBox*>(recTable->cellWidget(i,1))->setValue(x);
@@ -306,7 +306,7 @@ void firstPage::setUp_PolyTable(){
     ////////////////////////////////////////////////////////////////////////
     //      Load stored values and assign them in 3. and 2. Column        //
     ////////////////////////////////////////////////////////////////////////
-    cout<<mPoly.getStoredValuesPath()<<endl;
+    std::cout<<mPoly.getStoredValuesPath()<<endl;
     QFile polyFile(QString::fromStdString(mPoly.getStoredValuesPath()));
     polyFile.open(QIODevice::ReadOnly | QIODevice::Text);
 
@@ -317,7 +317,7 @@ void firstPage::setUp_PolyTable(){
 
         double x = inPoly.readLine().toDouble();
         label->setNum(x);
-        cout<<x<<endl;
+        std::cout<<x<<endl;
         label->setAlignment(Qt::AlignVCenter);
         polyTable->setCellWidget( i, 3, label );
         static_cast<QDoubleSpinBox*>(polyTable->cellWidget(i,1))->setValue(x);
@@ -399,7 +399,7 @@ void firstPage::setUp_SpiralTable(){
     //      Load stored values and assign them in 3. and 2. Column        //
     ////////////////////////////////////////////////////////////////////////
 
-    cout<<mSpiral.getStoredValuesPath()<<endl;
+    std::cout<<mSpiral.getStoredValuesPath()<<endl;
     QFile spiralFile(QString::fromStdString(mSpiral.getStoredValuesPath()));
     spiralFile.open(QIODevice::ReadOnly | QIODevice::Text);
 
@@ -415,7 +415,7 @@ void firstPage::setUp_SpiralTable(){
         }
 
         label->setNum(x);
-        cout<<x<<endl;
+        std::cout<<x<<endl;
         label->setAlignment(Qt::AlignVCenter);
         spiralTable->setCellWidget( i, 3, label );
         static_cast<QDoubleSpinBox*>(spiralTable->cellWidget(i,1))->setValue(x);
@@ -469,7 +469,7 @@ void firstPage::on_line_cut_clicked()
     mLine.printMemberVariables();
     mLine.cutAbsLim3D();
 
-    cout<<"lin cut done"<<endl;
+    std::cout<<"lin cut done"<<endl;
 }
 
 void firstPage::on_rec_cut_clicked()
@@ -537,11 +537,20 @@ void firstPage::on_poly_cut_clicked()
 
 void firstPage::on_spiral_cut_clicked()
 {
+    std::cout<<"void firstPage::on_spiral_cut_clicked() ENTERING"<<endl;
 
-     mSpiral.delayFactor=::macroDelayFactor;
+    if(static_cast<QDoubleSpinBox*>(spiralTable->cellWidget(1,1))->value() > static_cast<QDoubleSpinBox*>(spiralTable->cellWidget(0,1))->value()){
+
+                   QMessageBox::information(this,"spiral","R_Start has to be larger then R_End");
+    }
+    else
+    {
+
+
+    mSpiral.delayFactor=::macroDelayFactor;
 
     double x;
-    //Assing values from DoubelSpinBoxes to Spiral
+    std::cout<<"Assing values from DoubelSpinBoxes to Spiral START"<<endl;
     for(int i=0;i<8;i++)
     {
 
@@ -557,12 +566,17 @@ void firstPage::on_spiral_cut_clicked()
         mSpiral.setValue(i,x);
 
     }
+    std::cout<<"Assing values from DoubelSpinBoxes to Spiral DONE"<<endl;
+
 
     //Write the Values also to the txt file, s.t, when the Program is closed and started again, those values get loaded
     mSpiral.writeValuesToTextFile();
 
     mSpiral.printMemberVariables();
     mSpiral.cutAbsMacroSpiral3D();
+
+    }
+    std::cout<<"void firstPage::on_spiral_cut_clicked() LEAVING"<<endl;
 }
 
 

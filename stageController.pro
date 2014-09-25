@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     Figures/surfaceRec.cpp \
     pages/firstpage.cpp \
     pages/secondpage.cpp \
-    pages/thirdpage.cpp
+    pages/thirdpage.cpp \
+    globalstagecontroller.cpp
 
 HEADERS  += mainwindow.h \
     stageController.h \
@@ -40,7 +41,8 @@ HEADERS  += mainwindow.h \
     Figures/spiral.h \
     pages/firstpage.h \
     pages/secondpage.h \
-    pages/thirdpage.h
+    pages/thirdpage.h \
+    globalstagecontroller.h
 
 FORMS    += mainwindow.ui \
     pages/firstpage.ui \
@@ -53,6 +55,8 @@ INCLUDEPATH += $$PWD/
 
 RESOURCES += \
     Resources.qrc
+
+LIBS += $$PWD/PI_stuff/PI_GCS2_DLL_x64.lib\
 
 
 
