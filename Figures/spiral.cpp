@@ -2,7 +2,7 @@
 
 
 void    figures::spiral::loadValuesFromTextFile(){
-    std::cout<<"void    figures::spiral::loadValuesFromTextFile() ENTERING"<<endl;
+    std::cout<<"void    figures::spiral::loadValuesFromTextFile() ENTERING"<<std::endl;
 
     std::fstream f;
 
@@ -17,25 +17,25 @@ void    figures::spiral::loadValuesFromTextFile(){
     }
     f.close();
 
-    std::cout<<"void    figures::spiral::loadValuesFromTextFile() LEAVING"<<endl;
+    std::cout<<"void    figures::spiral::loadValuesFromTextFile() LEAVING"<<std::endl;
 
 }
 void    figures::spiral::writeValuesToTextFile(){
-   std::cout<<"void    figures::spiral::writeValuesToTextFile() ENTERING"<<endl;
+   std::cout<<"void    figures::spiral::writeValuesToTextFile() ENTERING"<<std::endl;
 
    std::fstream f;
    f.open(storedValuesPath);
 
-   std::cout<<"writing values to "<<storedValuesPath<<endl;
+   std::cout<<"writing values to "<<storedValuesPath<<std::endl;
    for(auto item : itsValues)
    {
-       std::cout<<item<<endl;
-       f<<item<<endl;
+       std::cout<<item<<std::endl;
+       f<<item<<std::endl;
    }
 
    f.close();
 
-   std::cout<<"void    figures::spiral::writeValuesToTextFile() LEAVING"<<endl;
+   std::cout<<"void    figures::spiral::writeValuesToTextFile() LEAVING"<<std::endl;
 }
 
 void    figures::spiral::setValue(int i, double value){
@@ -52,7 +52,7 @@ void    figures::spiral::printMemberVariables(){
 
     int i = 0;
     for(auto item : itsValues){
-        std::cout<<i++<<" "<<item<<endl;
+        std::cout<<i++<<" "<<item<<std::endl;
     }
 
 }
@@ -60,13 +60,13 @@ void    figures::spiral::printMemberVariables(){
 
 void figures::spiral::cutAbsMacroSpiral3D()
 {
-    std::cout<<"void figures::spiral::cutAbsMacroSpiral3D() ENTERING"<<endl;
+    std::cout<<"void figures::spiral::cutAbsMacroSpiral3D() ENTERING"<<std::endl;
 
     //////////////////////////////////////////
     //                 Set up               //
     //////////////////////////////////////////
 
-    std::cout<<"assign values from array to variables with more concrete names START"<<endl;
+    std::cout<<"assign values from array to variables with more concrete names START"<<std::endl;
     double R=itsValues[0];
     double R_end = itsValues[1];
     int    steps=itsValues[2];
@@ -75,7 +75,7 @@ void figures::spiral::cutAbsMacroSpiral3D()
     double rotAngleX=itsValues[5];
     double rotAngleZ=itsValues[6];
     double velocity = itsValues[7];
-    std::cout<<"assign values from array to variables with more concrete names DONE"<<endl;
+    std::cout<<"assign values from array to variables with more concrete names DONE"<<std::endl;
 
     double deltaR = (R-R_end) / (sectors-1);
 	int stepsPerSector = steps / sectors;
@@ -105,7 +105,7 @@ void figures::spiral::cutAbsMacroSpiral3D()
     //////////////////////////////////////////
 	//		Generating the coordinates		//
     //////////////////////////////////////////
-    std::cout<<"Generating the coordinates START"<<endl;
+    std::cout<<"Generating the coordinates START"<<std::endl;
 	int n = 0;
 	int nOld = n;
 	for (int i = 1; i <= steps + 1; i++){
@@ -150,13 +150,13 @@ void figures::spiral::cutAbsMacroSpiral3D()
 		}
 	}
 
-    std::cout<<"Generating the coordinates DONE"<<endl;
+    std::cout<<"Generating the coordinates DONE"<<std::endl;
     //########################################################################################################################################################
 
     ///////////////////////////////////////
     //Write sequence to file for controle//
     ///////////////////////////////////////
-    std::cout<<"Write sequence to file for controle START"<<endl;
+    std::cout<<"Write sequence to file for controle START"<<std::endl;
 
     int color = 1;
 	std::fstream fc;
@@ -175,18 +175,18 @@ void figures::spiral::cutAbsMacroSpiral3D()
 			fc << storPos[i][j] << "\t";
 		}
 
-		fc << delay[i] << endl;
+		fc << delay[i] << std::endl;
 	
 	}
 	fc.close();
 
-    std::cout<<"Write sequence to file for controle DONE"<<endl;
+    std::cout<<"Write sequence to file for controle DONE"<<std::endl;
     //########################################################################################################################################################
 
 	//////////////////////////////////////////
 	//		Actual cutting procedure 		//
 	//////////////////////////////////////////
-    std::cout<<"Actual cutting procedure START"<<endl;
+    std::cout<<"Actual cutting procedure START"<<std::endl;
 
 	double diff[3];
 	for (int i = 0; i < 3; i++){
@@ -201,10 +201,10 @@ void figures::spiral::cutAbsMacroSpiral3D()
 	f.close();
 	f.open(nameFile, std::fstream::out | std::fstream::app);
 
-	f << "MAC BEG " << macroName << endl;
-	f << "VEL A " << velocity << " B " << velocity << " C " << velocity << endl;
-	f << "MOV A " << storPos[0][0] << " B " << storPos[0][1] << " C " << storPos[0][2] << endl;
-	f << "DEL " << delay[0] << endl;
+	f << "MAC BEG " << macroName << std::endl;
+	f << "VEL A " << velocity << " B " << velocity << " C " << velocity << std::endl;
+	f << "MOV A " << storPos[0][0] << " B " << storPos[0][1] << " C " << storPos[0][2] << std::endl;
+	f << "DEL " << delay[0] << std::endl;
     f << ::gE545.setLimitsMacro(1, 0, 200, 0, 0);
 	
 	int shutterCounter=0; 
@@ -225,26 +225,26 @@ void figures::spiral::cutAbsMacroSpiral3D()
 			}
 		}
 
-			f << "MOV A " << storPos[i][0] << " B " << storPos[i][1] << " C " << storPos[i][2] << endl;
-			f << "DEL " << delay[i] << endl;
+			f << "MOV A " << storPos[i][0] << " B " << storPos[i][1] << " C " << storPos[i][2] << std::endl;
+			f << "DEL " << delay[i] << std::endl;
 	}
 	//Close Shutter
     f << ::gE545.setLimitsMacro(1, 0, 0, 0, 200);
-	f << "VEL A " << "9000" << " B " << "9000" << " C " << "9000" << endl;
-    f << "MOV A " << pos[0] + focus[0] << " B " << pos[1] +focus[1] << " C " << pos[2] + focus[2] << endl;
-	f << "DEL 1000" << endl;
-	f << "MAC END" << endl;
+	f << "VEL A " << "9000" << " B " << "9000" << " C " << "9000" << std::endl;
+    f << "MOV A " << pos[0] + focus[0] << " B " << pos[1] +focus[1] << " C " << pos[2] + focus[2] << std::endl;
+	f << "DEL 1000" << std::endl;
+	f << "MAC END" << std::endl;
 	f.close();
 
-	std::cout << "Macro written to file:" << nameFile << endl;
-	std::cout << "SENDING MACRO TO CONTROLLER..." << endl;
+	std::cout << "Macro written to file:" << nameFile << std::endl;
+	std::cout << "SENDING MACRO TO CONTROLLER..." << std::endl;
     ::gE545.sendMacros(nameFile);
 
     ::gE545.closeShutter();
     ::gE545.startMacroAndWaitWhileRunning(macroName);
 
-    std::cout<<"Actual cutting procedure DONE"<<endl;
+    std::cout<<"Actual cutting procedure DONE"<<std::endl;
     //########################################################################################################################################################
 
-    std::cout<<"void figures::spiral::cutAbsMacroSpiral3D() LEAVING"<<endl;
+    std::cout<<"void figures::spiral::cutAbsMacroSpiral3D() LEAVING"<<std::endl;
 }

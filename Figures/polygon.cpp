@@ -19,20 +19,20 @@ void    figures::polygon::loadValuesFromTextFile()
 
 }
 void    figures::polygon::writeValuesToTextFile(){
-    std::cout<<"void    figures::polygon::writeValuesToTextFile() ENTERING"<<endl;
+    std::cout<<"void    figures::polygon::writeValuesToTextFile() ENTERING"<<std::endl;
 
    std::fstream f;
    f.open(storedValuesPath);
 
-   std::cout<<"writing values to "<<storedValuesPath<<endl;
+   std::cout<<"writing values to "<<storedValuesPath<<std::endl;
    for(auto item : itsValues)
    {
-       std::cout<<item<<endl;
-       f<<item<<endl;
+       std::cout<<item<<std::endl;
+       f<<item<<std::endl;
    }
 
    f.close();
-   std::cout<<"void    figures::polygon::writeValuesToTextFile() LEAVING"<<endl;
+   std::cout<<"void    figures::polygon::writeValuesToTextFile() LEAVING"<<std::endl;
 
 }
 
@@ -50,7 +50,7 @@ void    figures::polygon::printMemberVariables(){
 
     int i = 0;
     for(auto item : itsValues){
-        std::cout<<i++<<" "<<item<<endl;
+        std::cout<<i++<<" "<<item<<std::endl;
     }
 
 }
@@ -126,14 +126,14 @@ void    figures::polygon::cutAbsViaMacro3D(){
     for (int i = 0; i < steps + 1; i++){
         for (int j = 0; j < 3; j++){
 
-            fc << storPos[i][j] << endl;
+            fc << storPos[i][j] << std::endl;
 
         }
     }
 
     use.writeCoordToFile("cutAbsMacro3D_Coord.txt", storPos, steps + 1);
     fc.close();
-    std::cout << "coordinates written to file:" << "cutAbsMacro3D_Coord.txt" << endl;
+    std::cout << "coordinates written to file:" << "cutAbsMacro3D_Coord.txt" << std::endl;
 
     //########################################################################################################################################################
 
@@ -148,31 +148,31 @@ void    figures::polygon::cutAbsViaMacro3D(){
     f.close();
     f.open(nameFile, std::fstream::out | std::fstream::app);
 
-    f << "MAC BEG " << macroName << endl;
-    f << "VEL A " << velocity << " B " << velocity << " C " << velocity << endl;
+    f << "MAC BEG " << macroName << std::endl;
+    f << "VEL A " << velocity << " B " << velocity << " C " << velocity << std::endl;
     //Open Shutter
     for (int i = 0; i < steps+1; i++){
-        f << "MOV A " << storPos[i][0] << " B " << storPos[i][1] << " C " << storPos[i][2] << endl;
+        f << "MOV A " << storPos[i][0] << " B " << storPos[i][1] << " C " << storPos[i][2] << std::endl;
 
 
         if (i == 0){
-            f << "DEL " << (R / velocity) * 1000 * 2 << endl;
+            f << "DEL " << (R / velocity) * 1000 * 2 << std::endl;
             f << ::gE545.setLimitsMacro(1, 0, 200, 0, 0);
         }
         else{
-            f << "DEL " << delay << endl;
+            f << "DEL " << delay << std::endl;
         }
     }
     //Close Shutter
     f << ::gE545.setLimitsMacro(1, 0, 0, 0, 200);
-    f << "VEL A " << "9000" << " B " << "9000" << " C " << "9000" << endl;
-    f << "MOV A " << pos[0] + focus[0] << " B " << pos[1] + focus[1]<< " C " << pos[2] + focus[2] << endl;
-    f << "DEL 1000" << endl;
-    f << "MAC END" << endl;
+    f << "VEL A " << "9000" << " B " << "9000" << " C " << "9000" << std::endl;
+    f << "MOV A " << pos[0] + focus[0] << " B " << pos[1] + focus[1]<< " C " << pos[2] + focus[2] << std::endl;
+    f << "DEL 1000" << std::endl;
+    f << "MAC END" << std::endl;
     f.close();
 
-    std::cout << "Macro written to file:" << nameFile << endl;
-    std::cout << "SENDING MACRO TO CONTROLLER..." << endl;
+    std::cout << "Macro written to file:" << nameFile << std::endl;
+    std::cout << "SENDING MACRO TO CONTROLLER..." << std::endl;
     ::gE545.sendMacros(nameFile);
 
     ::gE545.closeShutter();

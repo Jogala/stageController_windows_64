@@ -41,9 +41,9 @@ public:
 
 
     polygon(){
-            std::cout<<"polygon::polygon() ENTERING"<<endl;
+            std::cout<<"polygon::polygon() ENTERING"<<std::endl;
             storedValuesPath="./Stored_Values/poly.txt";
-            std::cout<<"polygon::polygon() LEAVING"<<endl;
+            std::cout<<"polygon::polygon() LEAVING"<<std::endl;
     }
 
     ~polygon(){

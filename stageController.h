@@ -40,7 +40,7 @@ public:
     int getID();
     void printMemberVariables(){
 
-        std::cout << "ID = " << "\t" << ID << endl;
+        std::cout << "ID = " << "\t" << ID << std::endl;
 
         for(int i = 0; i < 3; i++)
         {

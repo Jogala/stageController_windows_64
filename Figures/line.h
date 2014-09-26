@@ -38,9 +38,9 @@ public:
 
 
     line(){
-        std::cout<<"line::line() ENTERING"<<endl;
+        std::cout<<"line::line() ENTERING"<<std::endl;
         storedValuesPath="./Stored_Values/line.txt";
-        std::cout<<"line::line() LEAVING"<<endl;
+        std::cout<<"line::line() LEAVING"<<std::endl;
     }
     ~line(){}
 

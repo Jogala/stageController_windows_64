@@ -5,7 +5,7 @@ firstPage::firstPage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::firstPage)
 {
-    std::cout<<"Entering constructor firstPage"<<endl;
+    std::cout<<"firstPage::firstPage(QWidget *parent) ENTERING"<<std::endl;
 
     ui->setupUi(this);
 
@@ -13,10 +13,13 @@ firstPage::firstPage(QWidget *parent) :
     veloMax=9900;
     maxA=195;
 
+    std::cout<<"set_Up the Tables for the figures START"<<std::endl;
     setUp_LineTable();
     setUp_RecTable();
     setUp_PolyTable();
     setUp_SpiralTable();
+    std::cout<<"set_Up the Tables for the figures DONE"<<std::endl;
+
 
     QShortcut *ctrl_l = new QShortcut(QKeySequence("CTRL+L"), this);
     QObject::connect(ctrl_l, SIGNAL(activated()), this, SLOT(setFocus_lineTable()));
@@ -55,9 +58,7 @@ firstPage::firstPage(QWidget *parent) :
     }
     this->setTabOrder(static_cast<QSpinBox*>(spiralTable->cellWidget(7,1)),ui->spiral_cut);
 
-    gE545.printMemberVariables();
-    std::cout<<"Leaving constructor firstPage"<<endl;
-
+    std::cout<<"firstPage::firstPage(QWidget *parent) LEAVING"<<std::endl;
 
 }
 
@@ -137,6 +138,7 @@ void firstPage::setUp_LineTable(){
     ////////////////////////////////////////////////////////////////////////////////////////
     //      Load stored values from text file  and assign them in 3. and 2. Column        //
     ////////////////////////////////////////////////////////////////////////////////////////
+    std::cout<<mLine.getStoredValuesPath()<<std::endl;
     QFile lineFile(QString::fromStdString(mLine.getStoredValuesPath()));
     lineFile.open(QIODevice::ReadOnly | QIODevice::Text);
 
@@ -147,7 +149,6 @@ void firstPage::setUp_LineTable(){
             QLabel *label = new QLabel();
             int x = inLine.readLine().toInt();
             label->setNum(x);
-            std::cout<<x<<endl;
             label->setAlignment(Qt::AlignVCenter);
             lineTable->setCellWidget( i, 3, label );
             static_cast<QSpinBox*>(lineTable->cellWidget(i,1))->setValue(x);
@@ -161,7 +162,6 @@ void firstPage::setUp_LineTable(){
             }
 
             label->setNum(x);
-            std::cout<<x<<endl;
             label->setAlignment(Qt::AlignVCenter);
             lineTable->setCellWidget( i, 3, label );
             static_cast<QDoubleSpinBox*>(lineTable->cellWidget(i,1))->setValue(x);
@@ -219,7 +219,7 @@ void firstPage::setUp_RecTable(){
     ////////////////////////////////////////////////////////////////////////
     //      Load stored values and assign them in 3. and 2. Column        //
     ////////////////////////////////////////////////////////////////////////
-    std::cout<<mRectangle.getStoredValuesPath()<<endl;
+    std::cout<<mRectangle.getStoredValuesPath()<<std::endl;
     QFile recFile(QString::fromStdString(mRectangle.getStoredValuesPath()));
     recFile.open(QIODevice::ReadOnly | QIODevice::Text);
 
@@ -235,7 +235,6 @@ void firstPage::setUp_RecTable(){
 
 
         label->setNum(x);
-        std::cout<<x<<endl;
         label->setAlignment(Qt::AlignVCenter);
         recTable->setCellWidget( i, 3, label );
         static_cast<QDoubleSpinBox*>(recTable->cellWidget(i,1))->setValue(x);
@@ -306,7 +305,7 @@ void firstPage::setUp_PolyTable(){
     ////////////////////////////////////////////////////////////////////////
     //      Load stored values and assign them in 3. and 2. Column        //
     ////////////////////////////////////////////////////////////////////////
-    std::cout<<mPoly.getStoredValuesPath()<<endl;
+    std::cout<<mPoly.getStoredValuesPath()<<std::endl;
     QFile polyFile(QString::fromStdString(mPoly.getStoredValuesPath()));
     polyFile.open(QIODevice::ReadOnly | QIODevice::Text);
 
@@ -317,7 +316,6 @@ void firstPage::setUp_PolyTable(){
 
         double x = inPoly.readLine().toDouble();
         label->setNum(x);
-        std::cout<<x<<endl;
         label->setAlignment(Qt::AlignVCenter);
         polyTable->setCellWidget( i, 3, label );
         static_cast<QDoubleSpinBox*>(polyTable->cellWidget(i,1))->setValue(x);
@@ -399,7 +397,7 @@ void firstPage::setUp_SpiralTable(){
     //      Load stored values and assign them in 3. and 2. Column        //
     ////////////////////////////////////////////////////////////////////////
 
-    std::cout<<mSpiral.getStoredValuesPath()<<endl;
+    std::cout<<mSpiral.getStoredValuesPath()<<std::endl;
     QFile spiralFile(QString::fromStdString(mSpiral.getStoredValuesPath()));
     spiralFile.open(QIODevice::ReadOnly | QIODevice::Text);
 
@@ -415,7 +413,6 @@ void firstPage::setUp_SpiralTable(){
         }
 
         label->setNum(x);
-        std::cout<<x<<endl;
         label->setAlignment(Qt::AlignVCenter);
         spiralTable->setCellWidget( i, 3, label );
         static_cast<QDoubleSpinBox*>(spiralTable->cellWidget(i,1))->setValue(x);
@@ -469,7 +466,7 @@ void firstPage::on_line_cut_clicked()
     mLine.printMemberVariables();
     mLine.cutAbsLim3D();
 
-    std::cout<<"lin cut done"<<endl;
+    std::cout<<"lin cut done"<<std::endl;
 }
 
 void firstPage::on_rec_cut_clicked()
@@ -537,7 +534,7 @@ void firstPage::on_poly_cut_clicked()
 
 void firstPage::on_spiral_cut_clicked()
 {
-    std::cout<<"void firstPage::on_spiral_cut_clicked() ENTERING"<<endl;
+    std::cout<<"void firstPage::on_spiral_cut_clicked() ENTERING"<<std::endl;
 
     if(static_cast<QDoubleSpinBox*>(spiralTable->cellWidget(1,1))->value() > static_cast<QDoubleSpinBox*>(spiralTable->cellWidget(0,1))->value()){
 
@@ -550,7 +547,7 @@ void firstPage::on_spiral_cut_clicked()
     mSpiral.delayFactor=::macroDelayFactor;
 
     double x;
-    std::cout<<"Assing values from DoubelSpinBoxes to Spiral START"<<endl;
+    std::cout<<"Assing values from DoubelSpinBoxes to Spiral START"<<std::endl;
     for(int i=0;i<8;i++)
     {
 
@@ -566,7 +563,7 @@ void firstPage::on_spiral_cut_clicked()
         mSpiral.setValue(i,x);
 
     }
-    std::cout<<"Assing values from DoubelSpinBoxes to Spiral DONE"<<endl;
+    std::cout<<"Assing values from DoubelSpinBoxes to Spiral DONE"<<std::endl;
 
 
     //Write the Values also to the txt file, s.t, when the Program is closed and started again, those values get loaded
@@ -576,7 +573,7 @@ void firstPage::on_spiral_cut_clicked()
     mSpiral.cutAbsMacroSpiral3D();
 
     }
-    std::cout<<"void firstPage::on_spiral_cut_clicked() LEAVING"<<endl;
+    std::cout<<"void firstPage::on_spiral_cut_clicked() LEAVING"<<std::endl;
 }
 
 

@@ -145,11 +145,13 @@ void figures::line::cutAbsLim3D(){
     std::cout<<"####################################################"<<std::endl;
     std::cout<<"void figures::line::cutAbsLim3D() ENTER"<<std::endl;
 
+    std::cout<<"assign values from array to variables with more concrete names START"<<std::endl;
     double l = itsValues[0];
     double phi = itsValues[1];
     double theta= itsValues[2];
     double repetitions= itsValues[3];
     double velocity = itsValues[4];
+    std::cout<<"assign values from array to variables with more concrete names DONE"<<std::endl;
 
     if (repetitions < 1){
 
@@ -179,7 +181,7 @@ void figures::line::cutAbsLim3D(){
         //////////////////////////////////////////////////////////////////////////
         //		Generating the sequence of coordinates that will be visited		//
         //////////////////////////////////////////////////////////////////////////
-
+        std::cout<<"Generating the sequence of coordinates that will be visited START"<<std::endl;
         for (int i = 0; i < repetitions; i++)
         {
             if (i % 2 == 1){
@@ -189,18 +191,26 @@ void figures::line::cutAbsLim3D(){
             }
 
             if (i % 2 == 0){
+                storagePos[i][0] = pos[0] - c*vec[0] / normOfVec;
+                storagePos[i][1] = pos[1] - c*vec[1] / normOfVec;
+                storagePos[i][2] = pos[2] - c*vec[2] / normOfVec;
             }
         }
+        std::cout<<"Generating the sequence of coordinates that will be visited DONE"<<std::endl;
 
         //////////////////////////////////////////////////////
         //		Write sequence to file for controle			//
         //////////////////////////////////////////////////////
 
-        use.writeCoordToFile("line3DAbs.txt", storagePos, repetitions);
+        std::cout<<"Write sequence to file for controle START"<<std::endl;
+        use.writeCoordToFile("./cut_coords/cutAbsLim3DCoord.txt", storagePos, repetitions);
+        std::cout<<"Write sequence to file for controle DONE"<<std::endl;
 
         //////////////////////////////////////////
         //		Actual cutting procedure 		//
         //////////////////////////////////////////
+
+        std::cout<<"Actual cutting procedure START"<<std::endl;
 
         //A
         ::gE545.moveTo(storagePos[0][0], storagePos[0][1], storagePos[0][2]);
@@ -217,6 +227,8 @@ void figures::line::cutAbsLim3D(){
         std::cout<<"close set vel"<<std::endl;
         ::gE545.setVelocity(1000, 1000, 1000);
         ::gE545.moveTo(pos[0], pos[1], pos[2]);
+
+        std::cout<<"Actual cutting procedure DONE"<<std::endl;
 
     }//else
 

@@ -38,9 +38,9 @@ public:
 
     
     rectangle(){
-        std::cout<<"rectangle::rectangle() ENTERING"<<endl;
+        std::cout<<"rectangle::rectangle() ENTERING"<<std::endl;
         storedValuesPath = "./Stored_Values/rec.txt" ;
-        std::cout<<"rectangle::rectangle() LEAVING"<<endl;
+        std::cout<<"rectangle::rectangle() LEAVING"<<std::endl;
     }
     ~rectangle(){}
     

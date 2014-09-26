@@ -24,7 +24,6 @@ void stageController::initialize(){
                             setLimits(1, 0, 0);
                             setLimits(2, 0, 0);
                             setLimits(3, 0, 0);
-                            std::cout << "E545 ready, press (h)elp for a list of avaliable commands" << std::endl;
                         }
                     }
                 }
@@ -168,9 +167,10 @@ void stageController::setFocus_and_writeValuesToFile(double focus[3]){
 
     std::cout<<"void stageController::setFocus_and_writeValuesToFile(double xFocus, double yFocus, double zFocus) LEAVING"<<std::endl;
 }
+
 void stageController::loadFocusValuesFromFile(){
 
-    std::cout<<"void stageController::loadFocusValuesFromFile()"<<std::endl;
+    std::cout<<"void stageController::loadFocusValuesFromFile() ENTERING"<<std::endl;
 
     std::fstream f;
 
@@ -186,7 +186,6 @@ void stageController::loadFocusValuesFromFile(){
         for(auto item : itsFocusValues)
         {
             f>>item;
-            std::cout<<item<<std::endl;
         }
 
         f.close();
@@ -195,6 +194,7 @@ void stageController::loadFocusValuesFromFile(){
 
     focusValuesWereSet=true;
 
+    std::cout<<"void stageController::loadFocusValuesFromFile() LEAVING"<<std::endl;
 }
 void stageController::getFocusValues(double focus[3]){
 
@@ -1085,10 +1085,8 @@ stageController::stageController()
         item=0;
     }
 
-    printMemberVariables();
     std::cout<<"stageController::stageController() LEAVING"<<std::endl;
 }
 stageController::~stageController()
 {
-    fileName_FocusValues = "Stored_Values/focusValues.txt";
 }

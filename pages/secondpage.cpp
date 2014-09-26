@@ -5,7 +5,7 @@ secondPage::secondPage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::secondPage)
 {
-    std::cout<<"Entering constructor secondPage"<<endl;
+    std::cout<<"secondPage::secondPage(QWidget *parent) ENTERING"<<std::endl;
 
     ui->setupUi(this);
     ui->T_spinBox->setMinimum(0);
@@ -15,7 +15,7 @@ secondPage::secondPage(QWidget *parent) :
 
     this->setLayout(ui->gridLayout);
 
-    std::cout<<"Leaving constructor secondPage"<<endl;
+    std::cout<<"secondPage::secondPage(QWidget *parent) LEAVING"<<std::endl;
 }
 
 secondPage::~secondPage()

@@ -164,39 +164,39 @@ public:
 
     void writeCoordToFile(std::string name, double storedPos[][3], int length){
 
-//        std::fstream f;
-//        f << fixed;
-//        f << setprecision(3);
+        std::fstream f;
+        f << std::fixed;
+        f << std::setprecision(3);
 
-//        f.open(name, std::fstream::out | std::fstream::trunc);
-//        f.close();
-//        f.open(name, std::fstream::out | std::fstream::app);
+        f.open(name, std::fstream::out | std::fstream::trunc);
+        f.close();
+        f.open(name, std::fstream::out | std::fstream::app);
 
-//        for (int i = 0; i < length; i++){
+        for (int i = 0; i < length; i++){
 
-//            f << storedPos[i][0] << "\t" << storedPos[i][1] << "\t" << storedPos[i][2] << std::endl;
+            f << storedPos[i][0] << "\t" << storedPos[i][1] << "\t" << storedPos[i][2] << std::endl;
 
-//        }
+        }
 
-//        f.close();
+        f.close();
     }
     void writeCoordToFile(std::string name, std::vector< std::vector<double> > &storedPos, int length){
 
-//        std::fstream f;
-//        f << fixed;
-//        f << setprecision(3);
+        std::fstream f;
+        f << std::fixed;
+        f << std::setprecision(3);
 
-//        f.open(name, std::fstream::out | std::fstream::trunc);
-//        f.close();
-//        f.open(name, std::fstream::out | std::fstream::app);
+        f.open(name, std::fstream::out | std::fstream::trunc);
+        f.close();
+        f.open(name, std::fstream::out | std::fstream::app);
 
-//        for (int i = 0; i < length; i++){
+        for (int i = 0; i < length; i++){
 
-//            f << storedPos[i][0] << "\t" << storedPos[i][1] << "\t" << storedPos[i][2] << std::endl;
+            f << storedPos[i][0] << "\t" << storedPos[i][1] << "\t" << storedPos[i][2] << std::endl;
 
-//        }
+        }
 
-//        f.close();
+        f.close();
     }
 
     template<class aNumber>

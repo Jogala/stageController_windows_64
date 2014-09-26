@@ -6,7 +6,7 @@ thirdPage::thirdPage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::thirdPage)
 {
-    std::cout<<"constructor thirdPage ENTERING"<<endl;
+    std::cout<<"thirdPage::thirdPage(QWidget *parent) ENTERING"<<std::endl;
     ui->setupUi(this);
 
     double stepSize=1;
@@ -46,14 +46,13 @@ thirdPage::thirdPage(QWidget *parent) :
 
     gE545.loadFocusValuesFromFile();
     gE545.getFocusValues(focus);
-    std::cout<<focus[0]<<" "<<focus[1]<<endl;
 
     ui->deltaX_spinBox->setValue(focus[0]);
     ui->deltaY_spinBox->setValue(focus[1]);
     ui->stepSize_spinBox->setValue(stepSize);
     ui->vel_spinBox->setValue(vel);
 
-    std::cout<<"constructor thirdPage LEAVING"<<endl;
+    std::cout<<"thirdPage::thirdPage(QWidget *parent) LEAVING"<<std::endl;
 }
 
 thirdPage::~thirdPage()
