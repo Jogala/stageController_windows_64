@@ -4,4 +4,5 @@
 extern int macroDelayFactor;
 extern double pi;
 
+
 #endif // GLOBALVARIABLES_H

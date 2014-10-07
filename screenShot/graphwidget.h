@@ -1,6 +1,8 @@
 #ifndef GRAPHWIDGET_H
 #define GRAPHWIDGET_H
 
+#include <QGraphicsItem>
+#include <QCoreApplication>
 #include <QGraphicsView>
 #include <QWidget>
 #include <QDesktopWidget>
@@ -12,7 +14,16 @@
 #include <QDebug>
 #include <QScreen>
 
-#include <QGraphicsView>
+#include <QKeyEvent>
+#include <QList>
+#include <math.h>
+#include <fstream>
+
+#include "graphwidget.h"
+#include "edge.h"
+#include "node.h"
+
+#include "globalstagecontroller.h"
 
 class Node;
 
@@ -26,12 +37,19 @@ public:
     void itemMoved();
     QGraphicsScene *scene;
     void refreshBackground();
+    QList <Node*> nodeList;
+    QList <Edge*> edgeList;
+    QGraphicsEllipseItem * laserSpot;
 
 public slots:
     void shuffle();
     void zoomIn();
     void zoomOut();
-
+    void addNode();
+    void removeNode();
+    void polygonZugSaveCoordinates();
+    void addLaserSpotToScene();
+    void writePosOfLaserSpotToFile_then_removeLaserSpotFromScene();
 
 protected:
     void keyPressEvent(QKeyEvent *event);
@@ -51,6 +69,10 @@ private:
     QWidget * pToCallingWindow;
     QRect geomScreenShot;
     QPixmap pixScreenShot;
+
+    double uFaktorX=1;
+    double uFaktorY=1;
+
 };
 
 #endif // GRAPHWIDGET_H

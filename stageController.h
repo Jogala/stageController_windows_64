@@ -14,8 +14,9 @@ private:
     double Position[3];
     usefulFunctions useful;
     double  veloLimit;
-    double itsFocusValues[3];
+
     std::string fileName_FocusValues;
+
 
 public:
     //Variables
@@ -24,6 +25,9 @@ public:
     char szErrorMesage[1024];
     int	iError;
     char szAxes[17];
+    double itsLaserPosX;
+    double itsLaserPosY;
+    double itsFocusValues[3];
 
     //Methods
 
@@ -37,6 +41,11 @@ public:
     void setFocus_and_writeValuesToFile(double focus[3]);
     void loadFocusValuesFromFile();
     void moveInFocus();
+
+    void loadLaserPosValuesFromFile();
+    void writeLaserPosValuesToFile();
+
+
     int getID();
     void printMemberVariables(){
 

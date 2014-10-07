@@ -1,10 +1,6 @@
 #include "graphwidget.h"
-#include "edge.h"
-#include "node.h"
 
-#include <math.h>
 
-#include <QKeyEvent>
 
 GraphWidget::GraphWidget(QWidget *parent)
     : QGraphicsView(parent), timerId(0), pToCallingWindow(parent)
@@ -21,21 +17,21 @@ GraphWidget::GraphWidget(QWidget *parent)
     setMinimumSize(400, 400);
     setWindowTitle(tr("Elastic Nodes"));
 
-    Node *node1 = new Node(this);
-    Node *node2 = new Node(this);
-    Node *node3 = new Node(this);
+    QPen pen;
+    pen.setColor(Qt::red);
+    pen.setWidth(5);
+    laserSpot = scene->addEllipse(10,10,20,20,pen);
+    laserSpot->setOpacity(0);
 
-    scene->addItem(node1);
-    scene->addItem(node2);
-    scene->addItem(node3);
+    std::cout<<"load Umrechungsfaktoren Image zu real Coordinates  START"<<std::endl;
+    std::string fileName = "./Stored_Values/uFaktoren.txt";
+    std::fstream f;
+    f.open(fileName, std::fstream::in);
+    f>>uFaktorX;
+    f>>uFaktorY;
+    f.close();
+    std::cout<<"load Umrechungsfaktoren Image zu real Coordinates  DONE"<<std::endl;
 
-    scene->addItem(new Edge(node1, node2));
-    scene->addItem(new Edge(node2, node3));
-
-
-    node1->setPos(-50, -50);
-    node2->setPos(0, -50);
-    node3->setPos(50, -50);
 }
 
 void GraphWidget::itemMoved()
@@ -141,6 +137,87 @@ void GraphWidget::zoomIn()
 void GraphWidget::zoomOut()
 {
     scaleView(1 / qreal(1.2));
+}
+
+void GraphWidget::addNode()
+{
+    Node * newNode = new Node(this);
+
+    nodeList.append(newNode);
+
+    scene->addItem(nodeList.last());
+    nodeList.last()->setPos(0,0);
+
+    if(nodeList.length()>1)
+    {
+        Edge * newEdge = new Edge(nodeList[nodeList.length()-2], nodeList.last());
+        edgeList.append(newEdge);
+        scene->addItem(edgeList.last());
+    }
+
+}
+
+void GraphWidget::removeNode()
+{
+    if(nodeList.length())
+    {
+        //remove last node from scene
+        scene->removeItem(nodeList.last());
+        //remove last node from nodeList
+        nodeList.removeLast();
+    }
+
+    if(edgeList.length())
+    {
+        scene->removeItem(edgeList.last());
+        edgeList.removeLast();
+    }
+}
+
+void GraphWidget::polygonZugSaveCoordinates()
+{
+    std::string fileName = "./cut_coords/polygonZugCoord.txt";
+    std::fstream f;
+    f.open(fileName, std::fstream::out | std::fstream::trunc);
+
+
+    for(Node* item : nodeList)
+    {
+        f<<uFaktorX*(item->pos().x())<<"\t"<<uFaktorY*(item->pos().y())<<"\t"<<100<<std::endl;
+    }
+
+    f.close();
+
+}
+
+void GraphWidget::addLaserSpotToScene()
+{
+    std::cout<<"void GraphWidget::addLaserSpotToScene() ENTERING"<<std::endl;
+
+
+    laserSpot->setOpacity(1);
+
+    ::gE545.loadLaserPosValuesFromFile();
+
+    laserSpot->setFlag(QGraphicsItem::ItemIsMovable);
+    laserSpot->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+    laserSpot->setEnabled(1);
+
+    std::cout<<"void GraphWidget::addLaserSpotToScene() LEAVING"<<std::endl;
+}
+
+void GraphWidget::writePosOfLaserSpotToFile_then_removeLaserSpotFromScene()
+{
+    std::cout<<"void GraphWidget::writePosOfLaserSpotToFile_then_removeLaserSpotFromScene() ENTERING"<<std::endl;
+
+    ::gE545.itsLaserPosX = uFaktorX*(laserSpot->pos().x());
+    ::gE545.itsLaserPosY = uFaktorY*(laserSpot->pos().y());
+    gE545.writeLaserPosValuesToFile();
+
+    laserSpot->setOpacity(0);
+    laserSpot->setEnabled(0);
+
+    std::cout<<"void GraphWidget::writePosOfLaserSpotToFile_then_removeLaserSpotFromScene() LEAVING"<<std::endl;
 }
 
 

@@ -24,13 +24,28 @@ public:
 
 private slots:
 
-    void on_pushButton_clicked();
+    void on_pushButton_Refresh_Background_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_pushButton_open_window_clicked();
+
+
+    void on_checkBox_polygonzug_stateChanged(int arg1);
+
+    void on_pushButton_add_one_node_clicked();
+
+    void on_pushButton_remove_last_node_clicked();
+
+    void on_pushButton_cut_polygonzug_clicked();
+
+    void on_pushButton_start_set_position_of_laser_clicked();
+
+    void on_pushButton_done_set_position_of_laser_clicked();
 
 private:
     Ui::fourthPage *ui;
     imageDialog * myImDialogWin;
+    bool polygonzugModus;
+
 
 };
 

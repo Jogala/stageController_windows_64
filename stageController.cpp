@@ -236,6 +236,36 @@ void stageController::moveInFocus(){
 
 }
 
+void stageController::loadLaserPosValuesFromFile()
+{
+    std::cout<<"void stageController::loadLaserPosValuesFromFile() ENTERING"<<std::endl;
+
+    std::string fileName = "./Stored_Values/positionLaser.txt";
+    std::fstream f;
+    f.open(fileName, std::fstream::in);
+    f>>itsLaserPosX;
+    f>>itsLaserPosY;
+    f.close();
+
+    std::cout<<itsLaserPosX<<"\t"<<itsLaserPosY<<std::endl;
+    std::cout<<"void stageController::loadLaserPosValuesFromFile() LEAVING"<<std::endl;
+}
+
+void stageController::writeLaserPosValuesToFile()
+{
+    std::cout<<"void stageController::writeLaserPosValuesToFile() ENTERING"<<std::endl;
+
+    std::string fileName = "./Stored_Values/positionLaser.txt";
+    std::fstream f;
+    f.open(fileName, std::fstream::out | std::fstream::trunc);
+    f<<itsLaserPosX<<std::endl;
+    f<<itsLaserPosY<<std::endl;
+    f.close();
+
+    std::cout<<itsLaserPosX<<"\t"<<itsLaserPosY<<std::endl;
+    std::cout<<"void stageController::writeLaserPosValuesToFile()LEAVING"<<std::endl;
+}
+
 //////////////////////////////////////////////////////
 //					Move							//
 //////////////////////////////////////////////////////
@@ -1095,6 +1125,10 @@ stageController::stageController()
     {
         item=0;
     }
+
+    loadLaserPosValuesFromFile();
+
+
 
     std::cout<<"stageController::stageController() LEAVING"<<std::endl;
 }
