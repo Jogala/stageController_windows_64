@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>595</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -34,12 +34,13 @@
    <addaction name="actionFigures"/>
    <addaction name="actionPuls"/>
    <addaction name="actionSettings"/>
+   <addaction name="actionFreehand"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionFigures">
    <property name="icon">
     <iconset resource="Resources.qrc">
-     <normaloff>:/icons/icons/figures_bw.jpg</normaloff>:/icons/icons/figures_bw.jpg</iconset>
+     <normaloff>:/icons/icons/figures_bw.png</normaloff>:/icons/icons/figures_bw.png</iconset>
    </property>
    <property name="text">
     <string>Figures</string>
@@ -79,6 +80,18 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+P</string>
+   </property>
+  </action>
+  <action name="actionFreehand">
+   <property name="icon">
+    <iconset theme="http://spockandcookies.deviantart.com/art/Hand-Sketch-335863407" resource="Resources.qrc">
+     <normaloff>:/icons/icons/hand_sketch_by_spockandcookies-d5jypv3.png</normaloff>:/icons/icons/hand_sketch_by_spockandcookies-d5jypv3.png</iconset>
+   </property>
+   <property name="text">
+    <string>freehand</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+H</string>
    </property>
   </action>
  </widget>

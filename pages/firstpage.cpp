@@ -315,6 +315,13 @@ void firstPage::setUp_PolyTable(){
         QLabel *label = new QLabel();
 
         double x = inPoly.readLine().toDouble();
+
+        //convert it to deg
+        if((i==2)||(i==3)||(i==4))
+        {
+            x=(x/(2*::pi))*360;
+        }
+
         label->setNum(x);
         label->setAlignment(Qt::AlignVCenter);
         polyTable->setCellWidget( i, 3, label );
@@ -439,6 +446,10 @@ void firstPage::setUp_SpiralTable(){
 
 void firstPage::on_line_cut_clicked()
 {
+    std::cout<<std::endl;
+    std::cout<<">>>>>>>>>> USER ACTION"<<std::endl;
+    std::cout<<"################################################################"<<std::endl;
+    std::cout<<"void firstPage::on_line_cut_clicked() ENTERING"<<std::endl;
 
     mLine.delayFactor=::macroDelayFactor;
 
@@ -462,11 +473,13 @@ void firstPage::on_line_cut_clicked()
 
     //Write the Values also to the txt file, s.t, when the Program is closed and started again, those values get loaded
     mLine.writeValuesToTextFile();
-
     mLine.printMemberVariables();
     mLine.cutAbsLim3D();
 
-    std::cout<<"lin cut done"<<std::endl;
+    QMessageBox::information(this,"line","press Ok for returning to (100, 100, 100)");
+    ::gE545.moveTo(100,100,100);
+
+    std::cout<<"void firstPage::on_line_cut_clicked() ENTERING"<<std::endl;
 }
 
 void firstPage::on_rec_cut_clicked()
@@ -499,6 +512,9 @@ void firstPage::on_rec_cut_clicked()
 
     mRectangle.printMemberVariables();
     mRectangle.cutAbs3D();
+
+    QMessageBox::information(this,"rectangle","press Ok for returning to (100, 100, 100)");
+    ::gE545.moveTo(100,100,100);
 }
 
 void firstPage::on_poly_cut_clicked()
@@ -530,6 +546,11 @@ void firstPage::on_poly_cut_clicked()
 
     mPoly.printMemberVariables();
     mPoly.cutAbsViaMacro3D();
+
+    QMessageBox::information(this,"poly","press Ok for returning to (100, 100, 100)");
+    ::gE545.moveTo(100,100,100);
+
+
 }
 
 void firstPage::on_spiral_cut_clicked()
@@ -572,7 +593,13 @@ void firstPage::on_spiral_cut_clicked()
     mSpiral.printMemberVariables();
     mSpiral.cutAbsMacroSpiral3D();
 
+    QMessageBox::information(this,"spiral","press Ok for returning to (100, 100, 100)");
+    ::gE545.moveTo(100,100,100);
+
     }
+
+
+
     std::cout<<"void firstPage::on_spiral_cut_clicked() LEAVING"<<std::endl;
 }
 
@@ -600,3 +627,4 @@ void firstPage::setFocus_spiralTable(){
     static_cast<QSpinBox*>(spiralTable->cellWidget(0,1))->setFocus();
     static_cast<QSpinBox*>(spiralTable->cellWidget(0,1))->selectAll();
 }
+

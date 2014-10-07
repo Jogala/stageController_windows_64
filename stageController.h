@@ -30,7 +30,7 @@ public:
     ///////////////////
     // Initialization//
     ///////////////////
-    void initialize();
+    int initialize();
 
     bool focusValuesWereSet = false;
     void getFocusValues(double focus[3]);

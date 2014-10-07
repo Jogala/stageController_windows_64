@@ -6,6 +6,7 @@
 #include "pages/firstpage.h"
 #include "pages/secondpage.h"
 #include "pages/thirdpage.h"
+#include "pages/fourthpage.h"
 
 
 namespace Ui {
@@ -21,6 +22,7 @@ public:
     void adjusMainWindowFor_firstPage();
     void adjusMainWindowFor_secondPage();
     void adjusMainWindowFor_thirdPage();
+    void adjusMainWindowFor_fourthPage();
 
     void killMe()
     {
@@ -44,6 +46,9 @@ private slots:
 
     void on_actionPuls_triggered();
 
+    void on_actionFreehand_triggered();
+
+
 private:
     Ui::MainWindow *ui;
     QStackedWidget *stackedWidget;
@@ -52,8 +57,7 @@ private:
     firstPage *firstPageWidget;
     secondPage *secondPageWidget;
     thirdPage *thirdPageWidget;
-
-    int anzahlPages;
+    fourthPage *fourthPageWidget;
 
     Eigen::MatrixXi pagesGeom;
     int maxWidthFirstPage;

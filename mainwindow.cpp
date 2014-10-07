@@ -9,15 +9,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
-    anzahlPages = 3;
+    //    if(::gE545.initialize()==0)
+    //    {
+    //         QMessageBox::information(this,"initialize","Could not establish connection to E545 via RS232");
+    //    }
+
     maxWidthFirstPage=1600;
-    pagesGeom.resize(3,2);
+    pagesGeom.resize(4,2);
     pagesGeom(0,0)=maxWidthFirstPage;
     pagesGeom(0,1)=550;
-    pagesGeom(1,0)=410;
+    pagesGeom(1,0)=450;
     pagesGeom(1,1)=500;
     pagesGeom(2,0)=830;
     pagesGeom(2,1)=450;
+    pagesGeom(3,0)=830;
+    pagesGeom(3,1)=800;
 
 
     QSize myIconSize(100,100);
@@ -37,6 +43,10 @@ MainWindow::MainWindow(QWidget *parent) :
     thirdPageWidget = new thirdPage(this);
     std::cout<<"allocate third Page on the heap DONE"<<std::endl;
 
+    std::cout<<"allocate fourth Page on the heap START"<<std::endl;
+    fourthPageWidget = new fourthPage(this);
+    std::cout<<"allocate fourth Page on the heap DONE"<<std::endl;
+
     //////////////////////////////////////////////////////////
     //      Put firstPageWidget into a Scroll Area          //
     //////////////////////////////////////////////////////////
@@ -51,6 +61,7 @@ MainWindow::MainWindow(QWidget *parent) :
     stackedWidget->addWidget(scrollArea);
     stackedWidget->addWidget(secondPageWidget);
     stackedWidget->addWidget(thirdPageWidget);
+    stackedWidget->addWidget(fourthPageWidget);
 
     ////////////////////////////////////////////////////////////
     //      Show First Page and Adjust size of MainWindow     //
@@ -92,7 +103,6 @@ void MainWindow::on_actionPuls_triggered()
     adjusMainWindowFor_secondPage();
 }
 
-
 void MainWindow::on_actionSettings_triggered()
 {
 
@@ -106,6 +116,20 @@ void MainWindow::on_actionSettings_triggered()
 
     adjusMainWindowFor_thirdPage();
 }
+
+void MainWindow::on_actionFreehand_triggered()
+{
+    if(stackedWidget->currentIndex()==0){
+        //Save current width of firstPage
+        pagesGeom(0,0)=static_cast<QRect>(this->geometry()).width();
+    }
+
+    stackedWidget->setCurrentIndex(3);
+    this->setCentralWidget(stackedWidget);
+
+    adjusMainWindowFor_fourthPage();
+}
+
 
 void MainWindow::adjusMainWindowFor_firstPage(){
 
@@ -127,3 +151,14 @@ void MainWindow::adjusMainWindowFor_thirdPage(){
     this->resize(pagesGeom(2,0),pagesGeom(2,1));
 
 }
+
+void MainWindow::adjusMainWindowFor_fourthPage(){
+
+    //this->setFixedSize(pagesGeom(3,0),pagesGeom(3,1));
+    this->setMaximumWidth(3000);
+    this->setMaximumHeight(3000);
+    this->resize(pagesGeom(3,0),pagesGeom(3,1));
+
+}
+
+

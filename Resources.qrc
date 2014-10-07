@@ -1,8 +1,9 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>icons/figures_bw.jpg</file>
         <file>icons/settings.png</file>
         <file>icons/puls.png</file>
         <file>icons/pulse_explanation.png</file>
+        <file>icons/figures_bw.png</file>
+        <file>icons/hand_sketch_by_spockandcookies-d5jypv3.png</file>
     </qresource>
 </RCC>

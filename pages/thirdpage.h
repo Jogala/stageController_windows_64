@@ -37,6 +37,8 @@ private slots:
 
     void on_delayFactor_SpinBox_valueChanged(double arg1);
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::thirdPage *ui;
 

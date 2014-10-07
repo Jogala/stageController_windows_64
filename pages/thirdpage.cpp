@@ -6,6 +6,9 @@ thirdPage::thirdPage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::thirdPage)
 {
+    std::cout<<std::endl;
+    std::cout<<"###########################################################"<<std::endl;
+    std::cout<<"###########################################################"<<std::endl;
     std::cout<<"thirdPage::thirdPage(QWidget *parent) ENTERING"<<std::endl;
     ui->setupUi(this);
 
@@ -33,6 +36,12 @@ thirdPage::thirdPage(QWidget *parent) :
     ui->stepSize_spinBox->setMinimum(0);
     ui->stepSize_spinBox->setMaximum(50);
 
+    ui->deltaX_spinBox->setMinimum(-200);
+    ui->deltaX_spinBox->setMaximum(200);
+
+    ui->deltaY_spinBox->setMinimum(-200);
+    ui->deltaY_spinBox->setMaximum(200);
+
     gE545.getPositon(pos);
     ui->x_pos->setValue(pos[0]);
     ui->y_pos->setValue(pos[1]);
@@ -46,6 +55,10 @@ thirdPage::thirdPage(QWidget *parent) :
 
     gE545.loadFocusValuesFromFile();
     gE545.getFocusValues(focus);
+
+    for(auto it : focus){
+        std::cout<<it<<std::endl;
+    }
 
     ui->deltaX_spinBox->setValue(focus[0]);
     ui->deltaY_spinBox->setValue(focus[1]);
@@ -138,6 +151,10 @@ void thirdPage::on_pushButton_clicked()
         tare[i]=pos[i];
     }
 
+    ui->x_pos->setValue(pos[0]-tare[0]);
+    ui->y_pos->setValue(pos[1]-tare[1]);
+
+
 }
 
 
@@ -145,4 +162,12 @@ void thirdPage::on_pushButton_clicked()
 void thirdPage::on_delayFactor_SpinBox_valueChanged(double arg1)
 {
     ::macroDelayFactor=ui->delayFactor_SpinBox->value();
+}
+
+void thirdPage::on_pushButton_2_clicked()
+{
+    double pos[3];
+    ::gE545.getPositon(pos);
+    ui->x_pos->setValue(pos[0]);
+    ui->y_pos->setValue(pos[1]);
 }

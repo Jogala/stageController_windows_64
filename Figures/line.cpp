@@ -2,6 +2,8 @@
 
 void    figures::line::loadValuesFromTextFile(){
 
+    std::cout<<"void    figures::line::loadValuesFromTextFile() ENTERING"<<std::endl;
+
     std::fstream f;
 
     f.open(storedValuesPath);
@@ -14,20 +16,25 @@ void    figures::line::loadValuesFromTextFile(){
     }
     f.close();
 
+    std::cout<<"void    figures::line::loadValuesFromTextFile() LEAVING"<<std::endl;
 }
 void    figures::line::writeValuesToTextFile(){
 
-   std::fstream f;
-   f.open(storedValuesPath);
+    std::cout<<"void    figures::line::writeValuesToTextFile() ENTERING"<<std::endl;
 
-   std::cout<<"writing values to "<<storedValuesPath<<std::endl;
-   for(auto item : itsValues)
-   {
-       std::cout<<item<<std::endl;
-       f<<item<<std::endl;
-   }
+    std::fstream f;
+    f.open(storedValuesPath);
 
-   f.close();
+    std::cout<<"writing values to "<<storedValuesPath<<std::endl;
+    for(auto item : itsValues)
+    {
+        std::cout<<item<<std::endl;
+        f<<item<<std::endl;
+    }
+
+    f.close();
+
+    std::cout<<"void    figures::line::writeValuesToTextFile() LEAVING"<<std::endl;
 }
 
 void    figures::line::setValue(int i, double value){
@@ -46,7 +53,6 @@ void    figures::line::printMemberVariables(){
     int i = 0;
     for(auto item : itsValues){
         std::cout<<i++<<" "<<item<<std::endl;
-        std::cout<<"C++11"<<std::endl;
     }
 
 }
@@ -143,15 +149,14 @@ void figures::line::cutAbsLim3D(){
     std::cout<<std::endl;
     std::cout<<std::endl;
     std::cout<<"####################################################"<<std::endl;
-    std::cout<<"void figures::line::cutAbsLim3D() ENTER"<<std::endl;
+    std::cout<<"void figures::line::cutAbsLim3D() ENTERING"<<std::endl;
 
-    std::cout<<"assign values from array to variables with more concrete names START"<<std::endl;
     double l = itsValues[0];
     double phi = itsValues[1];
     double theta= itsValues[2];
     double repetitions= itsValues[3];
     double velocity = itsValues[4];
-    std::cout<<"assign values from array to variables with more concrete names DONE"<<std::endl;
+
 
     if (repetitions < 1){
 
@@ -166,7 +171,10 @@ void figures::line::cutAbsLim3D(){
 
         double vec[3];
         double pos[3];
-        auto storagePos = std::vector<std::vector<double>>(repetitions, std::vector<double>(3));
+        double focus[3];
+        ::gE545.getFocusValues(focus);
+
+        auto storagePos = std::vector<std::vector<double>>(repetitions+1, std::vector<double>(3));
 
         ::gE545.getPositon(pos);
 
@@ -175,14 +183,15 @@ void figures::line::cutAbsLim3D(){
         vec[2] = l*cos(theta);
 
         int limAxis = use.axisOfBiggestProjection(vec);
-        double c = 10;
+        //Determines how far over the limits the stage is moving.
+        double c = 10; //in mu meter
         double normOfVec = use.norm(vec);
 
         //////////////////////////////////////////////////////////////////////////
         //		Generating the sequence of coordinates that will be visited		//
         //////////////////////////////////////////////////////////////////////////
-        std::cout<<"Generating the sequence of coordinates that will be visited START"<<std::endl;
-        for (int i = 0; i < repetitions; i++)
+
+        for (int i = 0; i < repetitions+1; i++)
         {
             if (i % 2 == 1){
                 storagePos[i][0] = pos[0] + vec[0] + c*vec[0] / normOfVec;
@@ -196,43 +205,38 @@ void figures::line::cutAbsLim3D(){
                 storagePos[i][2] = pos[2] - c*vec[2] / normOfVec;
             }
         }
-        std::cout<<"Generating the sequence of coordinates that will be visited DONE"<<std::endl;
 
         //////////////////////////////////////////////////////
         //		Write sequence to file for controle			//
         //////////////////////////////////////////////////////
 
-        std::cout<<"Write sequence to file for controle START"<<std::endl;
-        use.writeCoordToFile("./cut_coords/cutAbsLim3DCoord.txt", storagePos, repetitions);
-        std::cout<<"Write sequence to file for controle DONE"<<std::endl;
+        use.writeCoordToFile("line3DAbs.txt", storagePos, repetitions+1);
 
         //////////////////////////////////////////
         //		Actual cutting procedure 		//
         //////////////////////////////////////////
 
-        std::cout<<"Actual cutting procedure START"<<std::endl;
-
         //A
         ::gE545.moveTo(storagePos[0][0], storagePos[0][1], storagePos[0][2]);
-        ::gE545.setLimits(limAxis, pos[limAxis], pos[limAxis] + vec[limAxis]);
+        ::gE545.setLimits(limAxis, pos[limAxis-1], pos[limAxis-1] + vec[limAxis-1]);
 
-        for (int i = 0; i < repetitions; i++){
+        for(auto item : vec){
+            std::cout<<item<<std::endl;
+        }
 
-            std::cout<<"i "<<i<<std::endl;
+        std::cout<<"lim axis = "<<limAxis<<std::endl;
+        ::gE545.printLimits();
+
+        for (int i = 1; i < repetitions+1; i++){
+
             ::gE545.moveTo(storagePos[i][0], storagePos[i][1], storagePos[i][2]);
 
         }
-        std::cout<<"close sh"<<std::endl;
         ::gE545.closeShutter();
-        std::cout<<"close set vel"<<std::endl;
-        ::gE545.setVelocity(1000, 1000, 1000);
-        ::gE545.moveTo(pos[0], pos[1], pos[2]);
-
-        std::cout<<"Actual cutting procedure DONE"<<std::endl;
+        ::gE545.setVelocity(5000, 5000, 5000);
+        ::gE545.moveTo(pos[0]+focus[0], pos[1]+focus[1], pos[2]+focus[2]);
 
     }//else
-
-
     std::cout<<"void figures::line::cutAbsLim3D() LEAVING"<<std::endl;
 
 }

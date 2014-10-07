@@ -13,9 +13,10 @@
 #include <sstream>
 #include <limits.h>
 
+#include <Eigen/Core>
 
 //Qt stuff
-#include <Eigen/Core>
+#include <QtGui>
 #include <QWidget>
 #include <QMainWindow>
 #include <QTableWidget>
@@ -41,6 +42,7 @@
 #include <QWidgetAction>
 #include <QToolBar>
 #include <QLayout>
+
 
 
 

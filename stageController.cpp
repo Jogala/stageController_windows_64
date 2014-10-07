@@ -1,7 +1,7 @@
 #include "stageController.h"
 #include <QThread>
 
-void stageController::initialize(){
+int stageController::initialize(){
 
     std::cout<<"void stageController::initialize() ENTERING"<<std::endl;
 
@@ -24,10 +24,16 @@ void stageController::initialize(){
                             setLimits(1, 0, 0);
                             setLimits(2, 0, 0);
                             setLimits(3, 0, 0);
+
+                            return 1;
                         }
                     }
                 }
             }
+        }else
+        {
+            std::cout<<"could not connect to E545 via RS232"<<endl;
+            return 0;
         }
    std::cout<<"void stageController::initialize() LEAVING "<<std::endl;
 
@@ -183,13 +189,12 @@ void stageController::loadFocusValuesFromFile(){
     {
         std::cout<< fileName_FocusValues << " opened " <<std::endl;
 
-        for(auto item : itsFocusValues)
+         for(int i = 0; i < 3; i++)
         {
-            f>>item;
+            f>>itsFocusValues[i];
         }
 
         f.close();
-        std::cout<< fileName_FocusValues << " closed " <<std::endl;
     }
 
     focusValuesWereSet=true;
@@ -198,9 +203,14 @@ void stageController::loadFocusValuesFromFile(){
 }
 void stageController::getFocusValues(double focus[3]){
 
+    std::cout<<"void stageController::getFocusValues(double focus[3]) ENTERING"<<std::endl;
+
+
     if(focusValuesWereSet)
     {
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 3; i++)
+        {
+
             focus[i]=itsFocusValues[i];
         }
 
@@ -210,6 +220,9 @@ void stageController::getFocusValues(double focus[3]){
         std::cout<<"CALL loadFocusValuesFromFile BEFORE USING getFocusValues"<<std::endl;
         std::cout<<"HENCE THE DEFAULT VALUES WHICH ARE SET IN THE CONSTRUCTOR 0 0 0 ARE USED"<<std::endl;
     }
+
+    std::cout<<"void stageController::getFocusValues(double focus[3]) LEAVING"<<std::endl;
+
 }
 void stageController::moveInFocus(){
 
@@ -1002,8 +1015,6 @@ std::string stageController::setLimitsMacro(int whichAxis, double value1, double
 
         int axisAr[1];
         axisAr[0] = whichAxis;
-        int triggerParAr[1];
-        double valueAr[1];
 
         std::stringstream f;
 

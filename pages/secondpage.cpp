@@ -13,6 +13,7 @@ secondPage::secondPage(QWidget *parent) :
     ui->minDeltaT_spinBox->setMinimum(0);
     ui->minDeltaT_spinBox->setMaximum(10000);
 
+    ui->T_spinBox->setValue(200);
     this->setLayout(ui->gridLayout);
 
     std::cout<<"secondPage::secondPage(QWidget *parent) LEAVING"<<std::endl;

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui quick
 
 CONFIG += c++11
 
@@ -27,7 +27,12 @@ SOURCES += main.cpp\
     pages/firstpage.cpp \
     pages/secondpage.cpp \
     pages/thirdpage.cpp \
-    globalstagecontroller.cpp
+    globalstagecontroller.cpp \
+    pages/fourthpage.cpp \
+    screenShot/edge.cpp \
+    screenShot/graphwidget.cpp \
+    screenShot/node.cpp \
+    screenShot/imagedialog.cpp
 
 HEADERS  += mainwindow.h \
     stageController.h \
@@ -42,12 +47,19 @@ HEADERS  += mainwindow.h \
     pages/firstpage.h \
     pages/secondpage.h \
     pages/thirdpage.h \
-    globalstagecontroller.h
+    globalstagecontroller.h \
+    pages/fourthpage.h \
+    screenShot/edge.h \
+    screenShot/graphwidget.h \
+    screenShot/node.h \
+    screenShot/imagedialog.h
 
 FORMS    += mainwindow.ui \
     pages/firstpage.ui \
     pages/secondpage.ui \
-    pages/thirdpage.ui
+    pages/thirdpage.ui \
+    pages/fourthpage.ui \
+    screenShot/imagedialog.ui
 
 INCLUDEPATH += $$PWD/Eigen_Linear_Algebra_Library\
 

@@ -124,7 +124,7 @@
           </column>
           <item row="0" column="0">
            <property name="text">
-            <string>R =</string>
+            <string>l =</string>
            </property>
           </item>
           <item row="1" column="0">
