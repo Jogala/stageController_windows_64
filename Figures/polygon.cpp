@@ -137,9 +137,9 @@ void    figures::polygon::cutAbsViaMacro3D(){
 
     //########################################################################################################################################################
 
-    //////////////////////////////////////////
-    //		Actual cutting procedure 		//
-    //////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
+    //		Create Macro text file and send it to the stage		//
+    //////////////////////////////////////////////////////////////
 
     std::fstream f;
     f << std::fixed;
@@ -150,7 +150,7 @@ void    figures::polygon::cutAbsViaMacro3D(){
 
     f << "MAC BEG " << macroName << std::endl;
     f << "VEL A " << velocity << " B " << velocity << " C " << velocity << std::endl;
-    //Open Shutter
+
     for (int i = 0; i < steps+1; i++){
         f << "MOV A " << storPos[i][0] << " B " << storPos[i][1] << " C " << storPos[i][2] << std::endl;
 

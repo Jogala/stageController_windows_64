@@ -63,6 +63,10 @@ protected:
 
     void takeScreenShot();
 
+    void loadUFaktoren();
+
+signals:
+
 private:
     int timerId;
     Node *centerNode;

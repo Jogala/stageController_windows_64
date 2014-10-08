@@ -82,7 +82,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>370</y>
+     <y>420</y>
      <width>91</width>
      <height>81</height>
     </rect>
@@ -138,6 +138,16 @@ of Laser</string>
      <x>690</x>
      <y>60</y>
      <width>62</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBox_vel_PolygonZug">
+   <property name="geometry">
+    <rect>
+     <x>31</x>
+     <y>380</y>
+     <width>91</width>
      <height>22</height>
     </rect>
    </property>

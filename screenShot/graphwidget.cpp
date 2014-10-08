@@ -23,15 +23,6 @@ GraphWidget::GraphWidget(QWidget *parent)
     laserSpot = scene->addEllipse(10,10,20,20,pen);
     laserSpot->setOpacity(0);
 
-    std::cout<<"load Umrechungsfaktoren Image zu real Coordinates  START"<<std::endl;
-    std::string fileName = "./Stored_Values/uFaktoren.txt";
-    std::fstream f;
-    f.open(fileName, std::fstream::in);
-    f>>uFaktorX;
-    f>>uFaktorY;
-    f.close();
-    std::cout<<"load Umrechungsfaktoren Image zu real Coordinates  DONE"<<std::endl;
-
 }
 
 void GraphWidget::itemMoved()
@@ -176,29 +167,33 @@ void GraphWidget::removeNode()
 
 void GraphWidget::polygonZugSaveCoordinates()
 {
+    std::cout<<"void GraphWidget::polygonZugSaveCoordinates() ENTERING"<<std::endl;
+
+    loadUFaktoren();
+
     std::string fileName = "./cut_coords/polygonZugCoord.txt";
     std::fstream f;
     f.open(fileName, std::fstream::out | std::fstream::trunc);
 
-
     for(Node* item : nodeList)
     {
-        f<<uFaktorX*(item->pos().x())<<"\t"<<uFaktorY*(item->pos().y())<<"\t"<<100<<std::endl;
+        f<<100+uFaktorX*(item->pos().x()+::gE545.itsLaserPosX)<<"\t"<<100-uFaktorY*(item->pos().y()-::gE545.itsLaserPosY)<<"\t"<<100<<std::endl;
+
+        std::cout<<100+uFaktorX*(item->pos().x()+::gE545.itsLaserPosX)<<" "<<100-uFaktorY*(item->pos().y()-::gE545.itsLaserPosY)<<std::endl;
     }
 
     f.close();
 
+    std::cout<<"void GraphWidget::polygonZugSaveCoordinates() LEAVING"<<std::endl;
 }
 
 void GraphWidget::addLaserSpotToScene()
 {
     std::cout<<"void GraphWidget::addLaserSpotToScene() ENTERING"<<std::endl;
 
-
-    laserSpot->setOpacity(1);
-
     ::gE545.loadLaserPosValuesFromFile();
-
+    laserSpot->setPos(::gE545.itsLaserPosX,::gE545.itsLaserPosY);
+    laserSpot->setOpacity(1);
     laserSpot->setFlag(QGraphicsItem::ItemIsMovable);
     laserSpot->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
     laserSpot->setEnabled(1);
@@ -210,8 +205,8 @@ void GraphWidget::writePosOfLaserSpotToFile_then_removeLaserSpotFromScene()
 {
     std::cout<<"void GraphWidget::writePosOfLaserSpotToFile_then_removeLaserSpotFromScene() ENTERING"<<std::endl;
 
-    ::gE545.itsLaserPosX = uFaktorX*(laserSpot->pos().x());
-    ::gE545.itsLaserPosY = uFaktorY*(laserSpot->pos().y());
+    ::gE545.itsLaserPosX = laserSpot->pos().x();
+    ::gE545.itsLaserPosY = laserSpot->pos().y();
     gE545.writeLaserPosValuesToFile();
 
     laserSpot->setOpacity(0);
@@ -219,7 +214,6 @@ void GraphWidget::writePosOfLaserSpotToFile_then_removeLaserSpotFromScene()
 
     std::cout<<"void GraphWidget::writePosOfLaserSpotToFile_then_removeLaserSpotFromScene() LEAVING"<<std::endl;
 }
-
 
 void GraphWidget::takeScreenShot()
 {
@@ -232,6 +226,18 @@ void GraphWidget::takeScreenShot()
     pixScreenShot = screen->grabWindow(0, geomScreenShot.x(), geomScreenShot.y(), geomScreenShot.width(), geomScreenShot.height());
 
     pToCallingWindow->setWindowOpacity(1);
+}
+
+void GraphWidget::loadUFaktoren()
+{
+    std::cout<<"load Umrechungsfaktoren Image zu real Coordinates  START"<<std::endl;
+    std::string fileName = "./Stored_Values/uFaktoren.txt";
+    std::fstream f;
+    f.open(fileName, std::fstream::in);
+    f>>uFaktorX;
+    f>>uFaktorY;
+    f.close();
+    std::cout<<"load Umrechungsfaktoren Image zu real Coordinates  DONE"<<std::endl;
 }
 
 void GraphWidget::refreshBackground()

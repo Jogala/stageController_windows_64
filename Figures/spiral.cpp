@@ -227,7 +227,7 @@ void figures::spiral::cutAbsMacroSpiral3D()
 
 			f << "MOV A " << storPos[i][0] << " B " << storPos[i][1] << " C " << storPos[i][2] << std::endl;
 			f << "DEL " << delay[i] << std::endl;
-	}
+    }
 	//Close Shutter
     f << ::gE545.setLimitsMacro(1, 0, 0, 0, 200);
 	f << "VEL A " << "9000" << " B " << "9000" << " C " << "9000" << std::endl;

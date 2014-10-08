@@ -13,8 +13,6 @@ class stageController
 private:
     double Position[3];
     usefulFunctions useful;
-    double  veloLimit;
-
     std::string fileName_FocusValues;
 
 
@@ -28,6 +26,9 @@ public:
     double itsLaserPosX;
     double itsLaserPosY;
     double itsFocusValues[3];
+    double itsVelocityForMacro;
+    double  veloLimit;
+
 
     //Methods
 
@@ -141,6 +142,8 @@ public:
 
     bool checkIfAnyLimit();
     void getConfigOfTriggerOutput();
+
+    void createMacroFromCoordinates(std::string pathToCoordinates);
 
     void sendMacros(std::string nameOfFile);
     void startMacroAndWaitWhileRunning(std::string nameOfmacro);
