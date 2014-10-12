@@ -12,10 +12,6 @@ imageDialog::imageDialog(QWidget *parent) :
     QVBoxLayout *mLay = new QVBoxLayout(this);
     mLay->addWidget(widget);
 
-    this->resize(widget->scene->width()+30,widget->scene->height()+30);
-
-    update();
-
 }
 
 imageDialog::~imageDialog()

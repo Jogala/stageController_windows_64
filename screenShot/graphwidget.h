@@ -34,12 +34,13 @@ class GraphWidget : public QGraphicsView
 public:
     GraphWidget(QWidget *parent = 0);
 
-    void itemMoved();
     QGraphicsScene *scene;
     void refreshBackground();
     QList <Node*> nodeList;
     QList <Edge*> edgeList;
     QGraphicsEllipseItem * laserSpot;
+    QRect geomScreenShot;
+
 
 public slots:
     void shuffle();
@@ -50,6 +51,11 @@ public slots:
     void polygonZugSaveCoordinates();
     void addLaserSpotToScene();
     void writePosOfLaserSpotToFile_then_removeLaserSpotFromScene();
+    void takeScreenShot();
+    void loadScreenShotGeometry();
+
+    void loadUFaktoren();
+
 
 protected:
     void keyPressEvent(QKeyEvent *event);
@@ -61,9 +67,7 @@ protected:
 
     void scaleView(qreal scaleFactor);
 
-    void takeScreenShot();
 
-    void loadUFaktoren();
 
 signals:
 
@@ -71,7 +75,6 @@ private:
     int timerId;
     Node *centerNode;
     QWidget * pToCallingWindow;
-    QRect geomScreenShot;
     QPixmap pixScreenShot;
 
     double uFaktorX=1;

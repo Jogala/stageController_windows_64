@@ -29,6 +29,20 @@ fourthPage::fourthPage(QWidget *parent) :
     ui->spinBox_laserX->setValue(::gE545.itsLaserPosX);
     ui->spinBox_laserY->setValue(::gE545.itsLaserPosY);
     ui->spinBox_vel_PolygonZug->setValue(100);
+
+    ui->spinBox_screenShot_x->setMaximum(5000);
+    ui->spinBox_screenShot_y->setMaximum(5000);
+    ui->spinBox_screenShot_w->setMaximum(5000);
+    ui->spinBox_screenShot_h->setMaximum(5000);
+
+    ui->spinBox_stepSize->setMinimum(1);
+    ui->spinBox_stepSize->setMaximum(100);
+
+    ui->spinBox_screenShot_x->setValue(myImDialogWin->widget->geomScreenShot.x());
+    ui->spinBox_screenShot_y->setValue(myImDialogWin->widget->geomScreenShot.y());
+    ui->spinBox_screenShot_w->setValue(myImDialogWin->widget->geomScreenShot.width());
+    ui->spinBox_screenShot_h->setValue(myImDialogWin->widget->geomScreenShot.height());
+
 }
 
 fourthPage::~fourthPage()
@@ -43,9 +57,8 @@ void fourthPage::on_pushButton_Refresh_Background_clicked()
 
 void fourthPage::on_pushButton_open_window_clicked()
 {
-    QRect rec  = myImDialogWin->rect();
-    myImDialogWin->setGeometry(2000,500,rec.width(),rec.height());
-    myImDialogWin->show();
+    myImDialogWin->setGeometry(3500,500,600,600);
+    myImDialogWin->showMaximized();
 }
 
 void fourthPage::on_checkBox_polygonzug_stateChanged(int arg1)
@@ -117,3 +130,96 @@ void fourthPage::on_pushButton_done_set_position_of_laser_clicked()
     ui->spinBox_laserY->setValue(::gE545.itsLaserPosY);
 
 }
+
+
+
+void fourthPage::on_pushButton_up_clicked()
+{
+    myImDialogWin->widget->geomScreenShot.setRect(
+                                                    myImDialogWin->widget->geomScreenShot.x(),myImDialogWin->widget->geomScreenShot.y()-stepSizeScreenShot,
+                                                    myImDialogWin->widget->geomScreenShot.width(),myImDialogWin->widget->geomScreenShot.height()
+                                                  );
+
+    ui->spinBox_screenShot_y->setValue(myImDialogWin->widget->geomScreenShot.y());
+
+    myImDialogWin->widget->takeScreenShot();
+    myImDialogWin->widget->refreshBackground();
+}
+
+void fourthPage::on_pushButton_right_clicked()
+{
+    myImDialogWin->widget->geomScreenShot.setRect(
+                                                    myImDialogWin->widget->geomScreenShot.x()+stepSizeScreenShot,myImDialogWin->widget->geomScreenShot.y(),
+                                                    myImDialogWin->widget->geomScreenShot.width(),myImDialogWin->widget->geomScreenShot.height()
+                                                  );
+    ui->spinBox_screenShot_y->setValue(myImDialogWin->widget->geomScreenShot.x());
+
+
+    myImDialogWin->widget->takeScreenShot();
+    myImDialogWin->widget->refreshBackground();
+}
+
+void fourthPage::on_pushButton_down_clicked()
+{
+    myImDialogWin->widget->geomScreenShot.setRect(
+                                                    myImDialogWin->widget->geomScreenShot.x(),myImDialogWin->widget->geomScreenShot.y()-stepSizeScreenShot,
+                                                    myImDialogWin->widget->geomScreenShot.width(),myImDialogWin->widget->geomScreenShot.height()
+                                                  );
+
+    ui->spinBox_screenShot_y->setValue(myImDialogWin->widget->geomScreenShot.y());
+
+
+    myImDialogWin->widget->takeScreenShot();
+    myImDialogWin->widget->refreshBackground();
+}
+
+void fourthPage::on_pushButton_left_clicked()
+{
+    myImDialogWin->widget->geomScreenShot.setRect(
+                                                    myImDialogWin->widget->geomScreenShot.x()-stepSizeScreenShot,myImDialogWin->widget->geomScreenShot.y(),
+                                                    myImDialogWin->widget->geomScreenShot.width(),myImDialogWin->widget->geomScreenShot.height()
+                                                  );
+    ui->spinBox_screenShot_y->setValue(myImDialogWin->widget->geomScreenShot.x());
+
+
+    myImDialogWin->widget->takeScreenShot();
+    myImDialogWin->widget->refreshBackground();
+}
+
+void fourthPage::on_spinBox_stepSize_valueChanged(int arg1)
+{
+    stepSizeScreenShot=arg1;
+}
+
+void fourthPage::on_spinBox_screenShot_x_valueChanged(int arg1)
+{
+    myImDialogWin->widget->geomScreenShot.setX(arg1);
+
+    myImDialogWin->widget->takeScreenShot();
+    myImDialogWin->widget->refreshBackground();
+}
+
+void fourthPage::on_spinBox_screenShot_y_valueChanged(int arg1)
+{
+    myImDialogWin->widget->geomScreenShot.setY(arg1);
+
+    myImDialogWin->widget->takeScreenShot();
+    myImDialogWin->widget->refreshBackground();
+}
+
+void fourthPage::on_spinBox_screenShot_w_valueChanged(int arg1)
+{
+    myImDialogWin->widget->geomScreenShot.setWidth(arg1);
+
+    myImDialogWin->widget->takeScreenShot();
+    myImDialogWin->widget->refreshBackground();
+}
+
+void fourthPage::on_spinBox_screenShot_h_valueChanged(int arg1)
+{
+    myImDialogWin->widget->geomScreenShot.setHeight(arg1);
+
+    myImDialogWin->widget->takeScreenShot();
+    myImDialogWin->widget->refreshBackground();
+}
+

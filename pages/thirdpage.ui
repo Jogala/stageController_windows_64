@@ -331,7 +331,7 @@ equal to 1. </string>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QDoubleSpinBox" name="y_pos">
+      <widget class="QDoubleSpinBox" name="x_pos">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -341,7 +341,7 @@ equal to 1. </string>
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="x_pos">
+      <widget class="QDoubleSpinBox" name="y_pos">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>

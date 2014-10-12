@@ -1,14 +1,12 @@
 #include "edge.h"
 #include "node.h"
-#include "graphwidget.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
 
-Node::Node(GraphWidget *graphWidget)
-    : graph(graphWidget)
+Node::Node()
 {
     setFlag(ItemIsMovable);
     setFlag(ItemSendsGeometryChanges);
@@ -123,7 +121,6 @@ QVariant Node::itemChange(GraphicsItemChange change, const QVariant &value)
     case ItemPositionHasChanged:
         foreach (Edge *edge, edgeList)
             edge->adjust();
-        graph->itemMoved();
         break;
     default:
         break;

@@ -9,10 +9,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
-    //    if(::gE545.initialize()==0)
-    //    {
-    //         QMessageBox::information(this,"initialize","Could not establish connection to E545 via RS232");
-    //    }
+    bool youForgotToTurnInitOn = 1;
+
+    if(youForgotToTurnInitOn){
+      QMessageBox::information(this,"initialize","YOU FORGOT TO CALL THE FUNCTION INIT !!!! turn youForgotToTurnInitOn to 0 and compile it again");
+
+    }
+        else{
+        if(::gE545.initialize()==0)
+        {
+             QMessageBox::information(this,"initialize","Could not establish connection to E545 via RS232");
+        }
+    }
 
     maxWidthFirstPage=1600;
     pagesGeom.resize(4,2);

@@ -177,7 +177,7 @@ std::cout<<"assign values from array to variables with more concrete names DONE"
         ::gE545.closeShutter();
         ::gE545.closeShutter();
 
-
+        ::gE545.setVelocity(9900,9900,9900);
         ::gE545.moveTo(pos[0] + focus[0], pos[1] + focus[1], pos[2] + focus[2]);
         std::cout<<"Actual cutting procedure DONE"<<std::endl;
 

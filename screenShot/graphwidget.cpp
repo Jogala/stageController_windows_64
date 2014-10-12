@@ -5,6 +5,8 @@
 GraphWidget::GraphWidget(QWidget *parent)
     : QGraphicsView(parent), timerId(0), pToCallingWindow(parent)
 {
+    loadScreenShotGeometry();
+
     scene = new QGraphicsScene(this);
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
     scene->setSceneRect(-325, -325, 650, 650);
@@ -23,12 +25,8 @@ GraphWidget::GraphWidget(QWidget *parent)
     laserSpot = scene->addEllipse(10,10,20,20,pen);
     laserSpot->setOpacity(0);
 
-}
+    loadScreenShotGeometry();
 
-void GraphWidget::itemMoved()
-{
-    if (!timerId)
-        timerId = startTimer(1000 / 25);
 }
 
 void GraphWidget::keyPressEvent(QKeyEvent *event)
@@ -132,7 +130,7 @@ void GraphWidget::zoomOut()
 
 void GraphWidget::addNode()
 {
-    Node * newNode = new Node(this);
+    Node * newNode = new Node;
 
     nodeList.append(newNode);
 
@@ -215,9 +213,37 @@ void GraphWidget::writePosOfLaserSpotToFile_then_removeLaserSpotFromScene()
     std::cout<<"void GraphWidget::writePosOfLaserSpotToFile_then_removeLaserSpotFromScene() LEAVING"<<std::endl;
 }
 
+void GraphWidget::loadScreenShotGeometry()
+{
+
+    std::string storedValuesPath = "./Stored_Values/screenshot.txt";
+    double x;
+    double y;
+    double w;
+    double h;
+
+    std::cout<<"void GraphWidget::loadScreenShotGeometry(QRect geom) ENTERING"<<std::endl;
+
+    std::fstream f;
+
+    f.open(storedValuesPath);
+
+    if (f.is_open()) {
+
+        f>>x;
+        f>>y;
+        f>>w;
+        f>>h;
+    }
+    f.close();
+
+    geomScreenShot.setRect(x,y,w,h);
+    std::cout<<"void GraphWidget::loadScreenShotGeometry(QRect geom) LEAVING"<<std::endl;
+
+}
+
 void GraphWidget::takeScreenShot()
 {
-    geomScreenShot.setRect(2300,200, 650,650);
     pToCallingWindow->setWindowOpacity(0);
 
     QScreen *screen = QGuiApplication::primaryScreen();
