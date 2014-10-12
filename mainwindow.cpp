@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pagesGeom(1,0)=450;
     pagesGeom(1,1)=500;
     pagesGeom(2,0)=830;
-    pagesGeom(2,1)=450;
+    pagesGeom(2,1)=900;
     pagesGeom(3,0)=830;
     pagesGeom(3,1)=800;
 
@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     std::cout<<"allocate second Page on the heap DONE"<<std::endl;
 
     std::cout<<"allocate third Page on the heap START"<<std::endl;
-    thirdPageWidget = new thirdPage(this);
+    settingsPageWidget = new settingsPage(this,mMalkasten);
     std::cout<<"allocate third Page on the heap DONE"<<std::endl;
 
     std::cout<<"allocate fourth Page on the heap START"<<std::endl;
@@ -72,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //////////////////////////////////////////////////////////////
     stackedWidget->addWidget(scrollArea);
     stackedWidget->addWidget(secondPageWidget);
-    stackedWidget->addWidget(thirdPageWidget);
+    stackedWidget->addWidget(settingsPageWidget);
     stackedWidget->addWidget(freeHandWidget);
 
     ////////////////////////////////////////////////////////////
@@ -127,7 +127,7 @@ void MainWindow::on_actionSettings_triggered()
     stackedWidget->setCurrentIndex(2);
     this->setCentralWidget(stackedWidget);
 
-    adjusMainWindowFor_thirdPage();
+    adjusMainWindowFor_settingsPage();
 }
 
 void MainWindow::on_actionFreehand_triggered()
@@ -158,7 +158,7 @@ void MainWindow::adjusMainWindowFor_secondPage(){
 
 }
 
-void MainWindow::adjusMainWindowFor_thirdPage(){
+void MainWindow::adjusMainWindowFor_settingsPage(){
 
     this->setFixedSize(pagesGeom(2,0),pagesGeom(2,1));
     this->resize(pagesGeom(2,0),pagesGeom(2,1));

@@ -24,6 +24,7 @@
 
 
 class Malkasten;
+class settingsPage;
 
 class MeineSceneClass : public QGraphicsScene
 {
@@ -38,12 +39,16 @@ public:
     QList <Node*> nodeFreeHandList;
     QList <Edge*> edgeFreeHandList;
 
+    QGraphicsEllipseItem * laserSpot;
+
+    void giveItAPointerToSettingsPage(settingsPage * );
 
 public slots:
 
 private:
     Malkasten * pToMalkasten;
     QGraphicsPixmapItem * backGroundItem;
+    settingsPage * settingsPageWidget;
 
 
 };

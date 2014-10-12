@@ -5,7 +5,7 @@
 
 #include "pages/firstpage.h"
 #include "pages/secondpage.h"
-#include "pages/thirdpage.h"
+#include "pages/settingsPage.h"
 #include "pages/freehand.h"
 
 #include "screenShotWindow/malkasten.h"
@@ -24,7 +24,7 @@ public:
 
     void adjusMainWindowFor_firstPage();
     void adjusMainWindowFor_secondPage();
-    void adjusMainWindowFor_thirdPage();
+    void adjusMainWindowFor_settingsPage();
     void adjusMainWindowFor_fourthPage();
 
     void killMe()
@@ -56,7 +56,7 @@ private:
 
     firstPage *firstPageWidget;
     secondPage *secondPageWidget;
-    thirdPage *thirdPageWidget;
+    settingsPage *settingsPageWidget;
     freeHand * freeHandWidget;
 
     Eigen::MatrixXi pagesGeom;

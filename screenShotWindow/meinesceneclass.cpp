@@ -1,16 +1,25 @@
 #include "meinesceneclass.h"
 #include "malkasten.h"
 #include "globalstagecontroller.h"
+#include "pages/settingsPage.h"
 
 #include <QtGui>
 #include <QGraphicsSceneMouseEvent>
 
 MeineSceneClass::MeineSceneClass(QObject *parent, Malkasten * pToCallingMalkasten)
     :QGraphicsScene(parent)
-{
+{   
     pToCallingMalkasten->takeScreenShot();
     backGroundItem = this->addPixmap(*pToCallingMalkasten->pixScreenShot);
     backGroundItem->setZValue(-1);
+
+    laserSpot = new QGraphicsEllipseItem;
+    laserSpot->setBrush(Qt::red);
+    laserSpot->setFlag(QGraphicsItem::ItemIsMovable);
+    laserSpot->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+    laserSpot->setEnabled(1);
+    laserSpot->setRect(::gE545.itsLaserPosX,::gE545.itsLaserPosY,10,10);
+
 }
 
 void MeineSceneClass::setNewBackgroundPixmap(QPixmap * pToPix)
@@ -52,6 +61,11 @@ void MeineSceneClass::writeCoordOfNodesToFile()
 
         f.close();
 
+}
+
+void MeineSceneClass::giveItAPointerToSettingsPage(settingsPage * pToSettingsPage)
+{
+    settingsPageWidget = pToSettingsPage;
 }
 
 
