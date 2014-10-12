@@ -6,8 +6,11 @@
 #include "pages/firstpage.h"
 #include "pages/secondpage.h"
 #include "pages/thirdpage.h"
-#include "pages/fourthpage.h"
+#include "pages/freehand.h"
 
+#include "screenShotWindow/malkasten.h"
+#include "screenShotWindow/meineviewclass.h"
+#include "screenShotWindow/meinesceneclass.h"
 
 namespace Ui {
 class MainWindow;
@@ -41,11 +44,8 @@ public:
 private slots:
 
     void on_actionFigures_triggered();
-
     void on_actionSettings_triggered();
-
     void on_actionPuls_triggered();
-
     void on_actionFreehand_triggered();
 
 
@@ -57,10 +57,13 @@ private:
     firstPage *firstPageWidget;
     secondPage *secondPageWidget;
     thirdPage *thirdPageWidget;
-    fourthPage *fourthPageWidget;
+    freeHand * freeHandWidget;
 
     Eigen::MatrixXi pagesGeom;
     int maxWidthFirstPage;
+
+    //ScreenShotWindow
+    Malkasten * mMalkasten;
 };
 
 #endif // MAINWINDOW_H

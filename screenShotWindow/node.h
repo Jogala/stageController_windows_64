@@ -28,7 +28,6 @@ public:
 
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 

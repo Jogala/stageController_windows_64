@@ -28,11 +28,12 @@ SOURCES += main.cpp\
     pages/secondpage.cpp \
     pages/thirdpage.cpp \
     globalstagecontroller.cpp \
-    pages/fourthpage.cpp \
-    screenShot/edge.cpp \
-    screenShot/graphwidget.cpp \
-    screenShot/node.cpp \
-    screenShot/imagedialog.cpp
+    pages/freehand.cpp \
+    screenShotWindow/edge.cpp \
+    screenShotWindow/malkasten.cpp \
+    screenShotWindow/meinesceneclass.cpp \
+    screenShotWindow/meineviewclass.cpp \
+    screenShotWindow/node.cpp
 
 HEADERS  += mainwindow.h \
     stageController.h \
@@ -48,18 +49,20 @@ HEADERS  += mainwindow.h \
     pages/secondpage.h \
     pages/thirdpage.h \
     globalstagecontroller.h \
-    pages/fourthpage.h \
-    screenShot/edge.h \
-    screenShot/graphwidget.h \
-    screenShot/node.h \
-    screenShot/imagedialog.h
+    pages/freehand.h \
+    screenShotWindow/edge.h \
+    screenShotWindow/malkasten.h \
+    screenShotWindow/meinesceneclass.h \
+    screenShotWindow/meineviewclass.h \
+    screenShotWindow/node.h
 
 FORMS    += mainwindow.ui \
     pages/firstpage.ui \
     pages/secondpage.ui \
     pages/thirdpage.ui \
     pages/fourthpage.ui \
-    screenShot/imagedialog.ui
+    pages/freehand.ui
+
 
 INCLUDEPATH += $$PWD/Eigen_Linear_Algebra_Library\
 

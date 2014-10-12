@@ -37,6 +37,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QSize myIconSize(100,100);
     ui->mainToolBar->setIconSize(myIconSize);
 
+    //Screen Shot window
+    mMalkasten = new Malkasten(this);
+    mMalkasten->show();
+
     stackedWidget = new QStackedWidget(this);
 
     std::cout<<"allocate first Page on the heap START"<<std::endl;
@@ -52,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
     std::cout<<"allocate third Page on the heap DONE"<<std::endl;
 
     std::cout<<"allocate fourth Page on the heap START"<<std::endl;
-    fourthPageWidget = new fourthPage(this);
+    freeHandWidget = new freeHand(this,mMalkasten);
     std::cout<<"allocate fourth Page on the heap DONE"<<std::endl;
 
     //////////////////////////////////////////////////////////
@@ -69,7 +73,7 @@ MainWindow::MainWindow(QWidget *parent) :
     stackedWidget->addWidget(scrollArea);
     stackedWidget->addWidget(secondPageWidget);
     stackedWidget->addWidget(thirdPageWidget);
-    stackedWidget->addWidget(fourthPageWidget);
+    stackedWidget->addWidget(freeHandWidget);
 
     ////////////////////////////////////////////////////////////
     //      Show First Page and Adjust size of MainWindow     //
@@ -78,6 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
     adjusMainWindowFor_firstPage();
 
     ui->mainToolBar->setMovable(false);
+
 
     std::cout<<"MainWindow::MainWindow(QWidget *parent) LEAVING"<<std::endl;
 }
