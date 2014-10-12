@@ -3,12 +3,13 @@
 
 #include <QGraphicsItem>
 #include <QList>
+#include <QObject>
 
 class Edge;
 class GraphWidget;
 class QGraphicsSceneMouseEvent;
 
-class Node : public QGraphicsItem
+class Node :  public QGraphicsItem
 {
 public:
     Node();

@@ -18,9 +18,11 @@
 #include <QGraphicsItem>
 #include <iostream>
 #include <fstream>
+#include <QObject>
 
 #include "node.h"
 #include "edge.h"
+#include "laserSpot.h"
 
 
 class Malkasten;
@@ -28,6 +30,8 @@ class settingsPage;
 
 class MeineSceneClass : public QGraphicsScene
 {
+    Q_OBJECT
+
 public:
     MeineSceneClass(QObject *parent = 0,Malkasten * pToCallingMalkasten = 0);
 
@@ -35,20 +39,27 @@ public:
 
     void removeAllNodes();
     void writeCoordOfNodesToFile();
-    int uFaktorFromSceneToStage;
+    double uFaktorFromSceneToStage;
     QList <Node*> nodeFreeHandList;
     QList <Edge*> edgeFreeHandList;
 
-    QGraphicsEllipseItem * laserSpot;
+    LaserSpot * laserSpot;
 
     void giveItAPointerToSettingsPage(settingsPage * );
 
 public slots:
+    void printHallo(){
+        qDebug()<<"hallo";
+    }
+
+signals:
+
 
 private:
     Malkasten * pToMalkasten;
     QGraphicsPixmapItem * backGroundItem;
     settingsPage * settingsPageWidget;
+
 
 
 };

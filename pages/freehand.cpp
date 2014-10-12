@@ -22,6 +22,8 @@ freeHand::freeHand(QWidget *parent,Malkasten * pToMainWindowsMalkasten) :
 
     loadScreenShotGeometry();
     loadUFactors();
+
+    mMalkasten->refreshBackground();
 }
 
 freeHand::~freeHand()

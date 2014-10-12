@@ -34,7 +34,9 @@ SOURCES += main.cpp\
     screenShotWindow/meinesceneclass.cpp \
     screenShotWindow/meineviewclass.cpp \
     screenShotWindow/node.cpp \
-    pages/settingsPage.cpp
+    pages/settingsPage.cpp \
+    screenShotWindow/laserSpot.cpp
+
 
 HEADERS  += mainwindow.h \
     stageController.h \
@@ -56,7 +58,8 @@ HEADERS  += mainwindow.h \
     screenShotWindow/meinesceneclass.h \
     screenShotWindow/meineviewclass.h \
     screenShotWindow/node.h \
-    pages/settingsPage.h
+    pages/settingsPage.h \
+    screenShotWindow/laserSpot.h
 
 FORMS    += mainwindow.ui \
     pages/firstpage.ui \

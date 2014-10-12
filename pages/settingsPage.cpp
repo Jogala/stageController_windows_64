@@ -171,7 +171,6 @@ void settingsPage::on_pushButton_clicked()
 }
 
 
-
 void settingsPage::on_delayFactor_SpinBox_valueChanged(double arg1)
 {
     ::macroDelayFactor=ui->delayFactor_SpinBox->value();
@@ -225,8 +224,10 @@ void settingsPage::on_spinBox_laserPosY_editingFinished()
         gE545.writeLaserPosValuesToFile();
 }
 
-void settingsPage::assignNewValuesToLaswerPos()
+void settingsPage::assignNewValuesToLaserPos()
 {
+    qDebug()<<"I GOT TRIGGERED";
+    qDebug()<<mMalkasten->scene->laserSpot->pos();
     spinBox_laserPosX->setValue(mMalkasten->scene->laserSpot->x());
     spinBox_laserPosY->setValue(mMalkasten->scene->laserSpot->y());
     gE545.itsLaserPosX = mMalkasten->scene->laserSpot->x();

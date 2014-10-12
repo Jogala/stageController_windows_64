@@ -18,7 +18,7 @@ public:
     ~settingsPage();
 
 public slots:
-    void assignNewValuesToLaswerPos();
+    void assignNewValuesToLaserPos();
 
 private slots:
 

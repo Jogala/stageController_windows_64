@@ -13,10 +13,8 @@ MeineSceneClass::MeineSceneClass(QObject *parent, Malkasten * pToCallingMalkaste
     backGroundItem = this->addPixmap(*pToCallingMalkasten->pixScreenShot);
     backGroundItem->setZValue(-1);
 
-    laserSpot = new QGraphicsEllipseItem;
+    laserSpot = new LaserSpot(this);
     laserSpot->setBrush(Qt::red);
-    laserSpot->setFlag(QGraphicsItem::ItemIsMovable);
-    laserSpot->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
     laserSpot->setEnabled(1);
     laserSpot->setRect(::gE545.itsLaserPosX,::gE545.itsLaserPosY,10,10);
 
@@ -66,6 +64,8 @@ void MeineSceneClass::writeCoordOfNodesToFile()
 void MeineSceneClass::giveItAPointerToSettingsPage(settingsPage * pToSettingsPage)
 {
     settingsPageWidget = pToSettingsPage;
+    connect(laserSpot,SIGNAL(notification()),settingsPageWidget,SLOT(assignNewValuesToLaserPos()));
+
 }
 
 
