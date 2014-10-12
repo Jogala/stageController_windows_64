@@ -6,7 +6,8 @@
 meineViewClass::meineViewClass(MeineSceneClass *pToScene, Malkasten * pToCallingMalkasten) :
     QGraphicsView(pToScene), pToMalkasten(pToCallingMalkasten), scene(pToScene)
 {
-
+    this->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+    this->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 }
 
 void meineViewClass::enableDrawFreeHand(bool val)

@@ -14,11 +14,6 @@ Malkasten::Malkasten(QWidget *parent) :
     scene= new MeineSceneClass(0,this);
     view = new meineViewClass(scene,this);
 
-    QGraphicsEllipseItem *eli = scene->addEllipse(0,0,10,10,QPen(Qt::blue,5),QBrush(Qt::red));
-    eli->setFlag(QGraphicsItem::ItemIsMovable);
-    eli->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
-    eli->setEnabled(1);
-
     QVBoxLayout* vlayout = new QVBoxLayout(this);
     vlayout->addWidget(view);
 
@@ -56,4 +51,5 @@ void Malkasten::refreshBackground()
     takeScreenShot();
     //scene has access to pixScreenShot
     scene->setNewBackgroundPixmap(pixScreenShot);
+    view->resize(pixScreenShot->width(),pixScreenShot->height());
 }
