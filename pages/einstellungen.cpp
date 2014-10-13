@@ -198,33 +198,6 @@ void Einstellungen::on_pushButton_2_clicked()
     ui->y_pos->setValue(pos[1]);
 }
 
-void Einstellungen::on_radioButton_clicked(bool checked)
-{
-    if(checked)
-    {
-        spinBox_laserPosX->setEnabled(1);
-        spinBox_laserPosY->setEnabled(1);
-
-        if(!scene->laserSpot->isVisible()){
-        scene->laserSpot->show();
-        }
-        scene->laserSpot->setEnabled(1);
-
-
-    }else
-    {
-        spinBox_laserPosX->setEnabled(0);
-        spinBox_laserPosY->setEnabled(0);
-
-        gE545.itsLaserPosX = scene->laserSpot->x();
-        gE545.itsLaserPosY = scene->laserSpot->y();
-        gE545.writeLaserPosValuesToFile();
-        scene->laserSpot->hide();
-        spinBox_laserPosX->setValue(::gE545.itsLaserPosX);
-        spinBox_laserPosY->setValue(::gE545.itsLaserPosY);
-    }
-}
-
 void Einstellungen::on_spinBox_laserPosX_editingFinished()
 {
         scene->laserSpot->setPos(spinBox_laserPosX->value(),spinBox_laserPosY->value());
@@ -425,3 +398,32 @@ void Einstellungen::saveScreenShotGeometry()
     f.close();
 }
 
+
+
+
+void Einstellungen::on_checkBox_showLaserSpot_clicked(bool checked)
+{
+    if(checked)
+    {
+        spinBox_laserPosX->setEnabled(1);
+        spinBox_laserPosY->setEnabled(1);
+
+        if(!scene->laserSpot->isVisible()){
+        scene->laserSpot->show();
+        }
+        scene->laserSpot->setEnabled(1);
+
+
+    }else
+    {
+        spinBox_laserPosX->setEnabled(0);
+        spinBox_laserPosY->setEnabled(0);
+
+        gE545.itsLaserPosX = scene->laserSpot->x();
+        gE545.itsLaserPosY = scene->laserSpot->y();
+        gE545.writeLaserPosValuesToFile();
+        scene->laserSpot->hide();
+        spinBox_laserPosX->setValue(::gE545.itsLaserPosX);
+        spinBox_laserPosY->setValue(::gE545.itsLaserPosY);
+    }
+}

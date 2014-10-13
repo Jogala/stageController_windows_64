@@ -35,7 +35,6 @@ private slots:
     void on_pushButton_clicked();
     void on_delayFactor_SpinBox_valueChanged(double arg1);
     void on_pushButton_2_clicked();
-    void on_radioButton_clicked(bool checked);
     void on_spinBox_laserPosX_editingFinished();
     void on_spinBox_laserPosY_editingFinished();
 
@@ -59,6 +58,8 @@ private slots:
     void loadScreenShotGeometry();
     void saveScreenShotGeometry();
 
+
+    void on_checkBox_showLaserSpot_clicked(bool checked);
 
 private:
     Ui::Einstellungen *ui;
