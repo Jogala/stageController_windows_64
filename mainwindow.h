@@ -4,7 +4,7 @@
 #include "Header.h"
 
 #include "pages/firstpage.h"
-#include "pages/secondpage.h"
+#include "pages/pulsePage.h"
 #include "pages/settingsPage.h"
 #include "pages/freehand.h"
 
@@ -23,7 +23,7 @@ class MainWindow : public QMainWindow
 public:
 
     void adjusMainWindowFor_firstPage();
-    void adjusMainWindowFor_secondPage();
+    void adjusMainWindowFor_pulsePage();
     void adjusMainWindowFor_settingsPage();
     void adjusMainWindowFor_fourthPage();
 
@@ -55,7 +55,7 @@ private:
     QRect recMenuBar;
 
     firstPage *firstPageWidget;
-    secondPage *secondPageWidget;
+    pulsePage *pulsePageWidget;
     settingsPage *settingsPageWidget;
     freeHand * freeHandWidget;
 

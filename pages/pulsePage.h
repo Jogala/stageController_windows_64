@@ -1,5 +1,5 @@
-#ifndef SECONDPAGE_H
-#define SECONDPAGE_H
+#ifndef pulsePage_H
+#define pulsePage_H
 
 #include "./GlobalVariables.h"
 #include "./globalstagecontroller.h"
@@ -27,18 +27,20 @@
 #include <QComboBox>
 #include <QThread>
 
+#include "screenShotWindow/malkasten.h"
+#include "screenShotWindow/meinesceneclass.h"
 
 namespace Ui {
-class secondPage;
+class pulsePage;
 }
 
-class secondPage : public QWidget
+class pulsePage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit secondPage(QWidget *parent = 0);
-    ~secondPage();
+    explicit pulsePage(QWidget *parent = 0, Malkasten * pToMainWindowsMalkasten=0);
+    ~pulsePage();
 
 private slots:
     void on_open_shutter_clicked();
@@ -47,9 +49,22 @@ private slots:
 
     void on_pulse_button_clicked();
 
+    void on_pushButton_refreshBackground_clicked();
+
+
+    void on_open_shutter__blueDot_clicked();
+
+    void on_close_shutter___blueDot_clicked();
+
+    void on_radioButton_clicked(bool checked);
+
+    void on_pulse_button___blueDot_clicked();
+
 private:
-    Ui::secondPage *ui;
+    Ui::pulsePage *ui;
+    Malkasten *mMalkasten;
+    MeineSceneClass * scene;
 
 };
 
-#endif // SECONDPAGE_H
+#endif // pulsePage_H

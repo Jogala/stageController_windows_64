@@ -45,11 +45,8 @@ public:
 private slots:
 
     void on_line_cut_clicked();
-
     void on_rec_cut_clicked();
-
     void on_poly_cut_clicked();
-
     void on_spiral_cut_clicked();
 
     void setFocus_lineTable();
@@ -78,7 +75,6 @@ private:
     void setUp_LineTable();
     void setUp_PolyTable();
     void setUp_SpiralTable();
-
     void setShortcuts();
 };
 

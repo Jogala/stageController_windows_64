@@ -2,6 +2,7 @@
 #include "ui_freehand.h"
 
 #include <QDebug>
+#include "globalstagecontroller.h"
 
 freeHand::freeHand(QWidget *parent,Malkasten * pToMainWindowsMalkasten) :
     QWidget(parent),mMalkasten(pToMainWindowsMalkasten), ui(new Ui::freeHand)
@@ -20,8 +21,8 @@ freeHand::freeHand(QWidget *parent,Malkasten * pToMainWindowsMalkasten) :
     ui->spinBox_screenShot_h->setMinimum(1);
     ui->spinBox_screenShot_h->setMaximum(5000);
 
-    loadScreenShotGeometry();
-    loadUFactors();
+    ui->spinBox_velocity->setMinimum(1);
+    ui->spinBox_velocity->setMaximum(::gE545.itsVeloLimit);
 
     mMalkasten->refreshBackground();
 }
@@ -118,39 +119,6 @@ void freeHand::saveScreenShotGeometry()
     f.close();
 }
 
-void freeHand::loadUFactors()
-{
-
-    std::string storedValuesPath = "./Stored_Values/uFactors.txt";
-
-    double uFac;
-    std::fstream f;
-    f.open(storedValuesPath);
-
-    if (f.is_open()) {
-
-        f>>uFac;
-
-    }
-    f.close();
-
-    mMalkasten->scene->uFaktorFromSceneToStage = uFac;
-    ui->doubleSpinBox_uFactor->setValue(uFac);
-
-}
-void freeHand::saveUFactors()
-{
-    std::string storedValuesPath = "./Stored_Values/uFactors.txt";
-    std::fstream f;
-    f.open(storedValuesPath);
-
-    if (f.is_open()) {
-
-        f<<ui->doubleSpinBox_uFactor->value()<<std::endl;
-    }
-    f.close();
-}
-
 void freeHand::on_pushButton_clear_clicked()
 {
     mMalkasten->scene->removeAllNodes();
@@ -159,10 +127,6 @@ void freeHand::on_pushButton_clear_clicked()
 void freeHand::on_pushButton_cut_freeHand_press_clicked()
 {
     mMalkasten->scene->writeCoordOfNodesToFile();
+    ::gE545.createMacroFromCoordinatesAndCut("./cut_coords/coordFreeHand.txt","freeHand",ui->spinBox_velocity->value(),ui->doubleSpinBox_delayFactor->value());
 }
 
-void freeHand::on_doubleSpinBox_uFactor_editingFinished()
-{
-    mMalkasten->scene->uFaktorFromSceneToStage = ui->doubleSpinBox_uFactor->value();
-    saveUFactors();
-}

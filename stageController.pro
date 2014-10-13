@@ -25,8 +25,6 @@ SOURCES += main.cpp\
     Figures/spiral.cpp \
     Figures/surfaceRec.cpp \
     pages/firstpage.cpp \
-    pages/secondpage.cpp \
-    pages/settingsPage.cpp \
     globalstagecontroller.cpp \
     pages/freehand.cpp \
     screenShotWindow/edge.cpp \
@@ -34,8 +32,11 @@ SOURCES += main.cpp\
     screenShotWindow/meinesceneclass.cpp \
     screenShotWindow/meineviewclass.cpp \
     screenShotWindow/node.cpp \
+    screenShotWindow/laserSpot.cpp \
     pages/settingsPage.cpp \
-    screenShotWindow/laserSpot.cpp
+    pages/pulsePage.cpp \
+    screenShotWindow/meterstab.cpp \
+    pages/settingspage.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -49,7 +50,7 @@ HEADERS  += mainwindow.h \
     Figures/rectangle.h \
     Figures/spiral.h \
     pages/firstpage.h \
-    pages/secondpage.h \
+    pages/pulsePage.h \
     pages/settingsPage.h \
     globalstagecontroller.h \
     pages/freehand.h \
@@ -59,15 +60,17 @@ HEADERS  += mainwindow.h \
     screenShotWindow/meineviewclass.h \
     screenShotWindow/node.h \
     pages/settingsPage.h \
-    screenShotWindow/laserSpot.h
+    screenShotWindow/laserSpot.h \
+    screenShotWindow/meterstab.h \
+    pages/settingspage.h
+
 
 FORMS    += mainwindow.ui \
     pages/firstpage.ui \
-    pages/secondpage.ui \
-    pages/settingsPage.ui \
     pages/fourthpage.ui \
     pages/freehand.ui \
-    pages/settingsPage.ui
+    pages/pulsePage.ui \
+    pages/settingspage.ui
 
 
 INCLUDEPATH += $$PWD/Eigen_Linear_Algebra_Library\

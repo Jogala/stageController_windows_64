@@ -173,8 +173,7 @@ void    figures::polygon::cutAbsViaMacro3D(){
 
     std::cout << "Macro written to file:" << nameFile << std::endl;
     std::cout << "SENDING MACRO TO CONTROLLER..." << std::endl;
-    ::gE545.sendMacros(nameFile);
-
+    ::gE545.sendMacro(nameFile);
     ::gE545.closeShutter();
     ::gE545.startMacroAndWaitWhileRunning(macroName);
 

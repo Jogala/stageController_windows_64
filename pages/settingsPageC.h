@@ -1,8 +1,6 @@
 #ifndef settingsPage_H
 #define settingsPage_H
 
-
-#include <QWidget>
 #include "./globalstagecontroller.h"
 #include "./GlobalVariables.h"
 #include "screenShotWindow/malkasten.h"

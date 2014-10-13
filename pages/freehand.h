@@ -29,12 +29,10 @@ private slots:
     void loadScreenShotGeometry();
     void saveScreenShotGeometry();
 
-    void loadUFactors();
-    void saveUFactors();
-
     void on_pushButton_clear_clicked();
     void on_pushButton_cut_freeHand_press_clicked();
-    void on_doubleSpinBox_uFactor_editingFinished();
+
+
 
 private:
     Ui::freeHand *ui;

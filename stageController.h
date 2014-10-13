@@ -26,8 +26,7 @@ public:
     double itsLaserPosX;
     double itsLaserPosY;
     double itsFocusValues[3];
-    double itsVelocityForMacro;
-    double  veloLimit;
+    double itsVeloLimit;
 
 
     //Methods
@@ -143,9 +142,14 @@ public:
     bool checkIfAnyLimit();
     void getConfigOfTriggerOutput();
 
-    void createMacroFromCoordinates(std::string pathToCoordinates);
+    //////////////////////////////////////
+    //              MACRO               //
+    //////////////////////////////////////
 
-    void sendMacros(std::string nameOfFile);
+    void stopAllMotion();
+    void createMacroFromCoordinatesAndCut(std::string pathToCoordinates,std::string nameOfMacro, int velocity, double delayFactor);
+
+    void sendMacro(std::string nameOfFile);
     void startMacroAndWaitWhileRunning(std::string nameOfmacro);
     void startMacro(std::string nameOfmacro);
 

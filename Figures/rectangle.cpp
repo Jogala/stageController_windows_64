@@ -152,7 +152,7 @@ std::cout<<"assign values from array to variables with more concrete names DONE"
 		//////////////////////////////////////////////////////
 
         std::cout<<"Write sequence to file for controle START"<<std::endl;
-		use.writeCoordToFile("rec3DAbs.txt", storagePos, moves);
+        use.writeCoordToFile("./cut_coords/rec3DAbs.txt", storagePos, moves);
         std::cout<<"Write sequence to file for controle DONE"<<std::endl;
 
 		//////////////////////////////////////////

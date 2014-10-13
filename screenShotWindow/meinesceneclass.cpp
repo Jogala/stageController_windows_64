@@ -16,7 +16,24 @@ MeineSceneClass::MeineSceneClass(QObject *parent, Malkasten * pToCallingMalkaste
     laserSpot = new LaserSpot(this);
     laserSpot->setBrush(Qt::red);
     laserSpot->setEnabled(1);
-    laserSpot->setRect(::gE545.itsLaserPosX,::gE545.itsLaserPosY,10,10);
+    gE545.loadLaserPosValuesFromFile();
+    laserSpot->setRect(0,0,10,10);
+    laserSpot->moveBy(::gE545.itsLaserPosX,::gE545.itsLaserPosY);
+    this->addItem(laserSpot);
+    laserSpot->hide();
+
+
+    blueLaserSpot = new LaserSpot(this);
+    blueLaserSpot->setBrush(Qt::darkCyan);
+    blueLaserSpot->setEnabled(1);
+    blueLaserSpot->setRect(0,0,10,10);
+    this->addItem(blueLaserSpot);
+    blueLaserSpot->hide();
+
+    meterstab = new Meterstab;
+    this->addItem(meterstab);
+    meterstab->hide();
+
 
 }
 
@@ -65,6 +82,7 @@ void MeineSceneClass::giveItAPointerToSettingsPage(settingsPage * pToSettingsPag
 {
     settingsPageWidget = pToSettingsPage;
     connect(laserSpot,SIGNAL(notification()),settingsPageWidget,SLOT(assignNewValuesToLaserPos()));
+    connect(meterstab,SIGNAL(notification()),settingsPageWidget,SLOT(assignNewValuesToSpinBoxLineLength()));
 
 }
 

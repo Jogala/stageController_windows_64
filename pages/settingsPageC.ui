@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>settingsPage</class>
+ <class>Form</class>
  <widget class="QWidget" name="settingsPage">
   <property name="geometry">
    <rect>
@@ -173,7 +173,7 @@
     <string>y</string>
    </property>
   </widget>
-  <widget class="QDoubleSpinBox" name="x_pos">
+  <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
    <property name="geometry">
     <rect>
      <x>560</x>
@@ -183,7 +183,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QDoubleSpinBox" name="y_pos">
+  <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
    <property name="geometry">
     <rect>
      <x>560</x>
@@ -193,7 +193,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QDoubleSpinBox" name="vel_spinBox">
+  <widget class="QDoubleSpinBox" name="doubleSpinBox_5">
    <property name="geometry">
     <rect>
      <x>690</x>
@@ -203,7 +203,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QDoubleSpinBox" name="stepSize_spinBox">
+  <widget class="QDoubleSpinBox" name="doubleSpinBox_6">
    <property name="geometry">
     <rect>
      <x>690</x>
@@ -342,6 +342,32 @@
    </property>
    <property name="text">
     <string>h</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_scaleBar">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>50</y>
+     <width>82</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>show scale bar</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_laserSpot">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>60</y>
+     <width>82</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>mark laser position</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_12">
@@ -516,32 +542,6 @@
      <width>42</width>
      <height>22</height>
     </rect>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox">
-   <property name="geometry">
-    <rect>
-     <x>340</x>
-     <y>50</y>
-     <width>111</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>show scale bar</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_2">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>60</y>
-     <width>101</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>show laserSpot</string>
    </property>
   </widget>
  </widget>

@@ -23,6 +23,7 @@
 #include "node.h"
 #include "edge.h"
 #include "laserSpot.h"
+#include "meterstab.h"
 
 
 class Malkasten;
@@ -44,6 +45,9 @@ public:
     QList <Edge*> edgeFreeHandList;
 
     LaserSpot * laserSpot;
+    LaserSpot * blueLaserSpot;
+
+    Meterstab *meterstab;
 
     void giveItAPointerToSettingsPage(settingsPage * );
 

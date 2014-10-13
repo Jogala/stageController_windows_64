@@ -112,7 +112,7 @@ void figures::spiral::cutAbsMacroSpiral3D()
 
 		if ((i - 1) == 0){
 
-			delay[0] = (R / velocity) * 1000;
+            delay[0] = delayFactor*1000*(R / velocity);
 		
 		}
 		else{
@@ -120,12 +120,12 @@ void figures::spiral::cutAbsMacroSpiral3D()
 			if (nOld != n){
 
 				R = R - deltaR;
-				delay[(i - 1)] = (deltaR / velocity) * 1000;
+                delay[(i - 1)] = delayFactor*1000*(deltaR / velocity);
 
 			}
 			else{
 
-				delay[(i - 1)] = 1000 * (sin(deltaAlpha / 2) * 2 * R*delayFactor) / velocity;
+                delay[(i - 1)] = delayFactor*1000 * (sin(deltaAlpha / 2) * 2 * R) / velocity;
 
 			}
 		}
@@ -238,7 +238,7 @@ void figures::spiral::cutAbsMacroSpiral3D()
 
 	std::cout << "Macro written to file:" << nameFile << std::endl;
 	std::cout << "SENDING MACRO TO CONTROLLER..." << std::endl;
-    ::gE545.sendMacros(nameFile);
+    ::gE545.sendMacro(nameFile);
 
     ::gE545.closeShutter();
     ::gE545.startMacroAndWaitWhileRunning(macroName);

@@ -9,28 +9,38 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
-    bool youForgotToTurnInitOn = 1;
+    this->setWindowTitle("Laser Ablation");
+
+    bool youForgotToTurnInitOn = 0;
 
     if(youForgotToTurnInitOn){
       QMessageBox::information(this,"initialize","YOU FORGOT TO CALL THE FUNCTION INIT !!!! turn youForgotToTurnInitOn to 0 and compile it again");
 
     }
-        else{
+        else{        
+
+        QMessageBox m;
+        m.setStandardButtons(0);
+        m.setText("trying to connect via RS232 with E545");
+        m.show();
+
         if(::gE545.initialize()==0)
         {
+             m.close();
              QMessageBox::information(this,"initialize","Could not establish connection to E545 via RS232");
         }
+
     }
 
     maxWidthFirstPage=1600;
     pagesGeom.resize(4,2);
     pagesGeom(0,0)=maxWidthFirstPage;
     pagesGeom(0,1)=550;
-    pagesGeom(1,0)=450;
-    pagesGeom(1,1)=500;
-    pagesGeom(2,0)=830;
+    pagesGeom(1,0)=600;
+    pagesGeom(1,1)=650;
+    pagesGeom(2,0)=860;
     pagesGeom(2,1)=900;
-    pagesGeom(3,0)=830;
+    pagesGeom(3,0)=900;
     pagesGeom(3,1)=800;
 
 
@@ -48,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
     std::cout<<"allocate first Page on the heap DONE"<<std::endl;
 
     std::cout<<"allocate second Page on the heap START"<<std::endl;
-    secondPageWidget= new secondPage(this);
+    pulsePageWidget= new pulsePage(this,mMalkasten);
     std::cout<<"allocate second Page on the heap DONE"<<std::endl;
 
     std::cout<<"allocate third Page on the heap START"<<std::endl;
@@ -71,7 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //  assigns pages to switch between to a QstackedWidget     //
     //////////////////////////////////////////////////////////////
     stackedWidget->addWidget(scrollArea);
-    stackedWidget->addWidget(secondPageWidget);
+    stackedWidget->addWidget(pulsePageWidget);
     stackedWidget->addWidget(settingsPageWidget);
     stackedWidget->addWidget(freeHandWidget);
 
@@ -113,7 +123,7 @@ void MainWindow::on_actionPuls_triggered()
     stackedWidget->setCurrentIndex(1);
     this->setCentralWidget(stackedWidget);
 
-    adjusMainWindowFor_secondPage();
+    adjusMainWindowFor_pulsePage();
 }
 
 void MainWindow::on_actionSettings_triggered()
@@ -152,7 +162,7 @@ void MainWindow::adjusMainWindowFor_firstPage(){
 
 }
 
-void MainWindow::adjusMainWindowFor_secondPage(){
+void MainWindow::adjusMainWindowFor_pulsePage(){
 
     this->setFixedSize(pagesGeom(1,0),pagesGeom(1,1));
 

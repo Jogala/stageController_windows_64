@@ -5,6 +5,7 @@ int stageController::initialize(){
 
     std::cout<<"void stageController::initialize() ENTERING"<<std::endl;
 
+
     if (establishConnection())
     {
         printNameOfConnectedAxis();
@@ -16,6 +17,9 @@ int stageController::initialize(){
                 {
                     if (switchDriftControlModeOn())
                     {
+
+
+
                         setVelocity(50, 50, 50);
                         moveTo(100, 100, 100);
                         setTriggerMode(1, 3);
@@ -24,6 +28,7 @@ int stageController::initialize(){
                         setLimits(1, 0, 0);
                         setLimits(2, 0, 0);
                         setLimits(3, 0, 0);
+
 
                         return 1;
                     }
@@ -337,6 +342,10 @@ void stageController::moveTo(const double coord[3]){
 
     std::cout<<"void stageController::moveTo(const double coord[3]) ENTERING"<<std::endl;
 
+    for(int i=0; i<3; i++){
+        std::cout<<coord[i]<<std::endl;
+    }
+
     if ((0 <= coord[0]) && (coord[0] <= 200) &&
             (0 <= coord[1]) && (coord[1] <= 200) &&
             (0 <= coord[2]) && (coord[2] <= 200))
@@ -586,13 +595,13 @@ void stageController::setVelocity(double xVelocity, double yVelocity, double zVe
 
     PI_VEL(ID, szAxes, velocity);
 
-    if ((0 <= velocity[0]) && (velocity[0] <= veloLimit) && (0 <= velocity[1]) && (velocity[1] <= veloLimit) && (0 <= velocity[2]) && (velocity[2] <= veloLimit))
+    if ((0 <= velocity[0]) && (velocity[0] <= itsVeloLimit) && (0 <= velocity[1]) && (velocity[1] <= itsVeloLimit) && (0 <= velocity[2]) && (velocity[2] <= itsVeloLimit))
     {
         PI_VEL(ID, szAxes, velocity);
     }
     else
     {
-        std::cout << "The maximum velocity is " << veloLimit << std::endl;
+        std::cout << "The maximum velocity is " << itsVeloLimit << std::endl;
     }
 
     std::cout<<"void stageController::setVelocity(double xVelocity, double yVelocity, double zVelocity) LEAVING"<<std::endl;
@@ -603,13 +612,13 @@ void stageController::setVelocity(const double velocity[3]){
 
     std::cout<<"void stageController::setVelocity(const double velocity[3]) ENTERING"<<std::endl;
 
-    if ((0 <= velocity[0]) && (velocity[0] <= veloLimit) && (0 <= velocity[1]) && (velocity[1] <= veloLimit) && (0 <= velocity[2]) && (velocity[2] <= veloLimit))
+    if ((0 <= velocity[0]) && (velocity[0] <= itsVeloLimit) && (0 <= velocity[1]) && (velocity[1] <= itsVeloLimit) && (0 <= velocity[2]) && (velocity[2] <= itsVeloLimit))
     {
         PI_VEL(ID, szAxes, velocity);
     }
     else
     {
-        std::cout << "The maximum velocity is " << veloLimit << std::endl;
+        std::cout << "The maximum velocity is " << itsVeloLimit << std::endl;
     }
 
     std::cout<<"void stageController::setVelocity(const double velocity[3]) LEAVING"<<std::endl;
@@ -967,11 +976,20 @@ bool stageController::checkIfAnyLimit(){
 
 }
 
+
 //////////////////////////////////////
 //              MACRO               //
 //////////////////////////////////////
 
-void stageController::createMacroFromCoordinates(std::string pathToCoordinates)
+void stageController::stopAllMotion()
+{
+
+    std::string temp = "#24";
+    PI_GcsCommandset(ID, temp.c_str());
+
+}
+
+void stageController::createMacroFromCoordinatesAndCut(std::string pathToCoordinates, std::string nameOfMacro , int velocity, double delayFactor)
 {
     std::cout<<"void stageController::createMacroFromCoordinates(std::string pathToCoordinates) ENTERING"<<std::endl;
 
@@ -1019,7 +1037,7 @@ void stageController::createMacroFromCoordinates(std::string pathToCoordinates)
     std::vector<double> delayVec;
     for(int i = 0 ; i<storPos.size();i++)
     {
-        delayVec.push_back(sqrt(storPos[i][0]*storPos[i][0]+storPos[i][1]*storPos[i][1]+storPos[i][2]*storPos[i][2])/itsVelocityForMacro);
+        delayVec.push_back(delayFactor*1000*sqrt(storPos[i][0]*storPos[i][0]+storPos[i][1]*storPos[i][1]+storPos[i][2]*storPos[i][2])/velocity);
     }
 
 
@@ -1029,22 +1047,22 @@ void stageController::createMacroFromCoordinates(std::string pathToCoordinates)
     //		Create Macro text file and send it to the stage		//
     //////////////////////////////////////////////////////////////
 
-    std::string pathMacroFile = "./macros/macroHandSelectedPolyZug.txt";
-    std::string macroName = "macroHandSelectedPolyZug";
+    std::string pathMacroFile = "./macros/"+nameOfMacro+".txt";
 
     f.open(pathMacroFile, std::fstream::out | std::fstream::trunc);
 
-    f << "MAC BEG " << macroName << std::endl;
-    f << "VEL A " << itsVelocityForMacro << " B " << itsVelocityForMacro << " C " << itsVelocityForMacro << std::endl;
+    f << "MAC BEG " << nameOfMacro << std::endl;
+    f << "VEL A " << "9000" << " B " << "9000" << " C " << "9000" << std::endl;
 
     for (int i = 0; i < storPos.size(); i++){
-        f << "MOV A " << storPos[i][0] << " B " << storPos[i][1] << " C " << storPos[i][2] << std::endl;
 
-
-        if (i == 0){
+        if (i == 1)
+        {
+            //open shutter
+            f << "VEL A " << velocity << " B " << velocity << " C " << velocity << std::endl;
             f << setLimitsMacro(1, 0, 200, 0, 0);
         }
-
+        f << "MOV A " << storPos[i][0] << " B " << storPos[i][1] << " C " << storPos[i][2] << std::endl;
         f << "DEL " << delayVec[i] << std::endl;
     }
 
@@ -1056,26 +1074,25 @@ void stageController::createMacroFromCoordinates(std::string pathToCoordinates)
     f << "MAC END" << std::endl;
     f.close();
 
-    std::cout << "Macro written to file:" << macroName << std::endl;
+    std::cout << "Macro written to file:" << nameOfMacro << std::endl;
     std::cout << "SENDING MACRO TO CONTROLLER..." << std::endl;
-    sendMacros(pathMacroFile);
+    sendMacro(pathMacroFile);
 
     closeShutter();
-    startMacroAndWaitWhileRunning(macroName);
+    startMacroAndWaitWhileRunning(nameOfMacro);
 
     //########################################################################################################################################################
 
     std::cout<<"void stageController::createMacroFromCoordinates(std::string pathToCoordinates) LEAVING"<<std::endl;
 }
 
-void stageController::sendMacros(std::string nameOfFile){
+void stageController::sendMacro(std::string pathToMacro){
 
-    std::cout<<"void stageController::sendMacros(std::string nameOfFile) ENTERING"<<std::endl;
-
+    std::cout<<"void stageController::sendMacro(std::string nameOfFile) ENTERING"<<std::endl;
 
     std::stringstream ss;
     std::fstream f;
-    f.open(nameOfFile);
+    f.open(pathToMacro);
 
     if (f.is_open()) {
 
@@ -1087,7 +1104,7 @@ void stageController::sendMacros(std::string nameOfFile){
     std::string temp = ss.str();
     PI_GcsCommandset(ID, temp.c_str());
 
-    std::cout<<"void stageController::sendMacros(std::string nameOfFile) LEAVING"<<std::endl;
+    std::cout<<"void stageController::sendMacro(std::string nameOfFile) LEAVING"<<std::endl;
 
 }
 void stageController::startMacro(std::string nameOfmacro){
@@ -1108,8 +1125,7 @@ void stageController::startMacroAndWaitWhileRunning(std::string nameOfmacro){
 
     std::cout<<"void stageController::startMacroAndWaitWhileRunning(std::string nameOfmacro) ENTERING"<<std::endl;
 
-
-    std::cout << "START MACRO" << std::endl;
+    std::cout << "START MACRO " << nameOfmacro << std::endl;
 
     std::string command = "MAC START " + nameOfmacro;
     PI_GcsCommandset(ID, command.c_str());
@@ -1219,7 +1235,7 @@ stageController::stageController()
 {
     std::cout<<"stageController::stageController() ENTERING"<<std::endl;
     fileName_FocusValues = "./Stored_Values/focus.txt";
-    veloLimit=9900;
+    itsVeloLimit=9900;
 
     for(auto item : itsFocusValues)
     {

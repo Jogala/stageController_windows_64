@@ -1,5 +1,5 @@
-#include "settingspage.h"
-#include "ui_settingspage.h"
+#include "settingsPage.h"
+#include "ui_settingsPage.h"
 #include <QTime>
 
 settingsPage::settingsPage(QWidget *parent, Malkasten * pToMainWindowsMalkasten) :
@@ -415,3 +415,9 @@ void settingsPage::saveScreenShotGeometry()
     f.close();
 }
 
+void settingsPage::on_radioButton_2_clicked(bool checked)
+{
+
+        ui->radioButton_2->setChecked(0);
+
+}
