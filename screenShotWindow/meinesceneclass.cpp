@@ -81,8 +81,8 @@ void MeineSceneClass::writeCoordOfNodesToFile()
 void MeineSceneClass::giveItAPointerToSettingsPage(Einstellungen * pToSettingsPage)
 {
     settingsPageWidget = pToSettingsPage;
-    connect(laserSpot,SIGNAL(notification()),settingsPageWidget,SLOT(assignNewValuesToLaserPos()));
-    connect(meterstab,SIGNAL(notification()),settingsPageWidget,SLOT(assignNewValuesToSpinBoxLineLength()));
+//    connect(laserSpot,SIGNAL(notification()),settingsPageWidget,SLOT(assignNewValuesToLaserPos()));
+//    connect(meterstab,SIGNAL(notification()),settingsPageWidget,SLOT(assignNewValuesToSpinBoxLineLength()));
 
 }
 

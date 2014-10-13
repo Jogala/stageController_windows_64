@@ -61,8 +61,8 @@ HEADERS  += mainwindow.h \
     screenShotWindow/node.h \
     screenShotWindow/laserSpot.h \
     screenShotWindow/meterstab.h \
-    pages/einstellungen.h \
     pages/einstellungen.h
+
 
 
 FORMS    += mainwindow.ui \
@@ -70,8 +70,8 @@ FORMS    += mainwindow.ui \
     pages/fourthpage.ui \
     pages/freehand.ui \
     pages/pulsePage.ui \
-    pages/einstellungen.ui \
     pages/einstellungen.ui
+
 
 
 
