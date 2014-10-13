@@ -1,7 +1,7 @@
 #include "meinesceneclass.h"
 #include "malkasten.h"
 #include "globalstagecontroller.h"
-#include "pages/settingsPage.h"
+#include "pages/Einstellungen.h"
 
 #include <QtGui>
 #include <QGraphicsSceneMouseEvent>
@@ -78,7 +78,7 @@ void MeineSceneClass::writeCoordOfNodesToFile()
 
 }
 
-void MeineSceneClass::giveItAPointerToSettingsPage(settingsPage * pToSettingsPage)
+void MeineSceneClass::giveItAPointerToSettingsPage(Einstellungen * pToSettingsPage)
 {
     settingsPageWidget = pToSettingsPage;
     connect(laserSpot,SIGNAL(notification()),settingsPageWidget,SLOT(assignNewValuesToLaserPos()));

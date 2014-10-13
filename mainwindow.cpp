@@ -62,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent) :
     std::cout<<"allocate second Page on the heap DONE"<<std::endl;
 
     std::cout<<"allocate third Page on the heap START"<<std::endl;
-    settingsPageWidget = new settingsPage(this,mMalkasten);
+    settingsPageWidget = new Einstellungen(this,mMalkasten);
     std::cout<<"allocate third Page on the heap DONE"<<std::endl;
 
     std::cout<<"allocate fourth Page on the heap START"<<std::endl;

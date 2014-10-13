@@ -1,14 +1,17 @@
-#include "settingsPage.h"
-#include "ui_settingsPage.h"
 #include <QTime>
+#include "einstellungen.h"
+#include "ui_einstellungen.h"
 
-settingsPage::settingsPage(QWidget *parent, Malkasten * pToMainWindowsMalkasten) :
-    QWidget(parent), mMalkasten(pToMainWindowsMalkasten), scene(pToMainWindowsMalkasten->scene), ui(new Ui::settingsPage)
+Einstellungen::Einstellungen(QWidget *parent,Malkasten* pToMainWindowsMalkasten) :
+    QWidget(parent),mMalkasten(pToMainWindowsMalkasten), scene(pToMainWindowsMalkasten->scene),
+    ui(new Ui::Einstellungen)
 {
+    ui->setupUi(this);
+
     std::cout<<std::endl;
     std::cout<<"###########################################################"<<std::endl;
     std::cout<<"###########################################################"<<std::endl;
-    std::cout<<"settingsPage::settingsPage(QWidget *parent) ENTERING"<<std::endl;
+    std::cout<<"Einstellungen::Einstellungen(QWidget *parent) ENTERING"<<std::endl;
     ui->setupUi(this);
 
     double stepSize=1;
@@ -82,17 +85,24 @@ settingsPage::settingsPage(QWidget *parent, Malkasten * pToMainWindowsMalkasten)
     loadScreenShotGeometry();
 
 
-    std::cout<<"settingsPage::settingsPage(QWidget *parent) LEAVING"<<std::endl;
+    std::cout<<"Einstellungen::Einstellungen(QWidget *parent) LEAVING"<<std::endl;
 }
 
-settingsPage::~settingsPage()
+Einstellungen::~Einstellungen()
 {
     delete ui;
 }
 
 
 
-void settingsPage::on_up_button_pressed()
+Einstellungen::~Einstellungen()
+{
+    delete ui;
+}
+
+
+
+void Einstellungen::on_up_button_pressed()
 {
 
     gE545.move(0,stepSize,0);
@@ -103,7 +113,7 @@ void settingsPage::on_up_button_pressed()
 
 }
 
-void settingsPage::on_down_button_pressed()
+void Einstellungen::on_down_button_pressed()
 {
 
     gE545.move(0,-stepSize,0);
@@ -115,7 +125,7 @@ void settingsPage::on_down_button_pressed()
 
 }
 
-void settingsPage::on_left_button_pressed()
+void Einstellungen::on_left_button_pressed()
 {
 
     gE545.move(-stepSize,0,0);
@@ -127,7 +137,7 @@ void settingsPage::on_left_button_pressed()
 
 }
 
-void settingsPage::on_right_button_pressed()
+void Einstellungen::on_right_button_pressed()
 {
 
     gE545.move(stepSize,0,0);
@@ -138,7 +148,7 @@ void settingsPage::on_right_button_pressed()
 
 }
 
-void settingsPage::on_set_focus_values_clicked()
+void Einstellungen::on_set_focus_values_clicked()
 {
 
     double focus[3];
@@ -150,18 +160,18 @@ void settingsPage::on_set_focus_values_clicked()
 
 }
 
-void settingsPage::on_stepSize_spinBox_valueChanged(double arg1)
+void Einstellungen::on_stepSize_spinBox_valueChanged(double arg1)
 {
     stepSize= ui->stepSize_spinBox->value();
 }
 
 
-void settingsPage::on_vel_spinBox_valueChanged(double arg1)
+void Einstellungen::on_vel_spinBox_valueChanged(double arg1)
 {
     vel = ui->vel_spinBox->value();
 }
 
-void settingsPage::on_pushButton_clicked()
+void Einstellungen::on_pushButton_clicked()
 {
     gE545.getPositon(pos);
 
@@ -175,12 +185,12 @@ void settingsPage::on_pushButton_clicked()
 }
 
 
-void settingsPage::on_delayFactor_SpinBox_valueChanged(double arg1)
+void Einstellungen::on_delayFactor_SpinBox_valueChanged(double arg1)
 {
     ::macroDelayFactor=ui->delayFactor_SpinBox->value();
 }
 
-void settingsPage::on_pushButton_2_clicked()
+void Einstellungen::on_pushButton_2_clicked()
 {
     double pos[3];
     ::gE545.getPositon(pos);
@@ -188,7 +198,7 @@ void settingsPage::on_pushButton_2_clicked()
     ui->y_pos->setValue(pos[1]);
 }
 
-void settingsPage::on_radioButton_clicked(bool checked)
+void Einstellungen::on_radioButton_clicked(bool checked)
 {
     if(checked)
     {
@@ -215,7 +225,7 @@ void settingsPage::on_radioButton_clicked(bool checked)
     }
 }
 
-void settingsPage::on_spinBox_laserPosX_editingFinished()
+void Einstellungen::on_spinBox_laserPosX_editingFinished()
 {
         scene->laserSpot->setPos(spinBox_laserPosX->value(),spinBox_laserPosY->value());
         gE545.itsLaserPosX = scene->laserSpot->x();
@@ -223,7 +233,7 @@ void settingsPage::on_spinBox_laserPosX_editingFinished()
         gE545.writeLaserPosValuesToFile();
 }
 
-void settingsPage::on_spinBox_laserPosY_editingFinished()
+void Einstellungen::on_spinBox_laserPosY_editingFinished()
 {
         scene->laserSpot->setPos(spinBox_laserPosX->value(),spinBox_laserPosY->value());
         gE545.itsLaserPosX = scene->laserSpot->x();
@@ -231,7 +241,7 @@ void settingsPage::on_spinBox_laserPosY_editingFinished()
         gE545.writeLaserPosValuesToFile();
 }
 
-void settingsPage::assignNewValuesToLaserPos()
+void Einstellungen::assignNewValuesToLaserPos()
 {
     qDebug()<<"I GOT TRIGGERED";
     qDebug()<<scene->laserSpot->pos();
@@ -242,17 +252,17 @@ void settingsPage::assignNewValuesToLaserPos()
     gE545.writeLaserPosValuesToFile();
 }
 
-void settingsPage::assignNewValuesToSpinBoxLineLength()
+void Einstellungen::assignNewValuesToSpinBoxLineLength()
 {
     ui->doubleSpinBox_meterstab_length->setValue(scene->meterstab->line().length());
 }
 
-void settingsPage::on_pushButton_refreshBackground_clicked()
+void Einstellungen::on_pushButton_refreshBackground_clicked()
 {
     mMalkasten->refreshBackground();
 }
 
-void settingsPage::on_doubleSpinBox_meterstab_x1_valueChanged(double arg1)
+void Einstellungen::on_doubleSpinBox_meterstab_x1_valueChanged(double arg1)
 {
     qDebug()<<"x1";
     qDebug()<<scene->meterstab->line();
@@ -270,7 +280,7 @@ void settingsPage::on_doubleSpinBox_meterstab_x1_valueChanged(double arg1)
     ui->doubleSpinBox_uFactor->setValue(lengthReal/lengthPix);
 }
 
-void settingsPage::on_doubleSpinBox_meterstab_x2_valueChanged(double arg1)
+void Einstellungen::on_doubleSpinBox_meterstab_x2_valueChanged(double arg1)
 {
     qDebug()<<"x2";
     scene->meterstab->setLine(
@@ -287,7 +297,7 @@ void settingsPage::on_doubleSpinBox_meterstab_x2_valueChanged(double arg1)
 }
 
 
-void settingsPage::on_doubleSpinBox_length_real_valueChanged(double arg1)
+void Einstellungen::on_doubleSpinBox_length_real_valueChanged(double arg1)
 {
     double lengthPix =  ui->doubleSpinBox_meterstab_length->value();
     double lengthReal = ui->doubleSpinBox_length_real->value();
@@ -295,7 +305,7 @@ void settingsPage::on_doubleSpinBox_length_real_valueChanged(double arg1)
     ui->doubleSpinBox_uFactor->setValue(lengthReal/lengthPix);
 }
 
-void settingsPage::on_pushButton_3_clicked()
+void Einstellungen::on_pushButton_3_clicked()
 {
     double lengthPix =  ui->doubleSpinBox_meterstab_length->value();
     double lengthReal = ui->doubleSpinBox_length_real->value();
@@ -304,7 +314,7 @@ void settingsPage::on_pushButton_3_clicked()
 
 }
 
-void settingsPage::loadUFactors()
+void Einstellungen::loadUFactors()
 {
 
     std::string storedValuesPath = "./Stored_Values/uFactors.txt";
@@ -324,7 +334,7 @@ void settingsPage::loadUFactors()
     ui->doubleSpinBox_uFactor->setValue(uFac);
 
 }
-void settingsPage::saveUFactors()
+void Einstellungen::saveUFactors()
 {
     std::string storedValuesPath = "./Stored_Values/uFactors.txt";
     std::fstream f;
@@ -337,28 +347,28 @@ void settingsPage::saveUFactors()
     f.close();
 }
 
-void settingsPage::on_spinBox_screenShot_x_editingFinished()
+void Einstellungen::on_spinBox_screenShot_x_editingFinished()
 {
     mMalkasten->recScreenShot.setX(ui->spinBox_screenShot_x->value());
     saveScreenShotGeometry();
     mMalkasten->refreshBackground();
 
 }
-void settingsPage::on_spinBox_screenShot_y_editingFinished()
+void Einstellungen::on_spinBox_screenShot_y_editingFinished()
 {
     mMalkasten->recScreenShot.setY(ui->spinBox_screenShot_y->value());
     saveScreenShotGeometry();
     mMalkasten->refreshBackground();
 
 }
-void settingsPage::on_spinBox_screenShot_w_editingFinished()
+void Einstellungen::on_spinBox_screenShot_w_editingFinished()
 {
     mMalkasten->recScreenShot.setWidth(ui->spinBox_screenShot_w->value());
     saveScreenShotGeometry();
     mMalkasten->refreshBackground();
 
 }
-void settingsPage::on_spinBox_screenShot_h_editingFinished()
+void Einstellungen::on_spinBox_screenShot_h_editingFinished()
 {
     mMalkasten->recScreenShot.setHeight(ui->spinBox_screenShot_h->value());
     saveScreenShotGeometry();
@@ -366,7 +376,7 @@ void settingsPage::on_spinBox_screenShot_h_editingFinished()
 
 }
 
-void settingsPage::loadScreenShotGeometry()
+void Einstellungen::loadScreenShotGeometry()
 {
 
     std::string storedValuesPath = "./Stored_Values/screenshot.txt";
@@ -398,7 +408,7 @@ void settingsPage::loadScreenShotGeometry()
 
     std::cout<<"void GraphWidget::loadScreenShotGeometry(QRect geom) LEAVING"<<std::endl;
 }
-void settingsPage::saveScreenShotGeometry()
+void Einstellungen::saveScreenShotGeometry()
 {
 
     std::string storedValuesPath = "./Stored_Values/screenshot.txt";
@@ -415,9 +425,3 @@ void settingsPage::saveScreenShotGeometry()
     f.close();
 }
 
-void settingsPage::on_radioButton_2_clicked(bool checked)
-{
-
-        ui->radioButton_2->setChecked(0);
-
-}

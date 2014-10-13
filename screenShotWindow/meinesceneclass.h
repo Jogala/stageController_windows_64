@@ -27,7 +27,7 @@
 
 
 class Malkasten;
-class settingsPage;
+class Einstellungen;
 
 class MeineSceneClass : public QGraphicsScene
 {
@@ -49,7 +49,7 @@ public:
 
     Meterstab *meterstab;
 
-    void giveItAPointerToSettingsPage(settingsPage * );
+    void giveItAPointerToSettingsPage(Einstellungen * );
 
 public slots:
     void printHallo(){
@@ -62,7 +62,7 @@ signals:
 private:
     Malkasten * pToMalkasten;
     QGraphicsPixmapItem * backGroundItem;
-    settingsPage * settingsPageWidget;
+    Einstellungen * settingsPageWidget;
 
 
 

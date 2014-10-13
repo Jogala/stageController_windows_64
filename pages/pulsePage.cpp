@@ -133,3 +133,5 @@ void pulsePage::on_pulse_button___blueDot_clicked()
     gE545.moveTo(100,100,100);
     mMalkasten->refreshBackground();
 }
+
+

@@ -1,22 +1,23 @@
-#ifndef settingsPage_H
-#define settingsPage_H
+#ifndef EINSTELLUNGEN_H
+#define EINSTELLUNGEN_H
 
+#include <QWidget>
 #include "./globalstagecontroller.h"
 #include "./GlobalVariables.h"
 #include "screenShotWindow/malkasten.h"
 #include "screenShotWindow/meinesceneclass.h"
 
 namespace Ui {
-class settingsPage;
+class Einstellungen;
 }
 
-class settingsPage : public QWidget
+class Einstellungen : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit settingsPage( QWidget *parent = 0,Malkasten * pToMainWindowMalkasten = 0);
-    ~settingsPage();
+    explicit Einstellungen(QWidget *parent = 0, Malkasten* pToMainWindowsMalkasten=0);
+    ~Einstellungen();
 
 public slots:
     void assignNewValuesToLaserPos();
@@ -59,10 +60,8 @@ private slots:
     void saveScreenShotGeometry();
 
 
-protected:
-
 private:
-    Ui::settingsPage *ui;
+    Ui::Einstellungen *ui;
 
     //Set Focus
     double stepSize;
@@ -76,8 +75,12 @@ private:
 
     QSpinBox *spinBox_laserPosX;
     QSpinBox *spinBox_laserPosY;
-
-
 };
 
-#endif // settingsPage_H
+#endif // EINSTELLUNGEN_H
+
+
+
+
+
+

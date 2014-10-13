@@ -5,7 +5,7 @@
 
 #include "pages/firstpage.h"
 #include "pages/pulsePage.h"
-#include "pages/settingsPage.h"
+#include "pages/Einstellungen.h"
 #include "pages/freehand.h"
 
 #include "screenShotWindow/malkasten.h"
@@ -56,7 +56,7 @@ private:
 
     firstPage *firstPageWidget;
     pulsePage *pulsePageWidget;
-    settingsPage *settingsPageWidget;
+    Einstellungen *settingsPageWidget;
     freeHand * freeHandWidget;
 
     Eigen::MatrixXi pagesGeom;

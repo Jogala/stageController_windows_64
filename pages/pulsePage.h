@@ -60,6 +60,7 @@ private slots:
 
     void on_pulse_button___blueDot_clicked();
 
+
 private:
     Ui::pulsePage *ui;
     Malkasten *mMalkasten;

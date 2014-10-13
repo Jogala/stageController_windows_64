@@ -33,10 +33,11 @@ SOURCES += main.cpp\
     screenShotWindow/meineviewclass.cpp \
     screenShotWindow/node.cpp \
     screenShotWindow/laserSpot.cpp \
-    pages/settingsPage.cpp \
     pages/pulsePage.cpp \
     screenShotWindow/meterstab.cpp \
-    pages/settingspage.cpp
+    pages/einstellungen.cpp
+
+
 
 
 HEADERS  += mainwindow.h \
@@ -51,7 +52,6 @@ HEADERS  += mainwindow.h \
     Figures/spiral.h \
     pages/firstpage.h \
     pages/pulsePage.h \
-    pages/settingsPage.h \
     globalstagecontroller.h \
     pages/freehand.h \
     screenShotWindow/edge.h \
@@ -59,10 +59,10 @@ HEADERS  += mainwindow.h \
     screenShotWindow/meinesceneclass.h \
     screenShotWindow/meineviewclass.h \
     screenShotWindow/node.h \
-    pages/settingsPage.h \
     screenShotWindow/laserSpot.h \
     screenShotWindow/meterstab.h \
-    pages/settingspage.h
+    pages/einstellungen.h \
+    pages/einstellungen.h
 
 
 FORMS    += mainwindow.ui \
@@ -70,7 +70,10 @@ FORMS    += mainwindow.ui \
     pages/fourthpage.ui \
     pages/freehand.ui \
     pages/pulsePage.ui \
-    pages/settingspage.ui
+    pages/einstellungen.ui \
+    pages/einstellungen.ui
+
+
 
 
 INCLUDEPATH += $$PWD/Eigen_Linear_Algebra_Library\
