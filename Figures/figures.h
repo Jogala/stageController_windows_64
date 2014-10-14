@@ -14,7 +14,6 @@ namespace figures{
 	{
 	private:
 
-
 	public:
 
 		//For macros 
@@ -28,37 +27,6 @@ namespace figures{
         }
 		~figures(){}
 	};
-
-
-
-
-	//////////////////////////////////////
-	//		surface rectangle			//
-	//////////////////////////////////////
-	class surfaceRectangle : public figures
-	{
-	private:
-
-		double a, b, phi0, velocity;
-		int resolution;
-		char orientation;
-
-	public:
-		void set(double aIn, double bIn, double phi0In, double velocityIn, int resoluationIn, char longOrShortSide);
-		void cutRel();
-		void cutAbs();
-
-
-		surfaceRectangle(){	
-		}
-
-		~surfaceRectangle(){}
-
-	};
-
-
-
-
 
 }
 #endif

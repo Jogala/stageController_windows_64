@@ -74,31 +74,31 @@ public:
 
     void setRotMatrices(double rotMatX[3][3], double rotMatZ[3][3], double rotAngleX, double rotAngleZ){
 
-            //Rotation matrix X
-            rotMatX[0][0] = 1;
-            rotMatX[0][1] = 0;
-            rotMatX[0][2] = 0;
+        //Rotation matrix X
+        rotMatX[0][0] = 1;
+        rotMatX[0][1] = 0;
+        rotMatX[0][2] = 0;
 
-            rotMatX[1][0] = 0;
-            rotMatX[1][1] = cos(rotAngleX);
-            rotMatX[1][2] = -sin(rotAngleX);
+        rotMatX[1][0] = 0;
+        rotMatX[1][1] = cos(rotAngleX);
+        rotMatX[1][2] = -sin(rotAngleX);
 
-            rotMatX[2][0] = 0;
-            rotMatX[2][1] = sin(rotAngleX);
-            rotMatX[2][2] = cos(rotAngleX);
+        rotMatX[2][0] = 0;
+        rotMatX[2][1] = sin(rotAngleX);
+        rotMatX[2][2] = cos(rotAngleX);
 
-            //Rotation matrix Z
-            rotMatZ[0][0] = cos(rotAngleZ);
-            rotMatZ[0][1] = -sin(rotAngleZ);
-            rotMatZ[0][2] = 0;
+        //Rotation matrix Z
+        rotMatZ[0][0] = cos(rotAngleZ);
+        rotMatZ[0][1] = -sin(rotAngleZ);
+        rotMatZ[0][2] = 0;
 
-            rotMatZ[1][0] = sin(rotAngleZ);
-            rotMatZ[1][1] = cos(rotAngleZ);
-            rotMatZ[1][2] = 0;
+        rotMatZ[1][0] = sin(rotAngleZ);
+        rotMatZ[1][1] = cos(rotAngleZ);
+        rotMatZ[1][2] = 0;
 
-            rotMatZ[2][0] = 0;
-            rotMatZ[2][1] = 0;
-            rotMatZ[2][2] = 1;
+        rotMatZ[2][0] = 0;
+        rotMatZ[2][1] = 0;
+        rotMatZ[2][2] = 1;
 
     }
     void matrixTimesVec(double a[3][3], double v[3]){
@@ -207,6 +207,18 @@ public:
     }
 
     template<class aNumber>
+    aNumber norm(aNumber x1,aNumber x2, aNumber x3){
+
+        aNumber v[3];
+        v[0]=x1;
+        v[1]=x2;
+        v[2]=x3;
+
+        return sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+
+    }
+
+    template<class aNumber>
     int axisOfBiggestProjection(aNumber v[3]){
         aNumber w[3];
         w[0] = v[0] * v[0];
@@ -226,6 +238,30 @@ public:
 
     }
 
+    template<class aNumber>
+    int axisOfBiggestProjection(aNumber x1,aNumber x2, aNumber x3)
+    {
+
+        aNumber v[3];
+        v[0]=x1;
+        v[1]=x2;
+        v[2]=x3;
+        aNumber w[3];
+        w[0] = v[0] * v[0];
+        w[1] = v[1] * v[1];
+        w[2] = v[2] * v[2];
+
+        int j = 0;
+        for (int i = 1; i < 3; i++){
+            if (w[0] < w[i]){
+                j = i;
+                w[0] = w[i];
+            }
+        }
+
+        return j+1;
+        //1 for x etc...
+    }
     usefulFunctions();
     ~usefulFunctions();
 };

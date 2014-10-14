@@ -49,6 +49,8 @@ private slots:
     void on_actionFreehand_triggered();
 
 
+    void on_actionOpen_screenShotWindow_triggered();
+
 private:
     Ui::MainWindow *ui;
     QStackedWidget *stackedWidget;

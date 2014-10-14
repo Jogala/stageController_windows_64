@@ -1,19 +1,15 @@
-#ifndef LINE_H
-#define LINE_H
+#ifndef STRIPES_H
+#define STRIPES_H
 
 #include "figures.h"
 
 namespace figures
 {
-
-class line : public figures
+class stripes : public figures
 {
 private:
     std::string storedValuesPath;
-    double itsValues[5];
-
-    //    double l, phi, velocity, theta;
-    //    int repetitions;
+    double itsValues[6];
 
 public:
 
@@ -33,17 +29,17 @@ public:
 
     void printMemberVariables();
 
-    void cutAbs3D();
     void cutAbsLim3D();
 
 
-    line(){
-        std::cout<<"line::line() ENTERING"<<std::endl;
-        storedValuesPath="./Stored_Values/line.txt";
-        std::cout<<"line::line() LEAVING"<<std::endl;
-    }
-    ~line(){}
 
+
+
+    stripes(){
+        std::cout<<"stripes::stripes() ENTERING"<<std::endl;
+        storedValuesPath="./Stored_Values/stripes.txt";
+        std::cout<<"stripes::stripes() LEAVING"<<std::endl;
+    }
 };
 }
-#endif // LINE_H
+#endif // STRIPES_H

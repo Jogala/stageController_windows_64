@@ -23,7 +23,6 @@ SOURCES += main.cpp\
     Figures/polygon.cpp \
     Figures/rectangle.cpp \
     Figures/spiral.cpp \
-    Figures/surfaceRec.cpp \
     pages/firstpage.cpp \
     globalstagecontroller.cpp \
     pages/freehand.cpp \
@@ -35,7 +34,8 @@ SOURCES += main.cpp\
     screenShotWindow/laserSpot.cpp \
     pages/pulsePage.cpp \
     screenShotWindow/meterstab.cpp \
-    pages/einstellungen.cpp
+    pages/einstellungen.cpp \
+    Figures/stripes.cpp
 
 
 
@@ -61,7 +61,8 @@ HEADERS  += mainwindow.h \
     screenShotWindow/node.h \
     screenShotWindow/laserSpot.h \
     screenShotWindow/meterstab.h \
-    pages/einstellungen.h
+    pages/einstellungen.h \
+    Figures/stripes.h
 
 
 

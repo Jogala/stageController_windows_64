@@ -21,22 +21,15 @@ private slots:
 
     void on_pushButton_refreshBackground_clicked();
 
-    void on_spinBox_screenShot_x_editingFinished();
-    void on_spinBox_screenShot_y_editingFinished();
-    void on_spinBox_screenShot_w_editingFinished();
-    void on_spinBox_screenShot_h_editingFinished();
-
-    void loadScreenShotGeometry();
-    void saveScreenShotGeometry();
-
     void on_pushButton_clear_clicked();
     void on_pushButton_cut_freeHand_press_clicked();
 
-
+    void on_pushButton_removeLastNode_clicked();
 
 private:
     Ui::freeHand *ui;
     Malkasten * mMalkasten;
+    MeineSceneClass *scene;
 };
 
 #endif // FREEHAND_H

@@ -43,9 +43,10 @@ private slots:
     void on_spinBox_screenShot_w_editingFinished();
     void on_spinBox_screenShot_h_editingFinished();
 
+    void on_checkBox__showScaleBar_clicked(bool checked);
     void on_doubleSpinBox_meterstab_x1_valueChanged(double arg1);
     void on_doubleSpinBox_meterstab_x2_valueChanged(double arg1);
-    void on_doubleSpinBox_length_real_valueChanged(double arg1);
+    void on_doubleSpinBox_length_real_valueChanged();
     void on_pushButton_setConversionFac_clicked();
 
     void on_up_button_pressed();
@@ -53,6 +54,7 @@ private slots:
     void on_left_button_pressed();
     void on_right_button_pressed();
     void on_tare_button_clicked();
+    void on_pushButton_reset_clicked();
     void on_set_focus_values_clicked();
     void on_vel_spinBox_valueChanged(double arg1);
     void on_stepSize_spinBox_valueChanged(double arg1);
@@ -60,8 +62,6 @@ private slots:
     void on_delayFactor_SpinBox_valueChanged(double arg1);
 
 
-
-    void on_pushButton_reset_clicked();
 
 private:
     Ui::Einstellungen *ui;

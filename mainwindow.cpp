@@ -185,3 +185,8 @@ void MainWindow::adjusMainWindowFor_fourthPage(){
 }
 
 
+
+void MainWindow::on_actionOpen_screenShotWindow_triggered()
+{
+    mMalkasten->show();
+}

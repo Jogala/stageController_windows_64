@@ -60,6 +60,26 @@ void MeineSceneClass::removeAllNodes()
     }
 }
 
+bool MeineSceneClass::removeLastNode()
+{
+    if(nodeFreeHandList.length())
+    {
+        //remove last node from scene
+        this->removeItem(nodeFreeHandList.last());
+        //remove last node from nodeList
+        nodeFreeHandList.removeLast();
+
+        if(edgeFreeHandList.length())
+        {
+            this->removeItem(edgeFreeHandList.last());
+            edgeFreeHandList.removeLast();
+        }
+    }
+
+    return nodeFreeHandList.length();
+
+}
+
 void MeineSceneClass::writeCoordOfNodesToFile()
 {
 
@@ -81,8 +101,8 @@ void MeineSceneClass::writeCoordOfNodesToFile()
 void MeineSceneClass::giveItAPointerToSettingsPage(Einstellungen * pToSettingsPage)
 {
     settingsPageWidget = pToSettingsPage;
-//    connect(laserSpot,SIGNAL(notification()),settingsPageWidget,SLOT(assignNewValuesToLaserPos()));
-//    connect(meterstab,SIGNAL(notification()),settingsPageWidget,SLOT(assignNewValuesToSpinBoxLineLength()));
+    connect(laserSpot,SIGNAL(notification()),settingsPageWidget,SLOT(assignNewValuesToLaserPos()));
+    connect(meterstab,SIGNAL(notification()),settingsPageWidget,SLOT(assignNewValuesToSpinBoxLineLength()));
 
 }
 

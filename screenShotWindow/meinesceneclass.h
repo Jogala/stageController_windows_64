@@ -39,6 +39,7 @@ public:
     void setNewBackgroundPixmap(QPixmap * pToPix);
 
     void removeAllNodes();
+    bool removeLastNode();
     void writeCoordOfNodesToFile();
     double uFaktorFromSceneToStage;
     QList <Node*> nodeFreeHandList;

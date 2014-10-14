@@ -6,33 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>924</width>
-    <height>590</height>
+    <width>611</width>
+    <height>297</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QPushButton" name="pushButton_clear">
-   <property name="geometry">
-    <rect>
-     <x>530</x>
-     <y>90</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>clear</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pushButton_cut_freeHand_press">
    <property name="geometry">
     <rect>
-     <x>620</x>
-     <y>90</y>
-     <width>75</width>
-     <height>23</height>
+     <x>50</x>
+     <y>150</y>
+     <width>151</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="text">
@@ -42,10 +29,10 @@
   <widget class="QRadioButton" name="radioButton">
    <property name="geometry">
     <rect>
-     <x>400</x>
-     <y>60</y>
+     <x>60</x>
+     <y>30</y>
      <width>161</width>
-     <height>81</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -55,8 +42,8 @@
   <widget class="QPushButton" name="pushButton_refreshBackground">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>80</y>
+     <x>440</x>
+     <y>10</y>
      <width>131</width>
      <height>61</height>
     </rect>
@@ -65,56 +52,41 @@
     <string>Refresh Background</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>50</y>
-     <width>131</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>screenshot geometry</string>
-   </property>
-  </widget>
-  <widget class="QWidget" name="layoutWidget_2">
-   <property name="geometry">
-    <rect>
-     <x>210</x>
+     <x>50</x>
      <y>70</y>
-     <width>57</width>
-     <height>102</height>
+     <width>341</width>
+     <height>71</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QPushButton" name="pushButton_removeLastNode">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
-         <string>x</string>
+         <string>-</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>y</string>
+       <widget class="QPushButton" name="pushButton_clear">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>w</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string>h</string>
+         <string>clear</string>
         </property>
        </widget>
       </item>
@@ -123,81 +95,53 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QSpinBox" name="spinBox_screenShot_x"/>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>velocity</string>
+          </property>
+          <property name="buddy">
+           <cstring>spinBox_velocity</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="spinBox_velocity"/>
+        </item>
+       </layout>
       </item>
       <item>
-       <widget class="QSpinBox" name="spinBox_screenShot_y"/>
-      </item>
-      <item>
-       <widget class="QSpinBox" name="spinBox_screenShot_w"/>
-      </item>
-      <item>
-       <widget class="QSpinBox" name="spinBox_screenShot_h"/>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>delayFactor</string>
+          </property>
+          <property name="buddy">
+           <cstring>spinBox_velocity</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_delayFactor">
+          <property name="decimals">
+           <number>5</number>
+          </property>
+          <property name="maximum">
+           <double>2.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.010000000000000</double>
+          </property>
+          <property name="value">
+           <double>1.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>710</x>
-     <y>90</y>
-     <width>181</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_3">
-    <item>
-     <widget class="QLabel" name="label_7">
-      <property name="text">
-       <string>velocity</string>
-      </property>
-      <property name="buddy">
-       <cstring>spinBox_velocity</cstring>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QSpinBox" name="spinBox_velocity"/>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget_3">
-   <property name="geometry">
-    <rect>
-     <x>710</x>
-     <y>120</y>
-     <width>181</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_4">
-    <item>
-     <widget class="QLabel" name="label_8">
-      <property name="text">
-       <string>delayFactor</string>
-      </property>
-      <property name="buddy">
-       <cstring>spinBox_velocity</cstring>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QDoubleSpinBox" name="doubleSpinBox_delayFactor">
-      <property name="decimals">
-       <number>5</number>
-      </property>
-      <property name="maximum">
-       <double>2.000000000000000</double>
-      </property>
-      <property name="singleStep">
-       <double>0.010000000000000</double>
-      </property>
-      <property name="value">
-       <double>1.000000000000000</double>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>

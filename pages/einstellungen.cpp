@@ -173,7 +173,7 @@ void Einstellungen::on_doubleSpinBox_meterstab_x2_valueChanged(double arg1)
     ui->doubleSpinBox_uFactor->setValue(lengthReal/lengthPix);
 }
 
-void Einstellungen::on_doubleSpinBox_length_real_valueChanged(double arg1)
+void Einstellungen::on_doubleSpinBox_length_real_valueChanged()
 {
     double lengthPix =  ui->doubleSpinBox_meterstab_length->value();
     double lengthReal = ui->doubleSpinBox_length_real->value();
@@ -377,3 +377,16 @@ void Einstellungen::on_pushButton_reset_clicked()
         ui->x_pos->setValue(pos[0]);
         ui->y_pos->setValue(pos[1]);
 }
+
+void Einstellungen::on_checkBox__showScaleBar_clicked(bool checked)
+{
+    if(checked)
+    {
+        scene->meterstab->show();
+    }
+    else
+    {
+        scene->meterstab->hide();
+    }
+}
+
