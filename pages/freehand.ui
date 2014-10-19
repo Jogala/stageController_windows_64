@@ -52,7 +52,7 @@
     <string>Refresh Background</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>50</x>
@@ -107,7 +107,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox_velocity"/>
+         <widget class="QSpinBox" name="spinBox_velocity">
+          <property name="maximum">
+           <number>9000</number>
+          </property>
+          <property name="value">
+           <number>200</number>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>

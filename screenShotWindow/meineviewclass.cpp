@@ -10,9 +10,25 @@ meineViewClass::meineViewClass(MeineSceneClass *pToScene, Malkasten * pToCalling
     this->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
 }
 
+void meineViewClass::enableDrawPulses(bool val)
+{
+    drawPulses = val;
+
+    if(val)
+    {
+        drawFreehand = 0;
+    }
+}
+
 void meineViewClass::enableDrawFreeHand(bool val)
 {
     drawFreehand = val;
+
+    if(val)
+    {
+        drawPulses = 0;
+    }
+
 }
 
 void meineViewClass::mousePressEvent(QMouseEvent *event)
@@ -24,24 +40,14 @@ void meineViewClass::mousePressEvent(QMouseEvent *event)
     {
         QPointF coord = mapToScene(event->pos());
 
-
         if(drawFreehand)
         {
-            Node * newNode = new Node;
+            scene->addNode(coord);
+        }
 
-            scene->nodeFreeHandList.append(newNode);
-
-            scene->addItem(scene->nodeFreeHandList.last());
-            scene->nodeFreeHandList.last()->setPos(coord.x(),coord.y());
-
-            if(scene->nodeFreeHandList.length()>1)
-            {
-                std::cout<<"edge gets added"<<std::endl;
-                Edge * newEdge = new Edge(scene->nodeFreeHandList[scene->nodeFreeHandList.length()-2], scene->nodeFreeHandList.last());
-                scene->edgeFreeHandList.append(newEdge);
-                scene->addItem(scene->edgeFreeHandList.last());
-                std::cout<<"edge got added"<<std::endl;
-            }
+        if(drawPulses)
+        {
+            scene->addPuls(coord);
         }
     }
 }

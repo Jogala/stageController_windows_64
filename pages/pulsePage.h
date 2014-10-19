@@ -61,6 +61,13 @@ private slots:
     void on_pulse_button___blueDot_clicked();
 
 
+
+    void on_checkBox_thunderstorm_clicked(bool checked);
+
+    void on_open_shutter__blueDot_2_clicked();
+
+    void on_pushButton_2_clicked();
+
 private:
     Ui::pulsePage *ui;
     Malkasten *mMalkasten;

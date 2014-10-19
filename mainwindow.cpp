@@ -32,11 +32,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     }
 
-    maxWidthFirstPage=1600;
+    maxWidthFirstPage=1900;
     pagesGeom.resize(4,2);
     pagesGeom(0,0)=maxWidthFirstPage;
-    pagesGeom(0,1)=550;
-    pagesGeom(1,0)=600;
+    pagesGeom(0,1)=750;
+    pagesGeom(1,0)=900;
     pagesGeom(1,1)=650;
     pagesGeom(2,0)=860;
     pagesGeom(2,1)=900;
@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
     stackedWidget = new QStackedWidget(this);
 
     std::cout<<"allocate first Page on the heap START"<<std::endl;
-    firstPageWidget= new firstPage(this);
+    firstPageWidget= new firstPage(this, mMalkasten);
     std::cout<<"allocate first Page on the heap DONE"<<std::endl;
 
     std::cout<<"allocate second Page on the heap START"<<std::endl;

@@ -158,7 +158,6 @@ void figures::spiral::cutAbsMacroSpiral3D()
     ///////////////////////////////////////
     std::cout<<"Write sequence to file for controle START"<<std::endl;
 
-    int color = 1;
 	std::fstream fc;
     fc << std::fixed;
     fc << std::setprecision(5);
@@ -243,8 +242,12 @@ void figures::spiral::cutAbsMacroSpiral3D()
     ::gE545.closeShutter();
     ::gE545.startMacroAndWaitWhileRunning(macroName);
 
+    //I don't know why... but one has to reconnect after uploading a macro. Otherwise the stage shows a wired behaviour.
+    ::gE545.reconnect();
+
     std::cout<<"Actual cutting procedure DONE"<<std::endl;
     //########################################################################################################################################################
+
 
     std::cout<<"void figures::spiral::cutAbsMacroSpiral3D() LEAVING"<<std::endl;
 }

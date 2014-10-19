@@ -68,7 +68,6 @@ void    figures::polygon::cutAbsViaMacro3D(){
     double rotAngleZ=itsValues[4];
     double velocity = itsValues[5];
 
-
     double focus[3];
     ::gE545.getFocusValues(focus);
     double pos[3];
@@ -177,7 +176,8 @@ void    figures::polygon::cutAbsViaMacro3D(){
     ::gE545.closeShutter();
     ::gE545.startMacroAndWaitWhileRunning(macroName);
 
-    //########################################################################################################################################################
+    //I don't know why... but one has to reconnect after uploading a macro. Otherwise the stage shows a wired behaviour.
+    ::gE545.reconnect();
 
-
+    //#######################################################################################################################################################
 }

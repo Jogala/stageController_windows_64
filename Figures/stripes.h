@@ -9,7 +9,7 @@ class stripes : public figures
 {
 private:
     std::string storedValuesPath;
-    double itsValues[6];
+    double itsValues[7];
 
 public:
 
@@ -30,10 +30,6 @@ public:
     void printMemberVariables();
 
     void cutAbsLim3D();
-
-
-
-
 
     stripes(){
         std::cout<<"stripes::stripes() ENTERING"<<std::endl;

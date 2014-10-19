@@ -38,17 +38,26 @@ public:
 
     void setNewBackgroundPixmap(QPixmap * pToPix);
 
+    void addPuls(QPointF coordWhereToPutNewPuls);
+    void removeAllPulses();
+    bool removeLastPuls();
+
+    void addNode(QPointF coordWhereToPutNewNode);
     void removeAllNodes();
     bool removeLastNode();
     void writeCoordOfNodesToFile();
-    double uFaktorFromSceneToStage;
+
     QList <Node*> nodeFreeHandList;
     QList <Edge*> edgeFreeHandList;
+    QList <Node*> nodePulsList;
 
     LaserSpot * laserSpot;
     LaserSpot * blueLaserSpot;
+    LaserSpot * figuresLaserSpot;
 
+    //variables need for conversion pixel to real length
     Meterstab *meterstab;
+    double uFactorFromSceneToStage;
 
     void giveItAPointerToSettingsPage(Einstellungen * );
 

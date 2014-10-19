@@ -27,6 +27,9 @@ public slots:
 
 public:
     bool drawFreehand = 0;
+    bool drawPulses = 0;
+
+    void enableDrawPulses(bool );
     void enableDrawFreeHand(bool );
 
 protected:

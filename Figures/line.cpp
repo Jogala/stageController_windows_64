@@ -167,7 +167,6 @@ void figures::line::cutAbsLim3D(){
     }
     else{
 
-        ::gE545.setVelocity(velocity, velocity, velocity);
 
         double vec[3];
         double pos[3];
@@ -182,14 +181,44 @@ void figures::line::cutAbsLim3D(){
         vec[1] = l*sin(phi)*sin(theta);
         vec[2] = l*cos(theta);
 
-        int limAxis = use.axisOfBiggestProjection(vec);
-        //Determines how far over the limits the stage is moving.
-        double c = 10; //in mu meter
-        double normOfVec = use.norm(vec);
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //      calculate  Velocities s.t. the stage is moving on  a straight line from one point to the other      //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        std::cout<<"calculate  Velocities s.t. the stage is moving on  a straight line from one point to the other START"<<std::endl;
+
+        double v_x;
+        double v_y;
+        double v_z;
+
+        if((vec[0]!=0)||(vec[1]!=0)||(vec[2]!=0))
+        {
+            v_x = (abs(vec[0])/use.norm(vec))*velocity;
+            v_y = (abs(vec[1])/use.norm(vec))*velocity;
+            v_z = (abs(vec[2])/use.norm(vec))*velocity;
+
+        }else{
+            //means that l = 0, so no line is cut, but for being on the safe side we set v_i = 1000.
+            v_x=1000;
+            v_y=1000;
+            v_z=1000;
+        }
+
+        std::cout<<"use.norm(vec) = "<<use.norm(vec)<<std::endl;
+        std::cout<<" vec: "<<vec[0]<<"  "<<vec[1]<<"  "<<vec[2]<<std::endl;
+        std::cout<<" v: "<<v_x<<"  "<<v_y<<"  "<<v_z<<std::endl;
+
+        ::gE545.setVelocity(v_x, v_y, v_z);
+
+        std::cout<<"calculate  Velocities s.t. the stage is moving on  a straight line from one point to the other DONE"<<std::endl;
 
         //////////////////////////////////////////////////////////////////////////
         //		Generating the sequence of coordinates that will be visited		//
         //////////////////////////////////////////////////////////////////////////
+
+        //c determines how far the stage is moving over the limits.
+        double c = 10; //µm
+        double normOfVec = use.norm(vec);
 
         for (int i = 0; i < repetitions+1; i++)
         {
@@ -210,11 +239,14 @@ void figures::line::cutAbsLim3D(){
         //		Write sequence to file for controle			//
         //////////////////////////////////////////////////////
 
-        use.writeCoordToFile("line3DAbs.txt", storagePos, repetitions+1);
+        use.writeCoordToFile("./cut_coords/linecutAbsLim3D.txt", storagePos, repetitions+1);
 
         //////////////////////////////////////////
         //		Actual cutting procedure 		//
         //////////////////////////////////////////
+
+        // limAxis determines on which axis the limit intervall is going to be set.
+        int limAxis = use.axisOfBiggestProjection(vec);
 
         //A
         ::gE545.moveTo(storagePos[0][0], storagePos[0][1], storagePos[0][2]);
@@ -234,7 +266,11 @@ void figures::line::cutAbsLim3D(){
         }
         ::gE545.closeShutter();
         ::gE545.setVelocity(5000, 5000, 5000);
-        ::gE545.moveTo(pos[0]+focus[0], pos[1]+focus[1], pos[2]+focus[2]);
+
+        //center the middle of the line in the laserSpot
+        ::gE545.moveTo(pos[0]+vec[0]/2, pos[1]+vec[1]/2, pos[2]+vec[2]/2);
+        //move in focus
+        ::gE545.moveInFocus();
 
     }//else
     std::cout<<"void figures::line::cutAbsLim3D() LEAVING"<<std::endl;

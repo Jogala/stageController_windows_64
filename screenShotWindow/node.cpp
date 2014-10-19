@@ -114,6 +114,16 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->drawEllipse(-10, -10, 10, 10);
 }
 
+void Node::posOfCenterX()
+{
+
+}
+
+void Node::posOfCenterY()
+{
+
+}
+
 QVariant Node::itemChange(GraphicsItemChange change, const QVariant &value)
 {
     switch (change) {

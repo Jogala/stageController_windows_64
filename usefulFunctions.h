@@ -101,6 +101,42 @@ public:
         rotMatZ[2][2] = 1;
 
     }
+
+
+
+
+    void matrixTimesVec(double a[3][3], double &x1, double &x2, double& x3 )
+    {
+
+        double v[3];
+        v[0] = x1;
+        v[1] = x2;
+        v[2] = x3;
+
+        double x[3];
+        x[0] = 0;
+        x[1] = 0;
+        x[2] = 0;
+
+        for (int i = 0; i < 3; i++){
+
+            for (int j = 0; j < 3; j++){
+                x[i] = x[i] + a[i][j] * v[j];
+            }
+
+        }
+
+
+        x1 = x[0];
+        x2 = x[1];
+        x3 = x[2];
+
+    }
+
+
+
+
+
     void matrixTimesVec(double a[3][3], double v[3]){
 
         double x[3];
@@ -239,7 +275,7 @@ public:
     }
 
     template<class aNumber>
-    int axisOfBiggestProjection(aNumber x1,aNumber x2, aNumber x3)
+    int axisOfBiggestProjection(const aNumber x1,const aNumber x2,const aNumber x3)
     {
 
         aNumber v[3];

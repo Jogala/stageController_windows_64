@@ -2,9 +2,9 @@
 #define EINSTELLUNGEN_H
 
 #include <QWidget>
-#include "screenShotWindow/malkasten.h"
 #include "./globalstagecontroller.h"
 #include "./GlobalVariables.h"
+#include "screenShotWindow/malkasten.h"
 #include "screenShotWindow/meinesceneclass.h"
 
 namespace Ui {
@@ -26,9 +26,10 @@ private slots:
     void saveScreenShotGeometry();
     void assignNewValuesToLaserPos();
     void assignNewValuesToSpinBoxLineLength();
-    void loadUFactors();
-    void saveUFactors();
+    void loadConversionFactorParametersAndAssignThem();
+    void saveConversionFactorParameters();
     void loadScreenShotGeometry();
+    void loadFocusValuesAndAssignThem();
 
     //////////////////////////////////////////////////
 
@@ -60,6 +61,8 @@ private slots:
     void on_stepSize_spinBox_valueChanged(double arg1);
 
     void on_delayFactor_SpinBox_valueChanged(double arg1);
+
+protected:
 
 
 

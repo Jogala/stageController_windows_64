@@ -34,19 +34,10 @@ Einstellungen::Einstellungen(QWidget *parent, Malkasten * pToMalkasten) :
     ui->right_button->setAutoRepeat(true);
     ui->left_button->setAutoRepeat(true);
 
-    gE545.loadFocusValuesFromFile();
-    gE545.getFocusValues(focus);
 
-    for(auto it : focus){
-        std::cout<<it<<std::endl;
-    }
 
-    ui->deltaX_spinBox->setValue(focus[0]);
-    ui->deltaY_spinBox->setValue(focus[1]);
-    ui->stepSize_spinBox->setValue(stepSize);
-    ui->vel_spinBox->setValue(1000);
-
-    loadUFactors();
+    loadFocusValuesAndAssignThem();
+    loadConversionFactorParametersAndAssignThem();
     loadScreenShotGeometry();
 
 
@@ -181,6 +172,99 @@ void Einstellungen::on_doubleSpinBox_length_real_valueChanged()
     ui->doubleSpinBox_uFactor->setValue(lengthReal/lengthPix);
 }
 
+void Einstellungen::on_pushButton_setConversionFac_clicked()
+{
+    double lengthPix =  ui->doubleSpinBox_meterstab_length->value();
+    double lengthReal = ui->doubleSpinBox_length_real->value();
+    scene->uFactorFromSceneToStage = lengthReal/lengthPix;
+    saveConversionFactorParameters();
+}
+
+void Einstellungen::loadConversionFactorParametersAndAssignThem()
+{
+
+    std::string storedValuesPath = "./Stored_Values/uFactors.txt";
+
+    double originMeterstabX;
+    double originMeterstabY;
+    double meterstabX1;
+    double meterstabX2;
+    double realLength;
+    double uFac;
+
+    std::fstream f;
+    f.open(storedValuesPath);
+
+    if (f.is_open()) {
+
+        f>>originMeterstabX;
+        f>>originMeterstabY;
+        f>>meterstabX1;
+        f>>meterstabX2;
+        f>>realLength;
+        f>>uFac;
+    }
+    f.close();
+
+
+    scene->meterstab->moveBy(originMeterstabX,originMeterstabY);
+
+    ui->doubleSpinBox_meterstab_x1->setValue(meterstabX1);
+    ui->doubleSpinBox_meterstab_x2->setValue(meterstabX2);
+    scene->meterstab->setLine(
+                                meterstabX1,
+                                0,
+                                meterstabX2,
+                                0
+                              );
+
+    ui->doubleSpinBox_length_real->setValue(realLength);
+
+    scene->uFactorFromSceneToStage = uFac;
+    ui->doubleSpinBox_uFactor->setValue(uFac);
+
+}
+
+void Einstellungen::saveConversionFactorParameters()
+{
+    std::string storedValuesPath = "./Stored_Values/uFactors.txt";
+    std::fstream f;
+    f.open(storedValuesPath);
+
+    if (f.is_open())
+    {
+
+        std::cout<<"STORE UFACTOR VALUES"<<std::endl;
+        std::cout<<"#########################################################################"<<std::endl;
+        std::cout<<"#########################################################################"<<std::endl;
+        std::cout<<"#########################################################################"<<std::endl;
+
+        std::cout<<scene->meterstab->pos().x()<<std::endl;
+        std::cout<<scene->meterstab->pos().y()<<std::endl;
+        std::cout<<scene->meterstab->line().x1()<<std::endl;
+        std::cout<<scene->meterstab->line().x2()<<std::endl;
+        std::cout<<ui->doubleSpinBox_length_real->value()<<std::endl;
+        std::cout<<ui->doubleSpinBox_uFactor->value()<<std::endl;
+
+
+        f<<scene->meterstab->pos().x()<<std::endl;
+        f<<scene->meterstab->pos().y()<<std::endl;
+        f<<scene->meterstab->line().x1()<<std::endl;
+        f<<scene->meterstab->line().x2()<<std::endl;
+        f<<ui->doubleSpinBox_length_real->value()<<std::endl;
+        f<<ui->doubleSpinBox_uFactor->value()<<std::endl;
+
+
+        std::cout<<"#########################################################################"<<std::endl;
+        std::cout<<"#########################################################################"<<std::endl;
+        std::cout<<"#########################################################################"<<std::endl;
+
+
+    }
+    f.close();
+}
+
+
 
 void Einstellungen::on_up_button_pressed()
 {
@@ -236,19 +320,18 @@ void Einstellungen::on_tare_button_clicked()
 
 void Einstellungen::on_delayFactor_SpinBox_valueChanged(double arg1)
 {
-      ::macroDelayFactor=ui->delayFactor_SpinBox->value();
+    ::macroDelayFactor=ui->delayFactor_SpinBox->value();
 }
-
 
 
 void Einstellungen::on_set_focus_values_clicked()
 {
     double focus[3];
-    focus[0]=ui->deltaX_spinBox->value();
-    focus[1]=ui->deltaY_spinBox->value();
+    focus[0]=ui->x_pos->value();
+    focus[1]=ui->y_pos->value();
     focus[2]=0;
 
-    gE545.setFocus_and_writeValuesToFile(focus);
+    gE545.setFocusValues_and_writeValuesToFile(focus);
 }
 
 void Einstellungen::on_vel_spinBox_valueChanged(double arg1)
@@ -294,49 +377,6 @@ void Einstellungen::assignNewValuesToSpinBoxLineLength()
 }
 
 
-void Einstellungen::on_pushButton_setConversionFac_clicked()
-{
-    double lengthPix =  ui->doubleSpinBox_meterstab_length->value();
-    double lengthReal = ui->doubleSpinBox_length_real->value();
-    scene->uFaktorFromSceneToStage = lengthReal/lengthPix;
-    saveUFactors();
-}
-
-void Einstellungen::loadUFactors()
-{
-
-    std::string storedValuesPath = "./Stored_Values/uFactors.txt";
-
-    double uFac;
-    std::fstream f;
-    f.open(storedValuesPath);
-
-    if (f.is_open()) {
-
-        f>>uFac;
-
-    }
-    f.close();
-
-    scene->uFaktorFromSceneToStage = uFac;
-    ui->doubleSpinBox_uFactor->setValue(uFac);
-
-}
-
-void Einstellungen::saveUFactors()
-{
-    std::string storedValuesPath = "./Stored_Values/uFactors.txt";
-    std::fstream f;
-    f.open(storedValuesPath);
-
-    if (f.is_open()) {
-
-        f<<ui->doubleSpinBox_uFactor;
-    }
-    f.close();
-}
-
-
 void Einstellungen::loadScreenShotGeometry()
 {
 
@@ -370,6 +410,16 @@ void Einstellungen::loadScreenShotGeometry()
     std::cout<<"void GraphWidget::loadScreenShotGeometry(QRect geom) LEAVING"<<std::endl;
 }
 
+void Einstellungen::loadFocusValuesAndAssignThem()
+{
+
+    gE545.loadFocusValuesFromFile();
+
+    ui->x_pos->setValue(::gE545.getFocusValue(0));
+    ui->y_pos->setValue(::gE545.getFocusValue(1));
+    stepSize = ui->stepSize_spinBox->value();
+}
+
 void Einstellungen::on_pushButton_reset_clicked()
 {
         double pos[3];
@@ -389,4 +439,5 @@ void Einstellungen::on_checkBox__showScaleBar_clicked(bool checked)
         scene->meterstab->hide();
     }
 }
+
 

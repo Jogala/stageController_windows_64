@@ -16,6 +16,8 @@ pulsePage::pulsePage(QWidget *parent,  Malkasten * pToMainWindowsMalkasten) :
 
     ui->groupBox_blueLaserSpot->setEnabled(0);
 
+    ui->checkBox_thunderstorm->setChecked(0);
+
     std::cout<<"pulsePage::pulsePage(QWidget *parent) LEAVING"<<std::endl;
 }
 
@@ -104,15 +106,15 @@ void pulsePage::on_pulse_button___blueDot_clicked()
 
     std::cout<<"##################################################################################################"<<std::endl;
     std::cout<<"##################################################################################################"<<std::endl;
-    std::cout<<scene->uFaktorFromSceneToStage*(scene->blueLaserSpot->x()- scene->laserSpot->x())<<std::endl;
-    std::cout<<scene->uFaktorFromSceneToStage*(scene->blueLaserSpot->y()- scene->laserSpot->y())<<std::endl;
+    std::cout<<scene->uFactorFromSceneToStage*(scene->blueLaserSpot->x()- scene->laserSpot->x())<<std::endl;
+    std::cout<<scene->uFactorFromSceneToStage*(scene->blueLaserSpot->y()- scene->laserSpot->y())<<std::endl;
     std::cout<<"##################################################################################################"<<std::endl;
     std::cout<<"##################################################################################################"<<std::endl;
 
 
     gE545.moveTo(
-                    100+scene->uFaktorFromSceneToStage*(scene->blueLaserSpot->x()- scene->laserSpot->x()),
-                    100-scene->uFaktorFromSceneToStage*(scene->blueLaserSpot->y()- scene->laserSpot->y()),
+                    100+scene->uFactorFromSceneToStage*(scene->blueLaserSpot->x()- scene->laserSpot->x()),
+                    100-scene->uFactorFromSceneToStage*(scene->blueLaserSpot->y()- scene->laserSpot->y()),
                     100
                  );
     ::gE545.printPosition();
@@ -135,3 +137,71 @@ void pulsePage::on_pulse_button___blueDot_clicked()
 }
 
 
+void pulsePage::on_checkBox_thunderstorm_clicked(bool checked)
+{
+    mMalkasten->view->enableDrawPulses(checked);
+}
+
+void pulsePage::on_open_shutter__blueDot_2_clicked()
+{
+    double uFactorFromSceneToStage = scene->uFactorFromSceneToStage;
+
+    std::cout<<"#################################################################"<<std::endl;
+    std::cout<<"#################################################################"<<std::endl;
+    std::cout<<"#################################################################"<<std::endl;
+    std::cout<<"#################################################################"<<std::endl;
+
+    std::cout<<"uFactorFromSceneToStage:"<<std::endl;
+    std::cout<<uFactorFromSceneToStage<<std::endl;
+    std::cout<<"scene->nodePulsList.length():"<<std::endl;
+    std::cout<<scene->nodePulsList.length()<<std::endl;
+
+    std::cout<<"#################################################################"<<std::endl;
+    std::cout<<"#################################################################"<<std::endl;
+    std::cout<<"#################################################################"<<std::endl;
+    std::cout<<"#################################################################"<<std::endl;
+
+    double shutterOpenTime = ui->T_spinBox->value();
+    ::gE545.setVelocity(9000,9000,9000);
+
+    for(Node *item : scene->nodePulsList)
+    {
+
+        std::cout<<"item->pos().x(): "<<std::endl;
+        std::cout<<item->pos().x()<<std::endl;
+        std::cout<<"item->pos().y(): "<<std::endl;
+        std::cout<<item->pos().y()<<std::endl;
+
+        //item->pos returns the coordinate of the top left corner of a widget but we want the center...
+        double delta = 0.5*item->boundingRect().width();
+
+        ::gE545.moveTo
+                (
+                    100+uFactorFromSceneToStage*(item->pos().x()-::gE545.itsLaserPosX-delta),
+                    100-uFactorFromSceneToStage*(item->pos().y()-::gE545.itsLaserPosY-delta),
+                    100
+                );
+
+        if (gE545.checkIfAnyLimit()){
+            gE545.closeShutter();
+            QThread::msleep(shutterOpenTime);
+            gE545.openShutter();
+        }
+        else
+        {
+            gE545.openShutter();
+            QThread::msleep(shutterOpenTime);
+            gE545.closeShutter();
+        }
+
+    }
+
+    ::gE545.moveTo(100,100,100);
+
+
+}
+
+void pulsePage::on_pushButton_2_clicked()
+{
+    scene->removeAllPulses();
+}

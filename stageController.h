@@ -11,7 +11,7 @@ class stageController
 {
 
 private:
-    double Position[3];
+    double Position[3];         //in µm
     usefulFunctions useful;
     std::string fileName_FocusValues;
 
@@ -23,10 +23,10 @@ public:
     char szErrorMesage[1024];
     int	iError;
     char szAxes[17];
-    double itsLaserPosX;
-    double itsLaserPosY;
-    double itsFocusValues[3];
-    double itsVeloLimit;
+    double itsLaserPosX;        //in pixel
+    double itsLaserPosY;        //in pixel
+    double itsFocusValues[3];   //in µm
+    double itsVeloLimit;        //in µm/s
 
 
     //Methods
@@ -38,13 +38,14 @@ public:
 
     bool focusValuesWereSet = false;
     void getFocusValues(double focus[3]);
-    void setFocus_and_writeValuesToFile(double focus[3]);
+    double getFocusValue(int i);
+    void setFocusValues_and_writeValuesToFile(double focus[3]);
+    void setFocusValues_and_writeValuesToFile(double xFocus, double yFocus, double zFocus);
     void loadFocusValuesFromFile();
     void moveInFocus();
 
     void loadLaserPosValuesFromFile();
     void writeLaserPosValuesToFile();
-
 
     int getID();
     void printMemberVariables(){
@@ -68,6 +69,13 @@ public:
     //Close Connection//
     ////////////////////
     void closeConnection();
+
+
+    ////////////////////////
+    //Reconnect Connection//
+    ////////////////////////
+
+    bool reconnect();
 
     /////////////////////////////////////////
     // Get the name of the connected axis. //

@@ -38,6 +38,9 @@
    <property name="text">
     <string>show Laser Spot</string>
    </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QSpinBox" name="spinBox_laserPosX">
    <property name="enabled">
@@ -94,8 +97,8 @@
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>540</y>
-     <width>691</width>
+     <y>560</y>
+     <width>711</width>
      <height>16</height>
     </rect>
    </property>
@@ -142,7 +145,7 @@
     <string>ScreenShotGeometry</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>590</x>
@@ -222,7 +225,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>280</x>
@@ -340,11 +343,11 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>560</y>
+     <x>90</x>
+     <y>580</y>
      <width>161</width>
      <height>22</height>
     </rect>
@@ -358,159 +361,204 @@
      </widget>
     </item>
     <item>
-     <widget class="QDoubleSpinBox" name="delayFactor_SpinBox"/>
+     <widget class="QDoubleSpinBox" name="delayFactor_SpinBox">
+      <property name="value">
+       <double>1.000000000000000</double>
+      </property>
+     </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="label_10">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>400</y>
+     <width>661</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Set the &quot;focus&quot; values. They determine how the stage is moving after a cut for centering the figure:</string>
+   </property>
   </widget>
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>82</x>
-     <y>402</y>
-     <width>661</width>
-     <height>121</height>
+     <x>70</x>
+     <y>430</y>
+     <width>681</width>
+     <height>131</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
-     <layout class="QGridLayout" name="gridLayout_5">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_10">
-        <property name="text">
-         <string>deltaX</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QDoubleSpinBox" name="deltaX_spinBox"/>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_11">
-        <property name="text">
-         <string>deltaY</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QDoubleSpinBox" name="deltaY_spinBox"/>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QGridLayout" name="gridLayout_6">
-      <item row="0" column="1">
-       <widget class="QPushButton" name="up_button">
-        <property name="text">
-         <string>up</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QPushButton" name="left_button">
-        <property name="text">
-         <string>left</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="tare_button">
-        <property name="text">
-         <string>tare</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="right_button">
-        <property name="text">
-         <string>right</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QPushButton" name="down_button">
-        <property name="text">
-         <string>down</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_12">
-          <property name="text">
-           <string>x</string>
-          </property>
-         </widget>
-        </item>
+       <layout class="QGridLayout" name="gridLayout_6">
         <item row="0" column="1">
-         <widget class="QDoubleSpinBox" name="x_pos">
-          <property name="readOnly">
-           <bool>true</bool>
+         <widget class="QPushButton" name="up_button">
+          <property name="text">
+           <string>up</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="label_13">
+         <widget class="QPushButton" name="left_button">
           <property name="text">
-           <string>y</string>
+           <string>left</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QDoubleSpinBox" name="y_pos">
-          <property name="readOnly">
-           <bool>true</bool>
+         <widget class="QPushButton" name="tare_button">
+          <property name="text">
+           <string>tare</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="right_button">
+          <property name="text">
+           <string>right</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QPushButton" name="down_button">
+          <property name="text">
+           <string>down</string>
           </property>
          </widget>
         </item>
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="set_focus_values">
-        <property name="text">
-         <string>set</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>dx</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="x_pos">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <double>-200.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>200.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>dy</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="y_pos">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <double>-200.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>200.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_reset">
+          <property name="text">
+           <string>reset_tare</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_reset">
-        <property name="text">
-         <string>reset</string>
-        </property>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_14">
+          <property name="text">
+           <string>vel.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QDoubleSpinBox" name="vel_spinBox">
+          <property name="minimum">
+           <double>100.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>9000.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>1000.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_15">
+          <property name="text">
+           <string>stepSize</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QDoubleSpinBox" name="stepSize_spinBox">
+          <property name="minimum">
+           <double>1.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>100.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>10.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
     <item>
-     <layout class="QGridLayout" name="gridLayout_4">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_14">
-        <property name="text">
-         <string>vel.</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QDoubleSpinBox" name="vel_spinBox"/>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_15">
-        <property name="text">
-         <string>stepSize</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QDoubleSpinBox" name="stepSize_spinBox"/>
-      </item>
-     </layout>
+     <widget class="QPushButton" name="set_focus_values">
+      <property name="text">
+       <string>set dx and dy as new focus values</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
+  <zorder>pushButton_refreshBackground</zorder>
+  <zorder>checkBox_laserSpot</zorder>
+  <zorder>spinBox_laserPosX</zorder>
+  <zorder>spinBox_laserPosY</zorder>
+  <zorder>line</zorder>
+  <zorder>line_2</zorder>
+  <zorder>line_3</zorder>
+  <zorder>line_4</zorder>
+  <zorder>label_17</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>label_16</zorder>
+  <zorder>label_10</zorder>
+  <zorder>set_focus_values</zorder>
  </widget>
  <resources/>
  <connections/>

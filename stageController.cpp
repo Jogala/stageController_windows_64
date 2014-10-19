@@ -83,6 +83,12 @@ void stageController::closeConnection(){
 
     std::cout<<"void stageController::closeConnection() LEAVING"<<std::endl;
 }
+
+bool stageController::reconnect()
+{
+    closeConnection();
+    return establishConnection();
+}
 void stageController::printNameOfConnectedAxis(){
 
     std::cout<<"void stageController::printNameOfConnectedAxis()ENTERING"<<std::endl;
@@ -137,7 +143,55 @@ bool stageController::switchChannelsOn(){
     std::cout<<"bool stageController::switchChannelsOn() LEAVING"<<std::endl;
 
 }
-void stageController::setFocus_and_writeValuesToFile(double focus[3]){
+
+void stageController::setFocusValues_and_writeValuesToFile(double xFocus, double yFocus, double zFocus){
+
+    std::cout<<"void stageController::setFocus_and_writeValuesToFile(double xFocus, double yFocus, double zFocus) ENTERING"<<std::endl;
+
+    double focus[3];
+    focus[0]=xFocus;
+    focus[1]=yFocus;
+    focus[2]=zFocus;
+
+
+    for(int i=0;i<3;i++)
+    {
+        itsFocusValues[i]=focus[i];
+    }
+    std::cout<<"new focus values assinged to stageController Object"<<std::endl;
+
+    std::fstream f;
+    f << std::fixed;
+    f << std::setprecision(5);
+
+    std::cout<<"Trying to write new focus values to file "<<fileName_FocusValues<<std::endl;
+    f.open(fileName_FocusValues, std::fstream::out | std::fstream::trunc);
+    f.close();
+    f.open(fileName_FocusValues, std::fstream::out | std::fstream::app);
+
+    if(!(f.is_open()))
+    {
+
+        std::cout<<"failed to open "<< fileName_FocusValues <<std::endl;
+    }
+    else
+    {
+        std::cout << fileName_FocusValues <<" opened successfully "<<std::endl;
+
+        for(int i=0;i<3;i++)
+        {
+            f<<itsFocusValues[i]<<std::endl;
+        }
+
+        f.close();
+        std::cout << fileName_FocusValues <<" closed "<<std::endl;
+    }
+
+    focusValuesWereSet=true;
+
+    std::cout<<"void stageController::setFocus_and_writeValuesToFile(double xFocus, double yFocus, double zFocus) LEAVING"<<std::endl;
+}
+void stageController::setFocusValues_and_writeValuesToFile(double focus[3]){
 
     std::cout<<"void stageController::setFocus_and_writeValuesToFile(double xFocus, double yFocus, double zFocus) ENTERING"<<std::endl;
 
@@ -178,7 +232,6 @@ void stageController::setFocus_and_writeValuesToFile(double focus[3]){
 
     std::cout<<"void stageController::setFocus_and_writeValuesToFile(double xFocus, double yFocus, double zFocus) LEAVING"<<std::endl;
 }
-
 void stageController::loadFocusValuesFromFile(){
 
     std::cout<<"void stageController::loadFocusValuesFromFile() ENTERING"<<std::endl;
@@ -229,6 +282,28 @@ void stageController::getFocusValues(double focus[3]){
     std::cout<<"void stageController::getFocusValues(double focus[3]) LEAVING"<<std::endl;
 
 }
+
+double stageController::getFocusValue(int i)
+{
+    std::cout<<"void stageController::getFocusValues(double focus[3]) ENTERING"<<std::endl;
+
+
+    if(focusValuesWereSet)
+    {
+
+           return  itsFocusValues[i];
+
+    }else{
+
+
+        return -1;
+        std::cout<<"YOU ARE TRYING TO GET FOCUS VALUES BUT THEY HAVE NOT BEEN LOADED YET"<<std::endl;
+        std::cout<<"CALL loadFocusValuesFromFile BEFORE USING getFocusValues"<<std::endl;
+        std::cout<<"HENCE THE DEFAULT VALUES WHICH ARE SET IN THE CONSTRUCTOR 0 0 0 ARE USED"<<std::endl;
+    }
+
+    std::cout<<"void stageController::getFocusValues(double focus[3]) LEAVING"<<std::endl;
+}
 void stageController::moveInFocus(){
 
 
@@ -255,7 +330,6 @@ void stageController::loadLaserPosValuesFromFile()
     std::cout<<itsLaserPosX<<"\t"<<itsLaserPosY<<std::endl;
     std::cout<<"void stageController::loadLaserPosValuesFromFile() LEAVING"<<std::endl;
 }
-
 void stageController::writeLaserPosValuesToFile()
 {
     std::cout<<"void stageController::writeLaserPosValuesToFile() ENTERING"<<std::endl;
@@ -300,8 +374,6 @@ bool stageController::switchAllServosOn(){
         return 1;
     }
     std::cout<<"bool stageController::switchAllServosOn() LEAVING"<<std::endl;
-
-
 }
 void stageController::moveTo(double xCoord, double yCoord, double zCoord){
 
@@ -415,7 +487,6 @@ void stageController::move(double xDelta, double yDelta, double zDelta){
 
 }
 void stageController::move(double vec[3]){
-
 
     std::cout<<"void stageController::move(double vec[3])"<<std::endl;
 
