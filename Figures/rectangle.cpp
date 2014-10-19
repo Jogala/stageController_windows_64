@@ -110,7 +110,6 @@ void    figures::rectangle::cutAbs3D(){
 
         double deltaPhiSum = phi0 - deltaPhi[0] / 2.0;
 
-
         for (int i = 0; i <moves; i++)
         {
 
@@ -129,7 +128,6 @@ void    figures::rectangle::cutAbs3D(){
 
             deltaPhiSum = deltaPhiSum + deltaPhi[(i % 2)];
         }
-
         std::cout<<"Generating the sequence of coordinates that will be visited DONE"<<std::endl;
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////

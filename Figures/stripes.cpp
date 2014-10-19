@@ -74,8 +74,6 @@ void    figures::stripes::cutAbsLim3D()
     double rotAngleZ=itsValues[4];
     int anzahlLinien = itsValues[5];
     double velocity = itsValues[6];
-
-    printMemberVariables();
     std::cout<<"assign values from array to variables with more concrete names DONE"<<std::endl;
 
     double phi0RotMat[3][3];
@@ -86,11 +84,16 @@ void    figures::stripes::cutAbsLim3D()
     use.setZRotMatrix(zRotMat,rotAngleZ);
 
     double abstand= b/(anzahlLinien+1);
-    double overShot = 5; //µm
+    double overShot = 10; //µm
 
     auto posVecR = std::vector<std::vector<double>>(anzahlLinien+2, std::vector<double>(3));
     auto posVecL = std::vector<std::vector<double>>(anzahlLinien+2, std::vector<double>(3));
 
+    ///////////////////////////////////////////////////////////
+    //      generate the coordinates of the  stripes         //
+    ///////////////////////////////////////////////////////////
+
+    std::cout<<" generate the coordinates of the  stripes START"<<std::endl;
     double temp[3];
     for(int i = 0; i<anzahlLinien+2;i++)
     {
@@ -119,50 +122,31 @@ void    figures::stripes::cutAbsLim3D()
         {
             posVecL[i][j]=temp[j]+pos[j];
         }
-
-
-        std::cout<< "posVecL: "<< posVecL[i][0]<<"\t"<<posVecL[i][1]<<"\t"<<posVecL[i][2]<<" posVecR: "<<posVecR[i][0]<<"\t"<<posVecR[i][1]<<"\t"<<posVecR[i][2]<<std::endl;
-
-
     }
+    std::cout<<" generate the coordinates of the  stripes DONE"<<std::endl;
+
+    ////////////////////////////////////////////////////////////////////
+    //      determine the axis on which the limits will be changed    //
+    ////////////////////////////////////////////////////////////////////
+
+    double vec[3];
+
+    vec[0]=posVecR[0][0]-posVecL[0][0];
+    vec[1]=posVecR[0][1]-posVecL[0][1];
+    vec[2]=posVecR[0][2]-posVecL[0][2];
 
 
+    int whichAxis=use.axisOfBiggestProjection(vec);
 
+    //////////////////////////////////////////////////////////////////////////////
+    //     create a normed vector pointing in the direction of the stripes      //
+    //////////////////////////////////////////////////////////////////////////////
 
+    double normedVec[3];
 
-
-
-    auto vec = std::vector<std::vector<double>>(anzahlLinien+2, std::vector<double>(3));
-    for(int i = 0; i<anzahlLinien+2;i++)
-    {
-        vec[i][0]=posVecR[i][0]-posVecL[i][0];
-        vec[i][1]=posVecR[i][1]-posVecL[i][1];
-        vec[i][2]=posVecR[i][2]-posVecL[i][2];
-    }
-
-    auto whichAxis = std::vector<int>(anzahlLinien+2);
-    auto projectionOntoThisAxis = std::vector<double>(anzahlLinien+2);
-
-    std::cout<<"+++++++++projections+++++++++"<<std::endl;
-    for(int i = 0; i<anzahlLinien+2;i++)
-    {
-        whichAxis[i]= use.axisOfBiggestProjection(vec[i][0],vec[i][1],vec[i][2]);    
-        projectionOntoThisAxis[i]=posVecL[i][whichAxis[i]-1];
-
-        std::cout<<whichAxis[i]<<std::endl;
-        std::cout<<projectionOntoThisAxis[i]<<std::endl;
-
-    }
-    std::cout<<"+++++++++++++++++++++++++++++"<<std::endl;
-
-    auto normedVec = std::vector<std::vector<double>>(anzahlLinien+2, std::vector<double>(3));
-    for(int i = 0; i<anzahlLinien+2;i++)
-    {
-        normedVec[i][0]=vec[i][0]/use.norm(vec[i][0],vec[i][1],vec[i][2]);
-        normedVec[i][1]=vec[i][1]/use.norm(vec[i][0],vec[i][1],vec[i][2]);
-        normedVec[i][2]=vec[i][2]/use.norm(vec[i][0],vec[i][1],vec[i][2]);
-    }
-
+    normedVec[0]=vec[0]/use.norm(vec);
+    normedVec[1]=vec[1]/use.norm(vec);
+    normedVec[2]=vec[2]/use.norm(vec);
 
     ///////////////////////////////////////
     //Write sequence to file for controle//
@@ -176,70 +160,203 @@ void    figures::stripes::cutAbsLim3D()
     for(int i = 0; i<anzahlLinien+2;i++)
     {
         if(i%2==0){
-            fc<<posVecR[i][0]+overShot*normedVec[i][0]<<"\t"<<posVecR[i][1]+overShot*normedVec[i][1]<<"\t"<<posVecR[i][2]+overShot*normedVec[i][2]<<std::endl;
-            fc<<whichAxis[i]<<"\t"<<projectionOntoThisAxis[i]<<std::endl;
-            fc<<posVecL[i][0]+overShot*normedVec[i][0]<<"\t"<<posVecL[i][1]+overShot*normedVec[i][1]<<"\t"<<posVecL[i][2]+overShot*normedVec[i][2]<<std::endl;
+            fc<<posVecR[i][0]+overShot*normedVec[0]<<"\t"<<posVecR[i][1]+overShot*normedVec[1]<<"\t"<<posVecR[i][2]+overShot*normedVec[2]<<std::endl;
+            fc<<posVecL[i][0]+overShot*normedVec[0]<<"\t"<<posVecL[i][1]+overShot*normedVec[1]<<"\t"<<posVecL[i][2]+overShot*normedVec[2]<<std::endl;
 
         }else
         {
 
-            fc<<posVecL[i][0]-overShot*normedVec[i][0]<<"\t"<<posVecL[i][1]-overShot*normedVec[i][1]<<"\t"<<posVecL[i][2]-overShot*normedVec[i][2]<<std::endl;
-            fc<<whichAxis[i]<<"\t"<<projectionOntoThisAxis[i]<<std::endl;
-            fc<<posVecR[i][0]+overShot*normedVec[i][0]<<"\t"<<posVecR[i][1]+overShot*normedVec[i][1]<<"\t"<<posVecR[i][2]+overShot*normedVec[i][2]<<std::endl;
+            fc<<posVecL[i][0]-overShot*normedVec[0]<<"\t"<<posVecL[i][1]-overShot*normedVec[1]<<"\t"<<posVecL[i][2]-overShot*normedVec[2]<<std::endl;
+            fc<<posVecR[i][0]+overShot*normedVec[0]<<"\t"<<posVecR[i][1]+overShot*normedVec[1]<<"\t"<<posVecR[i][2]+overShot*normedVec[2]<<std::endl;
         }
 
     }
     fc.close();
 
-    std::cout<<"+++++++++++++++++++++++++++++"<<std::endl;
-    for(int i = 0; i<anzahlLinien+2;i++)
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //      calculate  Velocities s.t. the stage is moving on  a straight line from one point to the other      //
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    double velVec[3];
+
+    vec[0] = abs(posVecR[0][0]-posVecL[0][0])+2*abs(overShot*normedVec[0]);
+    vec[1] = abs(posVecR[0][1]-posVecL[0][1])+2*abs(overShot*normedVec[1]);
+    vec[2] = abs(posVecR[0][2]-posVecL[0][2])+2*abs(overShot*normedVec[2]);
+
+    if((vec[0]!=0)||(vec[1]!=0)||(vec[2]!=0))
     {
-        std::cout<<posVecL[i][whichAxis[i]-1]<<"\t"<<posVecR[i][whichAxis[i]-1]<<std::endl;
+        velVec[0] = (abs(vec[0])/use.norm(vec))*velocity;
+        velVec[1] = (abs(vec[1])/use.norm(vec))*velocity;
+        velVec[2] = (abs(vec[2])/use.norm(vec))*velocity;
+
+    }else{
+        //means that a = 0, so no line is cut, but for being on the safe side we set v_i = 1000.
+        velVec[0]=1000;
+        velVec[1]=1000;
+        velVec[2]=1000;
     }
-    std::cout<<"+++++++++++++++++++++++++++++"<<std::endl;
+
+    double velVecGoToNextLine[3];
+
+    vec[0] = abs(posVecL[1][0]-posVecL[0][0]);
+    vec[1] = abs(posVecR[1][1]-posVecL[0][1]);
+    vec[2] = abs(posVecR[1][2]-posVecL[0][2]);
+
+    if((vec[0]!=0)||(vec[1]!=0)||(vec[2]!=0))
+    {
+        velVecGoToNextLine[0] = (abs(vec[0])/use.norm(vec))*velocity;
+        velVecGoToNextLine[1] = (abs(vec[1])/use.norm(vec))*velocity;
+        velVecGoToNextLine[2] = (abs(vec[2])/use.norm(vec))*velocity;
+
+    }else{
+        //means that b = 0, so no line is cut, but for being on the safe side we set v_i = 1000.
+        velVecGoToNextLine[0]=1000;
+        velVecGoToNextLine[1]=1000;
+        velVecGoToNextLine[2]=1000;
+    }
 
 
     //////////////////////////////////////////
     //		Actual cutting procedure 		//
     //////////////////////////////////////////
-    ::gE545.setVelocity(velocity,velocity,velocity);
-    for(int i = 0; i<anzahlLinien+2;i++)
+    double limLeft;
+    double limRight;
+
+    ::gE545.setVelocity(2000,2000,2000);
+
+    ::gE545.moveTo
+            (
+                posVecR[0][0]+overShot*normedVec[0],
+                posVecR[0][1]+overShot*normedVec[1],
+                posVecR[0][2]+overShot*normedVec[2]
+            );
+
+
+    ::gE545.setLimits(whichAxis,posVecL[0][whichAxis-1],posVecR[0][whichAxis-1]);
+    ::gE545.setVelocity(velVec);
+
+    ::gE545.moveTo
+            (
+                posVecL[0][0]-overShot*normedVec[0],
+                posVecL[0][1]-overShot*normedVec[1],
+                posVecL[0][2]-overShot*normedVec[2]
+            );
+
+
+    for(int i = 1; i<anzahlLinien+2;i++)
     {
-        if(i%2==0){
+
+
+        if(i%2==1)
+        {
+            //////////////////////////////////////////
+            //from left to right side  L ----> R    //
+            //////////////////////////////////////////
+
+            ::gE545.setVelocity(velVecGoToNextLine);
+
+            //ordering Intervall boarder points. We need that for determining if next left point of the limits lies in the limits.
+            if(posVecL[i-1][whichAxis-1]<posVecR[i-1][whichAxis-1])
+            {
+                limLeft = posVecL[i-1][whichAxis-1];
+                limRight = posVecR[i-1][whichAxis-1];
+            }else
+            {
+                limLeft =  posVecR[i-1][whichAxis-1];
+                limRight = posVecL[i-1][whichAxis-1];
+            }
+
+            //if the left point of the next Line lies in the old limits (that would cause the shutter to open when we move to the next line what we don't want)
+            if(((posVecL[i][whichAxis-1]-overShot*normedVec[whichAxis-1])>= limLeft)&&((posVecL[i][whichAxis-1]-overShot*normedVec[whichAxis-1])<= limRight))
+            {
+                //we change the limits first
+                ::gE545.setLimits(whichAxis,posVecL[i][whichAxis-1],posVecR[i][whichAxis-1]);
+                //and then move to the next line
+                ::gE545.moveTo
+                        (
+                            posVecL[i][0]-overShot*normedVec[0],
+                            posVecL[i][1]-overShot*normedVec[1],
+                            posVecL[i][2]-overShot*normedVec[2]
+                        );
+            }
+            else
+            {
+                //we move first to the next line
+                ::gE545.moveTo
+                        (
+                            posVecL[i][0]-overShot*normedVec[0],
+                            posVecL[i][1]-overShot*normedVec[1],
+                            posVecL[i][2]-overShot*normedVec[2]
+                        );
+                //and then change the limits
+                ::gE545.setLimits(whichAxis,posVecL[i][whichAxis-1],posVecR[i][whichAxis-1]);
+            }
+
+
+            ::gE545.setVelocity(velVec);
+
             ::gE545.moveTo
                     (
-                        posVecR[i][0]+overShot*normedVec[i][0],
-                        posVecR[i][1]+overShot*normedVec[i][1],
-                        posVecR[i][2]+overShot*normedVec[i][2]
+                        posVecR[i][0]+overShot*normedVec[0],
+                        posVecR[i][1]+overShot*normedVec[1],
+                        posVecR[i][2]+overShot*normedVec[2]
                     );
 
-            std::cout<<posVecL[i][whichAxis[i]-1]<<"\t"<<posVecR[i][whichAxis[i]-1]<<std::endl;
-            ::gE545.setLimits(whichAxis[i],posVecL[i][whichAxis[i]-1],posVecR[i][whichAxis[i]-1]);
-            std::cout<<posVecL[i][whichAxis[i]]<<"\t"<<posVecR[i][whichAxis[i]]<<std::endl;
-            ::gE545.moveTo
-                    (
-                        posVecL[i][0]-overShot*normedVec[i][0],
-                        posVecL[i][1]-overShot*normedVec[i][1],
-                        posVecL[i][2]-overShot*normedVec[i][2]
-                    );
         }else
         {
+            //////////////////////////////////////////
+            //from rigth to left side  L <---- R    //
+            //////////////////////////////////////////
+
+            ::gE545.setVelocity(velVecGoToNextLine);
+
+            //ordering Intervall boarder points. We need that for determining if next left point of the limits lies in the limits.
+            if(posVecL[i-1][whichAxis-1]<posVecR[i-1][whichAxis-1])
+            {
+                limLeft = posVecL[i-1][whichAxis-1];
+                limRight = posVecR[i-1][whichAxis-1];
+            }else
+            {
+                limLeft =  posVecR[i-1][whichAxis-1];
+                limRight = posVecL[i-1][whichAxis-1];
+            }
+
+            //if the right point of the next Line lies in the old limits (that would cause the shutter to open when we move to the next line what we don't want)
+            if(((posVecR[i][whichAxis-1]+overShot*normedVec[whichAxis-1])>= limLeft)&&((posVecR[i][whichAxis-1]+overShot*normedVec[whichAxis-1])<= limRight))
+            {
+                //we change the limits first
+                ::gE545.setLimits(whichAxis,posVecL[i][whichAxis-1],posVecR[i][whichAxis-1]);
+                //and then move to the next line
+                ::gE545.moveTo
+                        (
+                            posVecR[i][0]+overShot*normedVec[0],
+                            posVecR[i][1]+overShot*normedVec[1],
+                            posVecR[i][2]+overShot*normedVec[2]
+                        );
+
+            }else
+            {
+                //we move first to the next line
+                ::gE545.moveTo
+                        (
+                            posVecR[i][0]+overShot*normedVec[0],
+                            posVecR[i][1]+overShot*normedVec[1],
+                            posVecR[i][2]+overShot*normedVec[2]
+                        );
+                //and then change the limits
+                ::gE545.setLimits(whichAxis,posVecL[i][whichAxis-1],posVecR[i][whichAxis-1]);
+            }
+
+
+            ::gE545.setVelocity(velVec);
+
             ::gE545.moveTo
                     (
-                        posVecL[i][0]-overShot*normedVec[i][0],
-                        posVecL[i][1]-overShot*normedVec[i][1],
-                        posVecL[i][2]-overShot*normedVec[i][2]
+                        posVecL[i][0]-overShot*normedVec[0],
+                        posVecL[i][1]-overShot*normedVec[1],
+                        posVecL[i][2]-overShot*normedVec[2]
                     );
 
-            std::cout<<posVecL[i][whichAxis[i]-1]<<"\t"<<posVecR[i][whichAxis[i]-1]<<std::endl;
-            ::gE545.setLimits(whichAxis[i],posVecL[i][whichAxis[i]-1],posVecR[i][whichAxis[i]-1]);
-            std::cout<<posVecL[i][whichAxis[i]-1]<<"\t"<<posVecR[i][whichAxis[i]-1]<<std::endl;
-            ::gE545.moveTo
-                    (
-                        posVecR[i][0]+overShot*normedVec[i][0],
-                        posVecR[i][1]+overShot*normedVec[i][1],
-                        posVecR[i][2]+overShot*normedVec[i][2]
-                    );
         }
 
     }
@@ -253,7 +370,6 @@ void    figures::stripes::cutAbsLim3D()
     //move figure in focus
     ::gE545.moveInFocus();
 
-    std::cout<<"void figures::stripes::cutAbsLim3D() ENTERING"<<std::endl;
-
+    std::cout<<"void figures::stripes::cutAbsLim3D() LEAVING"<<std::endl;
 }
 
