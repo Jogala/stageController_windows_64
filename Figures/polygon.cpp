@@ -112,6 +112,36 @@ void    figures::polygon::cutAbsViaMacro3D(){
 
     //########################################################################################################################################################
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //      calculate  Velocities s.t. the stage is moving on  a straight line from one point to the other      //
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    std::cout<<"calculate  Velocities s.t. the stage is moving on  a straight line from one point to the other START"<<std::endl;
+
+    auto velVec = std::vector<std::vector<double>>(steps, std::vector<double>(3));
+    for (int i = 0; i <steps; i++)
+    {
+        for(int j = 0; j<3; j++)
+        {
+            vec[j]=storPos[i+1][j]-storPos[i][j];
+        }
+
+        if((vec[0]!=0)||(vec[1]!=0)||(vec[2]!=0))
+        {
+            velVec[i][0] = (abs(vec[0])/use.norm(vec))*velocity;
+            velVec[i][1] = (abs(vec[1])/use.norm(vec))*velocity;
+            velVec[i][2] = (abs(vec[2])/use.norm(vec))*velocity;
+        }else{
+            //means that a = 0 or b = 0, so no line is cut, but for being on the safe side we set v_i = 1000.
+            velVec[i][1]=1000;
+            velVec[i][2]=1000;
+            velVec[i][3]=1000;
+        }
+    }
+    std::cout<<"calculate  Velocities s.t. the stage is moving on  a straight line from one point to the other DONE"<<std::endl;
+
+    //########################################################################################################################################################
+
     ///////////////////////////////////////
     //Write sequence to file for controle//
     ///////////////////////////////////////
@@ -148,14 +178,22 @@ void    figures::polygon::cutAbsViaMacro3D(){
     f.open(nameFile, std::fstream::out | std::fstream::app);
 
     f << "MAC BEG " << macroName << std::endl;
-    f << "VEL A " << velocity << " B " << velocity << " C " << velocity << std::endl;
+    f << "VEL A " << 5000 << " B " << 5000 << " C " << 5000 << std::endl;
 
     for (int i = 0; i < steps+1; i++){
+
+
+        if(i!=0)
+        {
+            f << "VEL A " << velVec[i-1][0] << " B " << velVec[i-1][1] << " C " << velVec[i-1][2] << std::endl;
+        }
+
         f << "MOV A " << storPos[i][0] << " B " << storPos[i][1] << " C " << storPos[i][2] << std::endl;
 
-
         if (i == 0){
+            //Move out from center to "polygon path" needs of course a other delay...
             f << "DEL " << (R / velocity) * 1000 * 2 << std::endl;
+            //open Shutter
             f << ::gE545.setLimitsMacro(1, 0, 200, 0, 0);
         }
         else{
