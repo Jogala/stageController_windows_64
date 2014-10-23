@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QRectF>
 #include <QGraphicsItem>
+#include <QShortcut>
 
 
 Malkasten::Malkasten(QWidget *parent) :
@@ -20,11 +21,11 @@ Malkasten::Malkasten(QWidget *parent) :
     takeScreenShot();
 
     view->show();
-
-    qDebug()<<view->geometry();
-    qDebug()<<scene->sceneRect();
-
     view->setMouseTracking(true);
+
+    //Set Shortcut
+    QShortcut *refreshBackground = new QShortcut(QKeySequence("R"), this);
+    QObject::connect(refreshBackground, SIGNAL(activated()), this, SLOT(refreshBackground()));
 }
 
 Malkasten::~Malkasten()

@@ -66,7 +66,10 @@ private slots:
 
     void on_open_shutter__blueDot_2_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_pushButton_removeAllPulses_clicked();
+
+    void on_pushButton_removeLastPulse_clicked();
+
 
 private:
     Ui::pulsePage *ui;

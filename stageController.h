@@ -12,11 +12,12 @@ class stageController
 
 private:
     double Position[3];         //in µm
-    usefulFunctions useful;
+    usefulFunctions use;
     std::string fileName_FocusValues;
 
-
 public:
+
+
     //Variables
 
     int ID;

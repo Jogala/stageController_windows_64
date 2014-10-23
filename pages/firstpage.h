@@ -90,7 +90,7 @@ private:
     QTableWidget * polyTable;
     QTableWidget * spiralTable;
     QTableWidget * lineTable;
-    QTableWidget *stripesTable;
+    QTableWidget * stripesTable;
 
     //figures
     figures::rectangle  mRectangle;

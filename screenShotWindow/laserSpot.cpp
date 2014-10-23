@@ -27,3 +27,19 @@ QVariant LaserSpot::itemChange(QGraphicsItem::GraphicsItemChange change, const Q
 
     return QGraphicsItem::itemChange(change, value);
 }
+
+double LaserSpot::posOfCenterX()
+{
+    QPointF point = this->pos();
+    QRectF rec = this->boundingRect();
+
+    return point.x()-0.5*rec.width();
+}
+
+double LaserSpot::posOfCenterY()
+{
+    QPointF point = this->pos();
+    QRectF rec = this->boundingRect();
+
+    return point.y()-0.5*rec.height();
+}

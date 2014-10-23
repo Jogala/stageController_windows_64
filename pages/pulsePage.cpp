@@ -14,9 +14,13 @@ pulsePage::pulsePage(QWidget *parent,  Malkasten * pToMainWindowsMalkasten) :
 
     ui->T_spinBox->setValue(200);
 
-    ui->groupBox_blueLaserSpot->setEnabled(0);
+    ui->groupBox_greenLaserSpot->setEnabled(0);
 
     ui->checkBox_thunderstorm->setChecked(0);
+
+    //Set Shortcut
+    QShortcut *refreshBackground = new QShortcut(QKeySequence("R"), this);
+    QObject::connect(refreshBackground, SIGNAL(activated()), mMalkasten, SLOT(refreshBackground()));
 
     std::cout<<"pulsePage::pulsePage(QWidget *parent) LEAVING"<<std::endl;
 }
@@ -81,12 +85,12 @@ void pulsePage::on_radioButton_clicked(bool checked)
 {
     if(checked)
     {
-         scene->blueLaserSpot->show();
-         ui->groupBox_blueLaserSpot->setEnabled(1);
+         scene->greenLaserSpot->show();
+         ui->groupBox_greenLaserSpot->setEnabled(1);
     }else
     {
-         scene->blueLaserSpot->hide();
-         ui->groupBox_blueLaserSpot->setEnabled(0);
+         scene->greenLaserSpot->hide();
+         ui->groupBox_greenLaserSpot->setEnabled(0);
     }
 }
 
@@ -95,26 +99,9 @@ void pulsePage::on_pulse_button___blueDot_clicked()
     double shutterOpenTime = ui->T_spinBox->value();
     double minShutterClosedTime = ui->minDeltaT_spinBox->value();
 
-
-    std::cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<std::endl;
-    std::cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<std::endl;
-    std::cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<std::endl;
-    std::cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<std::endl;
-
-    gE545.printVelocity();
-    ::gE545.printPosition();
-
-    std::cout<<"##################################################################################################"<<std::endl;
-    std::cout<<"##################################################################################################"<<std::endl;
-    std::cout<<scene->uFactorFromSceneToStage*(scene->blueLaserSpot->x()- scene->laserSpot->x())<<std::endl;
-    std::cout<<scene->uFactorFromSceneToStage*(scene->blueLaserSpot->y()- scene->laserSpot->y())<<std::endl;
-    std::cout<<"##################################################################################################"<<std::endl;
-    std::cout<<"##################################################################################################"<<std::endl;
-
-
     gE545.moveTo(
-                    100+scene->uFactorFromSceneToStage*(scene->blueLaserSpot->x()- scene->laserSpot->x()),
-                    100-scene->uFactorFromSceneToStage*(scene->blueLaserSpot->y()- scene->laserSpot->y()),
+                    100+scene->uFactorFromSceneToStage*(scene->greenLaserSpot->posOfCenterX()- scene->laserSpot->posOfCenterX()),
+                    100-scene->uFactorFromSceneToStage*(scene->greenLaserSpot->posOfCenterY()- scene->laserSpot->posOfCenterY()),
                     100
                  );
     ::gE545.printPosition();
@@ -146,39 +133,19 @@ void pulsePage::on_open_shutter__blueDot_2_clicked()
 {
     double uFactorFromSceneToStage = scene->uFactorFromSceneToStage;
 
-    std::cout<<"#################################################################"<<std::endl;
-    std::cout<<"#################################################################"<<std::endl;
-    std::cout<<"#################################################################"<<std::endl;
-    std::cout<<"#################################################################"<<std::endl;
-
-    std::cout<<"uFactorFromSceneToStage:"<<std::endl;
-    std::cout<<uFactorFromSceneToStage<<std::endl;
-    std::cout<<"scene->nodePulsList.length():"<<std::endl;
-    std::cout<<scene->nodePulsList.length()<<std::endl;
-
-    std::cout<<"#################################################################"<<std::endl;
-    std::cout<<"#################################################################"<<std::endl;
-    std::cout<<"#################################################################"<<std::endl;
-    std::cout<<"#################################################################"<<std::endl;
-
     double shutterOpenTime = ui->T_spinBox->value();
     ::gE545.setVelocity(9000,9000,9000);
+
+    LaserSpot * laserSpot = scene->laserSpot;
 
     for(Node *item : scene->nodePulsList)
     {
 
-        std::cout<<"item->pos().x(): "<<std::endl;
-        std::cout<<item->pos().x()<<std::endl;
-        std::cout<<"item->pos().y(): "<<std::endl;
-        std::cout<<item->pos().y()<<std::endl;
-
-        //item->pos returns the coordinate of the top left corner of a widget but we want the center...
-        double delta = 0.5*item->boundingRect().width();
 
         ::gE545.moveTo
                 (
-                    100+uFactorFromSceneToStage*(item->pos().x()-::gE545.itsLaserPosX-delta),
-                    100-uFactorFromSceneToStage*(item->pos().y()-::gE545.itsLaserPosY-delta),
+                    100+uFactorFromSceneToStage*(item->pos().x()-0.5*item->boundingRect().width()-laserSpot->pos().x()),
+                    100-uFactorFromSceneToStage*(item->pos().y()-0.5*item->boundingRect().height()-laserSpot->pos().y()),
                     100
                 );
 
@@ -201,7 +168,15 @@ void pulsePage::on_open_shutter__blueDot_2_clicked()
 
 }
 
-void pulsePage::on_pushButton_2_clicked()
+void pulsePage::on_pushButton_removeAllPulses_clicked()
 {
     scene->removeAllPulses();
 }
+
+void pulsePage::on_pushButton_removeLastPulse_clicked()
+{
+
+    scene->removeLastPulse();
+
+}
+

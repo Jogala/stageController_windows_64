@@ -37,10 +37,9 @@ public:
     MeineSceneClass(QObject *parent = 0,Malkasten * pToCallingMalkasten = 0);
 
     void setNewBackgroundPixmap(QPixmap * pToPix);
-
-    void addPuls(QPointF coordWhereToPutNewPuls);
+    void addPulse(QPointF coordWhereToPutNewPuls);
     void removeAllPulses();
-    bool removeLastPuls();
+    bool removeLastPulse();
 
     void addNode(QPointF coordWhereToPutNewNode);
     void removeAllNodes();
@@ -52,8 +51,9 @@ public:
     QList <Node*> nodePulsList;
 
     LaserSpot * laserSpot;
-    LaserSpot * blueLaserSpot;
+    LaserSpot * greenLaserSpot;
     LaserSpot * figuresLaserSpot;
+    Node *punkt;
 
     //variables need for conversion pixel to real length
     Meterstab *meterstab;
@@ -67,7 +67,6 @@ public slots:
     }
 
 signals:
-
 
 private:
     Malkasten * pToMalkasten;

@@ -22,7 +22,10 @@ firstPage::firstPage(QWidget *parent, Malkasten *pToMainWindowsMalkasten) :
     std::cout<<"set_Up the Tables for the figures DONE"<<std::endl;
 
 
-    //Set Shortcuts for figures
+    //Set Shortcuts
+    QShortcut *refreshBackground = new QShortcut(QKeySequence("R"), this);
+    QObject::connect(refreshBackground, SIGNAL(activated()), mMalkasten, SLOT(refreshBackground()));
+
     QShortcut *ctrl_l = new QShortcut(QKeySequence("CTRL+L"), this);
     QObject::connect(ctrl_l, SIGNAL(activated()), this, SLOT(setFocus_lineTable()));
 
@@ -80,30 +83,18 @@ firstPage::~firstPage()
 
 void firstPage::moveToFigureLaserSpot()
 {
-
     std::cout<<"void firstPage::moveToFigureLaserSpot() ENTERING"<<std::endl;
-    std::cout<<"#################################################################################################"<<std::endl;
-    std::cout<<"#################################################################################################"<<std::endl;
 
     ::gE545.setVelocity(9000,9000,9000);
-
     ::gE545.printPosition();
 
     QPointF cutPos(scene->figuresLaserSpot->pos()-scene->laserSpot->pos());
     cutPos.setX(scene->uFactorFromSceneToStage*cutPos.x()+100);
     cutPos.setY(-scene->uFactorFromSceneToStage*cutPos.y()+100);
 
-
-    qDebug()<<scene->figuresLaserSpot->pos()-scene->laserSpot->pos();
-
-    std::cout<<"scene->uFactorFromSceneToStage*cutPos.x() = \t"<<scene->uFactorFromSceneToStage*cutPos.x()<<std::endl;
-    std::cout<<"scene->uFactorFromSceneToStage*cutPos.y() = \t"<<scene->uFactorFromSceneToStage*cutPos.y()<<std::endl;
-    std::cout<<"cutPos.x() = "<<cutPos.x()<<"cutPos.y() "<<cutPos.y()<<std::endl;
-
     ::gE545.moveTo(cutPos.x(),cutPos.y(),100);
     ::gE545.printPosition();
-    std::cout<<"#################################################################################################"<<std::endl;
-    std::cout<<"#################################################################################################"<<std::endl;
+
     std::cout<<"void firstPage::moveToFigureLaserSpot() LEAVING"<<std::endl;
 }
 

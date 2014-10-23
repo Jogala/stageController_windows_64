@@ -27,8 +27,8 @@ public:
     QPainterPath shape() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    void posOfCenterX();
-    void posOfCenterY();
+    double posOfCenterX();
+    double posOfCenterY();
 
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);

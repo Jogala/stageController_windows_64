@@ -47,7 +47,7 @@ void meineViewClass::mousePressEvent(QMouseEvent *event)
 
         if(drawPulses)
         {
-            scene->addPuls(coord);
+            scene->addPulse(coord);
         }
     }
 }

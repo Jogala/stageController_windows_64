@@ -18,8 +18,6 @@ int stageController::initialize(){
                     if (switchDriftControlModeOn())
                     {
 
-
-
                         setVelocity(50, 50, 50);
                         moveTo(100, 100, 100);
                         setTriggerMode(1, 3);
@@ -28,7 +26,6 @@ int stageController::initialize(){
                         setLimits(1, 0, 0);
                         setLimits(2, 0, 0);
                         setLimits(3, 0, 0);
-
 
                         return 1;
                     }
@@ -782,7 +779,7 @@ void stageController::setLimits(int whichAxis, double value1, double value2){
     setTriggerMode(whichAxis, 4);
 
     //Make sure values are in range
-    if (!useful.qValuesInLimits(value1, value2))
+    if (!use.qValuesInLimits(value1, value2))
     {
         std::cout << "ERROR:" << std::endl;
         std::cout << "void stageController::setLimits(int whichAxis, double value1, double value2) says:\n No valid limit values" << std::endl;
@@ -856,7 +853,7 @@ void stageController::setLimitsMin(int whichAxis, double minima){
     double pdValueArray[1];
     bool tryAgain = 1;
 
-    if (useful.qValueInLimits(minima))
+    if (use.qValueInLimits(minima))
     {
 
         while (tryAgain == 1){
@@ -886,7 +883,7 @@ void stageController::setLimitsMax(int whichAxis, double maxima){
     double pdValueArray[1];
     bool tryAgain = 1;
 
-    if (useful.qValueInLimits(maxima))
+    if (use.qValueInLimits(maxima))
     {
 
         while (tryAgain == 1){
@@ -1111,6 +1108,36 @@ void stageController::createMacroFromCoordinatesAndCut(std::string pathToCoordin
         delayVec.push_back(delayFactor*1000*sqrt(storPos[i][0]*storPos[i][0]+storPos[i][1]*storPos[i][1]+storPos[i][2]*storPos[i][2])/velocity);
     }
 
+    //########################################################################################################################################################
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //      calculate  Velocities s.t. the stage is moving on  a straight line from one point to the other      //
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    std::cout<<"calculate  Velocities s.t. the stage is moving on  a straight line from one point to the other START"<<std::endl;
+
+    double vec[3];
+    auto velVec = std::vector<std::vector<double>>(storPos.size()-1, std::vector<double>(3));
+    for (int i = 0; i <storPos.size()-1; i++)
+    {
+        for(int j = 0; j<3; j++)
+        {
+            vec[j]=storPos[i+1][j]-storPos[i][j];
+        }
+
+        if((vec[0]!=0)||(vec[1]!=0)||(vec[2]!=0))
+        {
+            velVec[i][0] = (abs(vec[0])/use.norm(vec))*velocity;
+            velVec[i][1] = (abs(vec[1])/use.norm(vec))*velocity;
+            velVec[i][2] = (abs(vec[2])/use.norm(vec))*velocity;
+        }else{
+            //means that a = 0 or b = 0, so no line is cut, but for being on the safe side we set v_i = 1000.
+            velVec[i][1]=1000;
+            velVec[i][2]=1000;
+            velVec[i][3]=1000;
+        }
+    }
+    std::cout<<"calculate  Velocities s.t. the stage is moving on  a straight line from one point to the other DONE"<<std::endl;
 
     //########################################################################################################################################################
 
@@ -1123,16 +1150,15 @@ void stageController::createMacroFromCoordinatesAndCut(std::string pathToCoordin
     f.open(pathMacroFile, std::fstream::out | std::fstream::trunc);
 
     f << "MAC BEG " << nameOfMacro << std::endl;
-    f << "VEL A " << "9000" << " B " << "9000" << " C " << "9000" << std::endl;
+    f << "VEL A " << velocity << " B " << velocity << " C " << velocity << std::endl;
+    f << "MOV A " << storPos[0][0] << " B " << storPos[0][1] << " C " << storPos[0][2] << std::endl;
+    f << "DEL " << delayVec[0] << std::endl;
+    //open shutter
+    f << setLimitsMacro(1, 0, 200, 0, 0);
 
-    for (int i = 0; i < storPos.size(); i++){
+    for (int i = 1; i < storPos.size(); i++){
 
-        if (i == 1)
-        {
-            //open shutter
-            f << "VEL A " << velocity << " B " << velocity << " C " << velocity << std::endl;
-            f << setLimitsMacro(1, 0, 200, 0, 0);
-        }
+        f << "VEL A " << velVec[i-1][0] << " B " << velVec[i-1][1] << " C " << velVec[i-1][2] << std::endl;
         f << "MOV A " << storPos[i][0] << " B " << storPos[i][1] << " C " << storPos[i][2] << std::endl;
         f << "DEL " << delayVec[i] << std::endl;
     }
@@ -1247,7 +1273,7 @@ std::string stageController::setLimitsMacro(int whichAxis, double value1, double
 
 
     //Make sure values are in range
-    if (!useful.qValuesInLimits(value1, value2))
+    if (!use.qValuesInLimits(value1, value2))
     {
         std::cout << "ERROR:" << std::endl;
         std::cout << "void stageController::setLimits(int whichAxis, double value1, double value2) says:\n No valid limit values" << std::endl;

@@ -112,7 +112,7 @@ void figures::spiral::cutAbsMacroSpiral3D()
 
 		if ((i - 1) == 0){
 
-            delay[0] = delayFactor*1000*(R / velocity);
+            delay[0] = delayFactor*1000*(R / 3000);
 		
 		}
 		else{
@@ -151,6 +151,39 @@ void figures::spiral::cutAbsMacroSpiral3D()
 	}
 
     std::cout<<"Generating the coordinates DONE"<<std::endl;
+
+
+
+    //########################################################################################################################################################
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //      calculate  Velocities s.t. the stage is moving on  a straight line from one point to the other      //
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    std::cout<<"calculate  Velocities s.t. the stage is moving on  a straight line from one point to the other START"<<std::endl;
+
+    auto velVec = std::vector<std::vector<double>>(steps, std::vector<double>(3));
+    for (int i = 0; i <steps; i++)
+    {
+        for(int j = 0; j<3; j++)
+        {
+            vec[j]=storPos[i+1][j]-storPos[i][j];
+        }
+
+        if((vec[0]!=0)||(vec[1]!=0)||(vec[2]!=0))
+        {
+            velVec[i][0] = (abs(vec[0])/use.norm(vec))*velocity;
+            velVec[i][1] = (abs(vec[1])/use.norm(vec))*velocity;
+            velVec[i][2] = (abs(vec[2])/use.norm(vec))*velocity;
+        }else{
+            //means that a = 0 or b = 0, so no line is cut, but for being on the safe side we set v_i = 1000.
+            velVec[i][1]=1000;
+            velVec[i][2]=1000;
+            velVec[i][3]=1000;
+        }
+    }
+    std::cout<<"calculate  Velocities s.t. the stage is moving on  a straight line from one point to the other DONE"<<std::endl;
+
     //########################################################################################################################################################
 
     ///////////////////////////////////////
@@ -201,7 +234,7 @@ void figures::spiral::cutAbsMacroSpiral3D()
 	f.open(nameFile, std::fstream::out | std::fstream::app);
 
 	f << "MAC BEG " << macroName << std::endl;
-	f << "VEL A " << velocity << " B " << velocity << " C " << velocity << std::endl;
+    f << "VEL A " << 3000 << " B " << 3000 << " C " << 3000 << std::endl;
 	f << "MOV A " << storPos[0][0] << " B " << storPos[0][1] << " C " << storPos[0][2] << std::endl;
 	f << "DEL " << delay[0] << std::endl;
     f << ::gE545.setLimitsMacro(1, 0, 200, 0, 0);
@@ -209,14 +242,17 @@ void figures::spiral::cutAbsMacroSpiral3D()
 	int shutterCounter=0; 
 	for (int i = 1; i < steps + 1; i++){
 
-		if (i>=2){
-			if (delay[i] != delay[i - 1]){
-
-				if (!(shutterCounter % 2)){
+        if (i>=2)
+        {
+            if (delay[i] != delay[i - 1])
+            {
+                if (!(shutterCounter % 2))
+                {
 					//Close Shutter
                     f << ::gE545.setLimitsMacro(1, 0, 0, 0, 200);
 				}
-				else{
+                else
+                {
 					//Open Shutter
                     f << ::gE545.setLimitsMacro(1, 0, 200, 0, 0);
 				}
@@ -224,6 +260,7 @@ void figures::spiral::cutAbsMacroSpiral3D()
 			}
 		}
 
+            f << "VEL A " << velVec[i-1][0] << " B " << velVec[i-1][1]<< " C " << velVec[i-1][2]<< std::endl;
 			f << "MOV A " << storPos[i][0] << " B " << storPos[i][1] << " C " << storPos[i][2] << std::endl;
 			f << "DEL " << delay[i] << std::endl;
     }

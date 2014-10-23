@@ -26,7 +26,11 @@ private slots:
 
     void on_pushButton_removeLastNode_clicked();
 
+
 private:
+    void loadFreeHandMacroDelayFactor();
+    void writeDelayFactorToFile();
+
     Ui::freeHand *ui;
     Malkasten * mMalkasten;
     MeineSceneClass *scene;

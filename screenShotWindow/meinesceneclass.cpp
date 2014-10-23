@@ -23,12 +23,12 @@ MeineSceneClass::MeineSceneClass(QObject *parent, Malkasten * pToCallingMalkaste
     laserSpot->hide();
 
 
-    blueLaserSpot = new LaserSpot(this);
-    blueLaserSpot->setBrush(Qt::green);
-    blueLaserSpot->setEnabled(1);
-    blueLaserSpot->setRect(0,0,10,10);
-    this->addItem(blueLaserSpot);
-    blueLaserSpot->hide();
+    greenLaserSpot = new LaserSpot(this);
+    greenLaserSpot->setBrush(Qt::green);
+    greenLaserSpot->setEnabled(1);
+    greenLaserSpot->setRect(0,0,10,10);
+    this->addItem(greenLaserSpot);
+    greenLaserSpot->hide();
 
     figuresLaserSpot = new LaserSpot(this);
     figuresLaserSpot->setBrush(Qt::white);
@@ -47,11 +47,16 @@ void MeineSceneClass::setNewBackgroundPixmap(QPixmap * pToPix)
     backGroundItem->setPixmap(*pToPix);
 }
 
-void MeineSceneClass::addPuls(QPointF coordWhereToPutNewPuls)
+void MeineSceneClass::addPulse(QPointF coordWhereToPutNewPuls)
 {
+
     Node * newNode = new Node;
 
-     nodePulsList.append(newNode);
+    //display new bounding rect at tip of the mouse arrow
+    coordWhereToPutNewPuls.setX(coordWhereToPutNewPuls.x()+0.5*newNode->boundingRect().height());
+    coordWhereToPutNewPuls.setY(coordWhereToPutNewPuls.y()+0.5*newNode->boundingRect().height());
+
+    nodePulsList.append(newNode);
 
     addItem(nodePulsList.last());
     nodePulsList.last()->setPos(coordWhereToPutNewPuls.x(),coordWhereToPutNewPuls.y());
@@ -73,6 +78,10 @@ void MeineSceneClass::removeAllPulses()
 void MeineSceneClass::addNode(QPointF coordWhereToPutNewNode)
 {
     Node * newNode = new Node;
+
+    //display new bounding rect at tip of the mouse arrow
+    coordWhereToPutNewNode.setX(coordWhereToPutNewNode.x()+0.5*newNode->boundingRect().height());
+    coordWhereToPutNewNode.setY(coordWhereToPutNewNode.y()+0.5*newNode->boundingRect().height());
 
     nodeFreeHandList.append(newNode);
 
@@ -127,6 +136,20 @@ bool MeineSceneClass::removeLastNode()
 
 }
 
+bool MeineSceneClass::removeLastPulse()
+{
+    if(nodePulsList.length())
+    {
+        //remove last node from scene
+        this->removeItem(nodePulsList.last());
+        //remove last node from nodeList
+        nodePulsList.removeLast();
+    }
+
+    return nodePulsList.length();
+
+}
+
 void MeineSceneClass::writeCoordOfNodesToFile()
 {
 
@@ -136,7 +159,7 @@ void MeineSceneClass::writeCoordOfNodesToFile()
 
         for(Node* item : nodeFreeHandList)
         {
-            //item->pos returns the coordinate of the top left corner of a widget but we want the center...
+
             double delta = 0.5*item->boundingRect().width();
 
             f<<100+uFactorFromSceneToStage*(item->pos().x()-::gE545.itsLaserPosX-delta)<<"\t";

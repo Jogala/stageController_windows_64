@@ -42,7 +42,7 @@
     <string>Refresh Background</string>
    </property>
   </widget>
-  <widget class="QGroupBox" name="groupBox_blueLaserSpot">
+  <widget class="QGroupBox" name="groupBox_greenLaserSpot">
    <property name="geometry">
     <rect>
      <x>180</x>
@@ -253,7 +253,7 @@
    </property>
    <layout class="QGridLayout" name="gridLayout_3">
     <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="pushButton_removeLastPulse">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -266,7 +266,7 @@
      </widget>
     </item>
     <item row="2" column="0">
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="pushButton_removeAllPulses">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
         <horstretch>0</horstretch>

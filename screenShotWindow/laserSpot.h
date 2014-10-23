@@ -16,6 +16,8 @@ class LaserSpot : public QObject, public QGraphicsEllipseItem
 public:
     explicit LaserSpot(QGraphicsScene *parent = 0);
 
+    double posOfCenterX();
+    double posOfCenterY();
 
 signals:
     void notification();

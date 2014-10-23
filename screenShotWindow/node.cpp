@@ -82,8 +82,7 @@ bool Node::advance()
 
 QRectF Node::boundingRect() const
 {
-    qreal adjust = 2;
-    return QRectF( -10 - adjust, -10 - adjust, 23 + adjust, 23 + adjust);
+    return QRectF( -10, -10, 10, 10);
 }
 
 QPainterPath Node::shape() const
@@ -114,14 +113,20 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->drawEllipse(-10, -10, 10, 10);
 }
 
-void Node::posOfCenterX()
+double Node::posOfCenterX()
 {
+    QPointF point = this->pos();
+    QRectF rec = this->boundingRect();
 
+    return point.x()-0.5*rec.width();
 }
 
-void Node::posOfCenterY()
+double Node::posOfCenterY()
 {
+    QPointF point = this->pos();
+    QRectF rec = this->boundingRect();
 
+    return point.y()-0.5*rec.height();
 }
 
 QVariant Node::itemChange(GraphicsItemChange change, const QVariant &value)

@@ -40,6 +40,9 @@ Einstellungen::Einstellungen(QWidget *parent, Malkasten * pToMalkasten) :
     loadConversionFactorParametersAndAssignThem();
     loadScreenShotGeometry();
 
+    //Set Shortcut
+    QShortcut *refreshBackground = new QShortcut(QKeySequence("R"), this);
+    QObject::connect(refreshBackground, SIGNAL(activated()), mMalkasten, SLOT(refreshBackground()));
 
     std::cout<<"settingsPage::settingsPage(QWidget *parent) LEAVING"<<std::endl;
 }
@@ -52,37 +55,6 @@ Einstellungen::~Einstellungen()
 void Einstellungen::on_pushButton_refreshBackground_clicked()
 {
     mMalkasten->refreshBackground();
-}
-
-
-void Einstellungen::on_checkBox_laserSpot_clicked(bool checked)
-{
-
-    qDebug()<<"on_checkBox_laserSpot_clicked"<<checked;
-
-    if(checked)
-    {
-        spinBox_laserPosX->setEnabled(1);
-        spinBox_laserPosY->setEnabled(1);
-
-        if(!scene->laserSpot->isVisible()){
-        scene->laserSpot->show();
-        }
-        scene->laserSpot->setEnabled(1);
-
-
-    }else
-    {
-        spinBox_laserPosX->setEnabled(0);
-        spinBox_laserPosY->setEnabled(0);
-
-        gE545.itsLaserPosX = scene->laserSpot->x();
-        gE545.itsLaserPosY = scene->laserSpot->y();
-        gE545.writeLaserPosValuesToFile();
-        scene->laserSpot->hide();
-        spinBox_laserPosX->setValue(::gE545.itsLaserPosX);
-        spinBox_laserPosY->setValue(::gE545.itsLaserPosY);
-    }
 }
 
 void Einstellungen::on_spinBox_screenShot_x_editingFinished()
@@ -129,6 +101,9 @@ void Einstellungen::saveScreenShotGeometry()
     }
     f.close();
 }
+
+
+
 
 void Einstellungen::on_doubleSpinBox_meterstab_x1_valueChanged(double arg1)
 {
@@ -266,6 +241,7 @@ void Einstellungen::saveConversionFactorParameters()
 
 
 
+
 void Einstellungen::on_up_button_pressed()
 {
     gE545.move(0,stepSize,0);
@@ -344,6 +320,34 @@ void Einstellungen::on_stepSize_spinBox_valueChanged(double arg1)
     stepSize= ui->stepSize_spinBox->value();
 }
 
+
+
+
+//Laser Spot                                                                START
+//#################################################################################
+
+void Einstellungen::on_checkBox_laserSpot_clicked(bool checked)
+{
+
+    if(checked)
+    {
+        spinBox_laserPosX->setEnabled(1);
+        spinBox_laserPosY->setEnabled(1);
+
+        if(!scene->laserSpot->isVisible()){
+        scene->laserSpot->show();
+        }
+        scene->laserSpot->setEnabled(1);
+
+    }else
+    {
+        spinBox_laserPosX->setEnabled(0);
+        spinBox_laserPosY->setEnabled(0);
+
+        scene->laserSpot->hide();
+    }
+}
+
 void Einstellungen::on_spinBox_laserPosX_editingFinished()
 {
     scene->laserSpot->setPos(spinBox_laserPosX->value(),spinBox_laserPosY->value());
@@ -362,6 +366,12 @@ void Einstellungen::on_spinBox_laserPosY_editingFinished()
 
 void Einstellungen::assignNewValuesToLaserPos()
 {
+    //This function got connected in:
+    //void MeineSceneClass::giveItAPointerToSettingsPage(Einstellungen * pToSettingsPage)
+    //with
+    //connect(laserSpot,SIGNAL(notification()),settingsPageWidget,SLOT(assignNewValuesToLaserPos()));
+    //s.t. whenever the position of the laser spot is changed by dragging, the spinBoxes get updated.
+
     qDebug()<<"I GOT TRIGGERED";
     qDebug()<<scene->laserSpot->pos();
     spinBox_laserPosX->setValue(scene->laserSpot->x());
@@ -371,11 +381,14 @@ void Einstellungen::assignNewValuesToLaserPos()
     gE545.writeLaserPosValuesToFile();
 }
 
+//Laser Spot                                                                    END
+//#################################################################################
+
+
 void Einstellungen::assignNewValuesToSpinBoxLineLength()
 {
     ui->doubleSpinBox_meterstab_length->setValue(scene->meterstab->line().length());
 }
-
 
 void Einstellungen::loadScreenShotGeometry()
 {

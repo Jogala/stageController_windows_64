@@ -37,9 +37,8 @@ public:
     //gets values assigned by loadScreenShotGeometry()
     QRect recScreenShot;
 
-    void refreshBackground();
-
-
+public slots:
+     void refreshBackground();
 
 protected:
 
@@ -47,7 +46,7 @@ protected:
 
 signals:
 
-public slots:
+
 
 private:
 
